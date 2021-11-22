@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\JobController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +17,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+    //Dashboard Controller
+    Route::group([
+        'prefix' => '/jobs',
+        'as' => 'jobs.',
+    ], function () {
+        Route::get('/', [JobController::class, 'index'])->name('index');
+        Route::post('/', [JobController::class, 'store'])->name('store');
+    });
