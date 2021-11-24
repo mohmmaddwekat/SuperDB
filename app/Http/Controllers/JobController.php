@@ -36,6 +36,12 @@ class JobController extends Controller
     {
         return view('jobs.index');
     }
+
+    public function featureQuery()
+    {
+        return view('jobs.feature');
+    }
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -54,6 +60,7 @@ class JobController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'query' => [
                 'required', 'string', 'max:255',
@@ -69,13 +76,57 @@ class JobController extends Controller
         $query = $request->post('query');
         $factory = new Factory;
         $factory->factory($query);
-
-
-
         return redirect()->route('jobs.index');
     }
 
+    protected  $type ;
+    protected  $colunm ;
 
+    public function storeFeature(Request $request)
+    {
+        $request->validate([
+            'nametable' => [
+                'required', 'string', 'max:255',
+
+            ],
+            'colunm' => [
+                'required', 'max:255',
+            ],
+            'type' => [
+                'required'
+            ],
+        ]);
+        $nametable = $request->post('nametable');
+        $this->colunm = $request->post('colunm');
+        $this->type = $request->post('type');
+
+        Schema::create($nametable, function($table)
+        {
+            
+            $table->increments('id');
+            foreach ($this->type as $key => $result) {
+
+                if($result == 'varchar'){
+                    preg_match('#\((.*?)\)#', $this->colunm[$key], $querycalumn);
+                    if(empty($querycalumn[1])){
+                        $value =250;
+                        $valCol = $this->colunm[$key];
+                    }
+                    if(!empty($querycalumn[1])){
+                        $value =$querycalumn[1];
+                        $valCol = str_replace(' '.$querycalumn[0], '', $this->colunm[$key]);
+                    }
+                    $table->string($valCol, $value);
+                }
+                if($result == 'int'){
+                    $table->integer($this->colunm[$key]);
+                }
+            }
+        });
+
+
+        return redirect()->route('jobs.feature-query');
+    }
     /**
      * Display the specified resource.
      *

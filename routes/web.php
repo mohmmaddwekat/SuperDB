@@ -18,6 +18,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/jobs/feature-query', [JobController::class, 'featureQuery'])->name('jobs.feature-query');
+Route::post('/jobs/feature-query', [JobController::class, 'storeFeature'])->name('jobs.store-feature');
 
     //Dashboard Controller
     Route::group([
@@ -26,4 +28,7 @@ Route::get('/', function () {
     ], function () {
         Route::get('/', [JobController::class, 'index'])->name('index');
         Route::post('/', [JobController::class, 'store'])->name('store');
+
+
+
     });
