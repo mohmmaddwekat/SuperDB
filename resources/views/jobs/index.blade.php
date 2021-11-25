@@ -1,33 +1,7 @@
 
-<x-layout title="ho">
-        <div class="container py-5 vh-100 h-100">
-            @if ($errors->any())
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $message)
-                            <li>
+<x-layout title="Add Query">
 
-                                {{ $message }}
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-            @if (session()->has('success'))
-                <div class="alert alert-success" role="alert">
-                    {{ session()->get('success') }}
-                </div>
-            @endif
-            @if (session()->has('error'))
-                <div class="alert alert-danger" role="alert">
-                    {{ session()->get('error') }}
-                </div>
-            @endif
-
- 
-
-
-            <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100 mt-5">
                 <div class="col col-md-12 col-lg-8 col-xl-6">
                     <form action="{{ route('jobs.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
@@ -43,7 +17,6 @@
                     </form>
                 </div>
             </div>
-        </div>
 
    
     </x-layout>

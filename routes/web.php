@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ConnectionController;
 use App\Http\Controllers\JobController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,22 +21,26 @@ Route::get('/', function () {
 
 Route::post('/jobs/feature-query', [JobController::class, 'storeFeature'])->name('jobs.store-feature');
 
-    //Dashboard Controller
-    Route::group([
-        'prefix' => '/jobs',
-        'as' => 'jobs.',
-    ], function () {
-        Route::get('/', [JobController::class, 'index'])->name('index');
-        Route::post('/', [JobController::class, 'store'])->name('store');
-        Route::get('/feature-query', [JobController::class, 'featureQuery'])->name('feature-query');
-        Route::get('/import', [JobController::class, 'import'])->name('import');
-        Route::post('/store-import', [JobController::class, 'storeImport'])->name('store-import');
-    });
+//Dashboard Controller
+Route::group([
+    'prefix' => '/jobs',
+    'as' => 'jobs.',
+], function () {
+    Route::get('/', [JobController::class, 'index'])->name('index');
+    Route::post('/', [JobController::class, 'store'])->name('store');
+    Route::get('/feature-query', [JobController::class, 'featureQuery'])->name('feature-query');
+    Route::get('/import', [JobController::class, 'import'])->name('import');
+    Route::post('/store-import', [JobController::class, 'storeImport'])->name('store-import');
+});
 
-Route::prefix('connection')->group(function () {
-Route::get('/',[ConnectionController::class,'index']);
-Route::get('/delete/{name}',[ConnectionController::class,'delete']);
-Route::post('/add/{id}', [ConnectionController::class, 'add']);
+
+Route::group([
+    'prefix' => '/connection',
+    'as' => 'connection.',
+], function () {
+    Route::get('/', [ConnectionController::class, 'index'])->name('index');
+    Route::get('/delete/{name}', [ConnectionController::class, 'delete'])->name('delete');
+    Route::post('/add/{id}', [ConnectionController::class, 'add'])->name('add');
 });
 
 
