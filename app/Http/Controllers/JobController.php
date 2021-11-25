@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Schema;
 use Mockery\Exception\InvalidOrderException;
 use PhpParser\Node\Stmt\TryCatch;
 
+use function GuzzleHttp\Promise\all;
+
 class JobController extends Controller
 {
     protected $TYPE = ['int', 'varchar'];
@@ -79,9 +81,10 @@ class JobController extends Controller
         return redirect()->route('jobs.index');
     }
 
+
+
     protected  $type ;
     protected  $colunm ;
-
     public function storeFeature(Request $request)
     {
         $request->validate([
@@ -126,6 +129,16 @@ class JobController extends Controller
 
 
         return redirect()->route('jobs.feature-query');
+    }
+
+
+
+    public function import(){
+        return view('jobs.import');
+    }
+    public function storeImport(Request $request){
+
+        dd($request->all());
     }
     /**
      * Display the specified resource.

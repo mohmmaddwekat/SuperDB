@@ -18,7 +18,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/jobs/feature-query', [JobController::class, 'featureQuery'])->name('jobs.feature-query');
 Route::post('/jobs/feature-query', [JobController::class, 'storeFeature'])->name('jobs.store-feature');
 
     //Dashboard Controller
@@ -28,10 +27,16 @@ Route::post('/jobs/feature-query', [JobController::class, 'storeFeature'])->name
     ], function () {
         Route::get('/', [JobController::class, 'index'])->name('index');
         Route::post('/', [JobController::class, 'store'])->name('store');
+        Route::get('/feature-query', [JobController::class, 'featureQuery'])->name('feature-query');
+        Route::get('/import', [JobController::class, 'import'])->name('import');
+        Route::post('/store-import', [JobController::class, 'storeImport'])->name('store-import');
     });
 
-    Route::prefix('connection')->group(function () {
+Route::prefix('connection')->group(function () {
 Route::get('/',[ConnectionController::class,'index']);
 Route::get('/delete/{name}',[ConnectionController::class,'delete']);
 Route::post('/add/{id}', [ConnectionController::class, 'add']);
 });
+
+
+
