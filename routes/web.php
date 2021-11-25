@@ -28,7 +28,10 @@ Route::post('/jobs/feature-query', [JobController::class, 'storeFeature'])->name
     ], function () {
         Route::get('/', [JobController::class, 'index'])->name('index');
         Route::post('/', [JobController::class, 'store'])->name('store');
-
-
-
     });
+
+    Route::prefix('connection')->group(function () {
+Route::get('/',[ConnectionController::class,'index']);
+Route::get('/delete/{name}',[ConnectionController::class,'delete']);
+Route::post('/add/{id}', [ConnectionController::class, 'add']);
+});
