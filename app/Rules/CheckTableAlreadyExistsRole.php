@@ -7,14 +7,15 @@ use Illuminate\Support\Facades\Schema;
 
 class CheckTableAlreadyExistsRole implements Rule
 {
+    protected $link;
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($link)
     {
-        //
+        $this->link = $link;
     }
 
     /**
@@ -29,19 +30,27 @@ class CheckTableAlreadyExistsRole implements Rule
         $query = $value;
         $order = array("\r\n", "\r","",",",";");
         $query =str_replace($order, "", $query);
-
         $order = array("(",")","", "\n");
         $query =str_replace($order, " ", $query);
-
         $query =array_slice(explode(' ', $query), 0);
 
-        if (Schema::hasTable($query[2]) and in_array('DROP',$query)) {
+        $result = mysqli_query($this->link ,"show tables");
+        $tables = array();
+        while($table = mysqli_fetch_array($result)) {
+            array_push($tables,$table[0]);
+        }
+
+        if (in_array(strtolower($query[2]),$tables) and in_array('CREATE',$query)) {
+            return false;
+        }
+        
+        if (in_array(strtolower($query[2]),$tables) and in_array('DROP',$query)) {
             return true; 
         }
-        if (Schema::hasTable($query[2]) and !in_array('ALTER',$query) and !in_array('INSERT',$query)) {
+        if (in_array(strtolower($query[2]),$tables) and !in_array('ALTER',$query) and !in_array('INSERT',$query)) {
             return false; 
         }
-        return true;
+         return true;
 
     }
 

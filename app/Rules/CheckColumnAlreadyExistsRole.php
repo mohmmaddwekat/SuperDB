@@ -7,14 +7,15 @@ use Illuminate\Support\Facades\Schema;
 
 class CheckColumnAlreadyExistsRole implements Rule
 {
+    protected $link;
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($link)
     {
-        //
+        $this->link = $link;
     }
 
     /**
@@ -33,36 +34,38 @@ class CheckColumnAlreadyExistsRole implements Rule
         $query =str_replace($order, " ", $query);
         $query =array_slice(explode(' ', $query), 0);
 
-        
-        if($index_same_value = array_intersect($query, ['int'])){
-            
-            foreach ($index_same_value as $key => $result){
-                
-                $key -=1;
-                if (Schema::hasColumn($query[2], $query[$key])) {
-                    return false; 
-                }
-                $element_search = $query[$key];
-                unset($query[$key]);
-                if(array_search($element_search, $query)){
-                    return false; 
-                }
-            }           
-        }
-        if($index_same_value = array_intersect($query, ['varchar'])){
 
-            foreach ($index_same_value as $key => $result){
-                $key -=1;
-                if (Schema::hasColumn($query[2], $query[$key])) {
-                    return false; 
-                }
-                $element_search = $query[$key];
-                unset($query[$key]);
-                if(array_search($element_search, $query)){
-                    return false; 
-                }
-            }           
-        }
+        $result = mysqli_query($this->link ,"SHOW COLUMNS FROM customers");
+        dd($result);
+        // if($index_same_value = array_intersect($query, ['int'])){
+            
+        //     foreach ($index_same_value as $key => $result){
+                
+        //         $key -=1;
+        //         if (Schema::hasColumn($query[2], $query[$key])) {
+        //             return false; 
+        //         }
+        //         $element_search = $query[$key];
+        //         unset($query[$key]);
+        //         if(array_search($element_search, $query)){
+        //             return false; 
+        //         }
+        //     }           
+        // }
+        // if($index_same_value = array_intersect($query, ['varchar'])){
+
+        //     foreach ($index_same_value as $key => $result){
+        //         $key -=1;
+        //         if (Schema::hasColumn($query[2], $query[$key])) {
+        //             return false; 
+        //         }
+        //         $element_search = $query[$key];
+        //         unset($query[$key]);
+        //         if(array_search($element_search, $query)){
+        //             return false; 
+        //         }
+        //     }           
+        // }
 
         return true;
     }

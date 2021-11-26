@@ -9,6 +9,7 @@ use App\Rules\CheckTableAlreadyExistsRole;
 use App\Rules\CheckColumnAlreadyExistsRole;
 use App\Rules\CheckColumnNotFoundRole;
 use App\Rules\CheckEqualNumberOfElementsRole;
+use App\Rules\CheckNotConnectRole;
 use App\Rules\CheckTableNotFoundRole;
 use Exception;
 use Illuminate\Database\Schema\Blueprint;
@@ -62,22 +63,22 @@ class JobController extends Controller
      */
     public function store(Request $request)
     {
+        $connection = "hamase";
 
         $request->validate([
             'query' => [
                 'required', 'string', 'max:255',
-
-                new CheckTableAlreadyExistsRole,
-                new CheckColumnAlreadyExistsRole,
-                new CheckTableNotFoundRole,
-                new CheckColumnNotFoundRole,
-                new CheckEqualNumberOfElementsRole,
-                new CheckAllColunmHasDefultValueRole,
+                new CheckNotConnectRole($connection),
             ],
         ]);
+
+        $link = mysqli_connect("localhost", "root", "", $connection);
+
         $query = $request->post('query');
         $factory = new Factory;
-        $factory->factory($query);
+        $factory->factory($query,$link);
+        mysqli_close($link);
+
         return redirect()->route('jobs.index');
     }
 

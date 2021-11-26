@@ -7,14 +7,15 @@ use Illuminate\Support\Facades\Schema;
 
 class CheckAllColunmHasDefultValueRole implements Rule
 {
+    protected $link;
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($link)
     {
-        //
+        $this->link = $link;
     }
 
     /**
@@ -42,9 +43,18 @@ class CheckAllColunmHasDefultValueRole implements Rule
             $newqueryValue = explode(',', $newqueryValue);
             $newquerycalumn = str_replace(array("(", ")", " "), '', $querycalumn[0]);
             $newquerycalumn = explode(',', $newquerycalumn);
-            if (count($newquerycalumn) != Schema::getColumnListing($query[2])) {
-                return false;
-            }
+
+            $result = mysqli_query($this->link,"SELECT * FROM customers");
+            // $tables = array();
+            // while($table = mysqli_fetch_array($result)) {
+            //     array_push($tables,$table[0]);
+            // }
+            // dd(mysqli_fetch_lengths($result),$result);
+            // if (count($newquerycalumn) != count($tables)) {
+            //     return false;
+            // }
+
+            dd();
         }
         return true;
     }

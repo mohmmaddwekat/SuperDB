@@ -1,48 +1,28 @@
 <?php
 namespace App\Job;
 
+use App\Rules\CheckNotConnectRole;
+use Exception;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 class Create implements Job{
 
 
-    public function create($query){
+    public function create($query,$link){
         
 
-            Schema::create($query[2], function (Blueprint $table) {
-                $table->increments('id');
-            });
-
-            $this->test = $query;
-            Schema::table($query[2], function (Blueprint $table) {
-
-                if ($results = array_intersect($this->test, ['int'])) {
-
-                    foreach ($results as $key => $result) {
-                        unset($this->test[$key]);
-                        $key -= 1;
-                        $table->integer($this->test[$key]);
-                        unset($this->test[$key]);
-                    }
-                }
-
-                if ($results = array_intersect($this->test, ['varchar'])) {
-
-                    foreach ($results as $key => $result) {
-                        unset($this->test[$key]);
-                        $value = $key + 1;
-                        unset($this->test[$value]);
-                        $key -= 1;
-                        $table->string($this->test[$key], $value);
-                        unset($this->test[$key]);
-                    }
-                }
-            });
+        if(mysqli_query($link, $query)){
+            return ['success','Table Created!'];
+        } 
+        if(!mysqli_query($link, $query)){
+          return ['error',mysqli_error($link)];
         }
-        public function send() {
-            return redirect()->route('jobs.index')->with('success','Table Created!');
-        }
+    }
+
+    public function send($message) {
+        return redirect()->route('jobs.index')->with($message[0],$message[1]);
+    }
     
 }
 

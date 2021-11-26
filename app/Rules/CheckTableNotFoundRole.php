@@ -8,14 +8,15 @@ use Illuminate\Support\Facades\Schema;
 
 class CheckTableNotFoundRole implements Rule
 {
+    protected $link;
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($link)
     {
-        //
+        $this->link = $link;
     }
 
     /**
@@ -35,16 +36,19 @@ class CheckTableNotFoundRole implements Rule
         $query =str_replace($order, " ", $query);
 
         $query =array_slice(explode(' ', $query), 0);
-
-        
-        if (!Schema::hasTable($query[2]) and in_array('DROP',$query)) {
-            return false; 
-        }
-        if (!Schema::hasTable($query[2]) and in_array('ALTER',$query)) {
-            return false; 
+        $result = mysqli_query($this->link ,"show tables");
+        $tables = array();
+        while($table = mysqli_fetch_array($result)) {
+            array_push($tables,$table[0]);
         }
         
-        if (!Schema::hasTable($query[2]) and in_array('INSERT',$query)) {
+        if (!in_array(strtolower($query[2]),$tables) and in_array('DROP',$query)) {
+            return false; 
+        }
+        if (!in_array(strtolower($query[2]),$tables) and in_array('ALTER',$query)) {
+            return false; 
+        }
+        if (!in_array(strtolower($query[2]),$tables) and in_array('INSERT',$query)) {
             return false; 
         }
         return true; 
