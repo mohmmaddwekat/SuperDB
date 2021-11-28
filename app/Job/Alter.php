@@ -7,14 +7,20 @@ class Alter implements Job{
 
     public function alter($query,$link){
         if(mysqli_query($link, $query)){
-            return ['success','Alter Created!'];
+            return true;
         } 
         if(!mysqli_query($link, $query)){
-          return ['error',mysqli_error($link)];
+          return false;
         }    
     }
-    public function send($message,$connection) {
-        return redirect()->route('jobs.index',$connection->id)->with($message[0],$message[1]);
+    public function send($bool,$link) {
+        if($bool == true){
+            return ['success','Alter Created!'];
+        } 
+        if($bool == false){
+          return ['error',mysqli_error($link)];
+        }    
+        //return redirect()->route('jobs.index',$connection->id)->with($message[0],$message[1]);
 
     }
 }

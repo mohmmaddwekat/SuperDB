@@ -13,15 +13,20 @@ class Create implements Job{
         
 
         if(mysqli_query($link, $query)){
-            return ['success','Table Created!'];
+            return true;
         } 
         if(!mysqli_query($link, $query)){
-          return ['error',mysqli_error($link)];
+          return false;
         }
     }
 
-    public function send($message,$connection) {
-        return redirect()->route('jobs.index',$connection->id)->with($message[0],$message[1]);
+    public function send($bool,$link) {
+        if($bool == true){
+            return ['success','Table Created!'];
+        } 
+        if($bool == false){
+          return ['error',mysqli_error($link)];
+        }    
     }
     
 }

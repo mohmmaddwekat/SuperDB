@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\ConnectionController;
+use App\Http\Controllers\DbController;
+use App\Http\Controllers\InsertController;
 use App\Http\Controllers\JobController;
+use App\Http\Controllers\SqlController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,7 +22,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('/jobs/insert/{id}', [JobController::class, 'storeInsert'])->name('jobs.store-insert');
 
 //Dashboard Controller
 Route::group([
@@ -30,15 +32,48 @@ Route::group([
     Route::get('/{id}', [JobController::class, 'index'])->name('index');
     Route::get('view-column/{name}/{id}', [JobController::class, 'viewColumn'])->name('view-column');
 
-    Route::get('/sql/{id}', [JobController::class, 'sql'])->name('sql');
+    Route::delete('/delete-table/{id}/{name}', [JobController::class, 'deletTable'])->name('delete-table');
 
-    Route::post('/{id}', [JobController::class, 'store'])->name('store');
-    Route::get('/insert/{id}', [JobController::class, 'insert'])->name('insert');
-    Route::get('/import', [JobController::class, 'import'])->name('import');
-    Route::post('/store-import', [JobController::class, 'storeImport'])->name('store-import');
+    Route::delete('/delete-column/{id}/{table}/{column}', [JobController::class, 'deletColumn'])->name('delete-column');
+
+
+
 });
 
 
+Route::group([
+    'prefix' => '/db',
+    'as' => 'db.',
+    
+], function () {
+
+    Route::get('/export/{id}/{table?}', [DbController::class, 'export'])->name('export');
+});
+
+Route::group([
+    'prefix' => '/inserts',
+    'as' => 'inserts.',
+    
+], function () {
+    Route::get('/{id}', [InsertController::class, 'index'])->name('index');
+    Route::post('/{id}', [InsertController::class, 'store'])->name('store');
+
+    Route::get('/rename-column/{id}/{table}/{column}', [InsertController::class, 'renameColumn'])->name('rename-column');
+    Route::post('/rename-column/{id}/{table}/{column}', [InsertController::class, 'updateColumn'])->name('update-column');
+
+    Route::get('/rename-table/{id}/{table}', [InsertController::class, 'renameTable'])->name('rename-table');
+    Route::post('/rename-table/{id}/{table}', [InsertController::class, 'updateTable'])->name('updateTable');
+});
+Route::group([
+    'prefix' => '/sqls',
+    'as' => 'sqls.',
+    
+], function () {
+
+    Route::get('/{id}', [SqlController::class, 'index'])->name('index');
+    Route::post('/{id}', [SqlController::class, 'store'])->name('store');
+
+});
 Route::group([
     'prefix' => '/connection',
     'as' => 'connection.',

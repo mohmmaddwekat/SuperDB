@@ -7,14 +7,19 @@ class Drop implements Job{
 
     public function drop($query,$link){
         if(mysqli_query($link, $query)){
-            return ['success','Table Droped!'];
+            return true;
         } 
         if(!mysqli_query($link, $query)){
-          return ['error',mysqli_error($link)];
+          return false;
         }
     }
-    public function send($message,$connection) {
-        return redirect()->route('jobs.index',$connection->id)->with($message[0],$message[1]);
+    public function send($bool,$link) {
+        if($bool == true){
+            return ['success','Table Droped!'];
+        } 
+        if($bool == false){
+          return ['error',mysqli_error($link)];
+        }   
     }
 }
 

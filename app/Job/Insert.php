@@ -12,14 +12,19 @@ class Insert implements Job
         public function insert($query, $link)
         {
                 if (mysqli_query($link, $query)) {
-                        return ['success', 'INSERTed data!'];
+                        return true;
                 }
                 if (!mysqli_query($link, $query)) {
-                        return ['error', mysqli_error($link)];
+                        return false;
                 }
         }
-        public function send($message,$connection)
+        public function send($bool,$link)
         {
-                return redirect()->route('jobs.index',$connection->id)->with($message[0], $message[1]);
+                if($bool == true){
+                        return ['success','INSERTed data!'];
+                } 
+                if($bool == false){
+                      return ['error',mysqli_error($link)];
+                }              
         }
 }
