@@ -13,29 +13,29 @@ class Factory{
         return $query;
     }
 
-    public function factory($query,$link){
+    public function factory($query,$link,$connection){
         $splitquery = $this->SplitQuery($query);
         if (in_array('CREATE', $splitquery)) {
             $create = new  Create();
             $message = $create->create($query,$link);
-            $create->send($message);
+            $create->send($message,$connection);
         }
         if (in_array('DROP', $splitquery) and !in_array('ALTER', $splitquery)) {
             $drop = new  Drop();
             $message = $drop->drop($query,$link);
-            $drop->send($message);
+            $drop->send($message,$connection);
         }
         if (in_array('ALTER', $splitquery)) {
             $alter = new  Alter();
             $message = $alter->alter($query,$link);
-            $alter->send($message);
+            $alter->send($message,$connection);
 
         }
 
         if (in_array('INSERT', $splitquery) and Schema::hasTable($splitquery[2])) {
             $insert = new  Insert();
             $message = $insert->insert($query,$link);
-            $insert->send($message);
+            $insert->send($message,$connection);
 
         }
     }

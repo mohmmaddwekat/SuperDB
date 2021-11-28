@@ -38,7 +38,7 @@
       <tr>
         <td><a href="">{{ $connection->name }}</a></td>
         <td><a type="button" href="connection/delete/{{$connection->id}}" class="btn btn-danger">delete</a></td>
-        <td><a type="button" href="{{ route('jobs.index', $connection->id ) }}" class="btn btn-danger">Show</a></td>
+        <td><a type="button" href="{{ route('jobs.index', $connection->id ) }}" class="btn btn-primary">Show</a></td>
 
       </tr>
     @endforeach

@@ -20,8 +20,8 @@ class Create implements Job{
         }
     }
 
-    public function send($message) {
-        return redirect()->route('jobs.index')->with($message[0],$message[1]);
+    public function send($message,$connection) {
+        return redirect()->route('jobs.index',$connection->id)->with($message[0],$message[1]);
     }
     
 }

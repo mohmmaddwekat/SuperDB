@@ -4,22 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Job\Factory;
 use App\Models\Job;
-use App\Rules\CheckAllColunmHasDefultValueRole;
-use App\Rules\CheckTableAlreadyExistsRole;
-use App\Rules\CheckColumnAlreadyExistsRole;
-use App\Rules\CheckColumnNotFoundRole;
-use App\Rules\CheckEqualNumberOfElementsRole;
 use App\Rules\CheckNotConnectRole;
-use App\Rules\CheckTableNotFoundRole;
-use Exception;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use Mockery\Exception\InvalidOrderException;
-use PhpParser\Node\Stmt\TryCatch;
-
-use function GuzzleHttp\Promise\all;
 
 class JobController extends Controller
 {
@@ -35,14 +23,65 @@ class JobController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        return view('jobs.index');
+        $DBconnection = DB::table('connection')->where('id','=',$id)->first(['name','id']);
+
+        $link = mysqli_connect("localhost", "root", "", $DBconnection->name);
+
+
+        $result = mysqli_query($link ,"show tables");
+        $tables = array();
+        while($table = mysqli_fetch_array($result)) {
+            array_push($tables,$table[0]);
+        }
+        mysqli_close($link);
+
+        return view('jobs.index',[
+        'connection'=> $DBconnection,
+        'tables' => $tables
+        ]);
     }
 
-    public function featureQuery()
+    public function viewColumn($name,$id)
     {
-        return view('jobs.feature');
+        $DBconnection = DB::table('connection')->where('id','=',$id)->first(['name','id']);
+        $link = mysqli_connect("localhost", "root", "", $DBconnection->name);
+
+        $sqlcolunms = mysqli_query($link,"SHOW COLUMNS FROM ".$name);
+        $sqlrow = mysqli_query($link,"SELECT * FROM ".$name);
+        $rows = array();
+        while ($row = mysqli_fetch_assoc($sqlrow)) {
+            array_push($rows,$row);
+        }
+
+        $colunms = array();
+        while($row = mysqli_fetch_array($sqlcolunms)){
+          array_push($colunms,$row);
+        }
+        mysqli_close($link);
+        return view('jobs.viewcolumn',[
+        'connection'=> $DBconnection,
+        'colunms' => $colunms,
+        'rows' => $rows,
+        ]);
+    }
+    
+    public function sql($id)
+    {
+        $DBconnection = DB::table('connection')->where('id','=',$id)->first(['name','id']);
+        return view('jobs.sql',[
+        'connection'=> $DBconnection,
+        ]);
+    }
+
+    public function insert($id)
+    {
+        $connection = DB::table('connection')->where('id','=',$id)->first(['name','id']);
+
+        return view('jobs.insert',[
+            'connection'=> $connection
+            ]);
     }
     
     /**
@@ -61,33 +100,35 @@ class JobController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$id)
     {
-        $connection = "hamase";
-
+        $DBconnection = DB::table('connection')->where('id','=',$id)->first(['name','id']);
         $request->validate([
             'query' => [
                 'required', 'string', 'max:255',
-                new CheckNotConnectRole($connection),
+                new CheckNotConnectRole($DBconnection->name),
             ],
         ]);
 
-        $link = mysqli_connect("localhost", "root", "", $connection);
+        $link = mysqli_connect("localhost", "root", "", $DBconnection->name);
 
         $query = $request->post('query');
         $factory = new Factory;
-        $factory->factory($query,$link);
+        $factory->factory($query,$link,$DBconnection);
         mysqli_close($link);
 
-        return redirect()->route('jobs.index');
+        return redirect()->route('jobs.sql',$DBconnection->id);
     }
 
 
 
     protected  $type ;
     protected  $colunm ;
-    public function storeFeature(Request $request)
+    public function storeInsert(Request $request,$id)
     {
+        $DBconnection = DB::table('connection')->where('id','=',$id)->first(['name','id']);
+        dd($id);
+
         $request->validate([
             'nametable' => [
                 'required', 'string', 'max:255',
@@ -103,6 +144,8 @@ class JobController extends Controller
         $nametable = $request->post('nametable');
         $this->colunm = $request->post('colunm');
         $this->type = $request->post('type');
+
+
 
         Schema::create($nametable, function($table)
         {
@@ -129,7 +172,7 @@ class JobController extends Controller
         });
 
 
-        return redirect()->route('jobs.feature-query');
+        return redirect()->route('jobs.insert');
     }
 
 

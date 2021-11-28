@@ -12,6 +12,9 @@
 
     <link rel="stylesheet" href={{ asset('/layout-assets/vendors/perfect-scrollbar/perfect-scrollbar.css') }}>
     <link rel="stylesheet" href={{ asset('/layout-assets/css/app.css') }}>
+
+    <script src="{{ asset('https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js') }}"></script>
+
     <link rel="shortcut icon" href={{ asset('/layout-assets/images/favicon.svg') }} type="image/x-icon">
 </head>
 
@@ -44,18 +47,11 @@
                                 <li>
                                     <a href="{{ route('connection.index') }}" >database</a>
                                 </li>
-                                <li>
-                                    <a href="{{ route('jobs.import') }}" >import</a>
-                                </li>
+
                                 <li>
                                     <a href="" >Export</a>
                                 </li>
-                                <li>
-                                    <a href="{{ route('jobs.index') }}" >Query</a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('jobs.feature-query') }}" >Feature Query</a>
-                                </li>
+
                             </ul>
                         </li>
 
@@ -146,13 +142,14 @@
             </footer>
         </div>
     </div>
-    <script src={{ asset('/layout-assets/js/feather-icons/feather.min.js') }}></script>
-    <script src={{ asset('/layout-assets/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js') }}></script>
-    <script src={{ asset('/layout-assets/assets/js/app.js') }}></script>
-    <script src={{ asset('/layout-assets/vendors/chartjs/Chart.min.js') }}></script>
-    <script src={{ asset('/layout-assets/vendors/apexcharts/apexcharts.min.js') }}></script>
-    <script src={{ asset('/layout-assets/js/pages/dashboard.js') }}></script>
-    <script src={{ asset('/layout-assets/js/main.js') }}></script>
+    <script src="{{ asset('/layout-assets/js/feather-icons/feather.min.js') }}"></script>
+    <script src="{{ asset('/layout-assets/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
+    <script src="{{ asset('/layout-assets/assets/js/app.js') }}"></script>
+    <script src="{{ asset('/layout-assets/vendors/chartjs/Chart.min.js') }}"></script>
+    <script src="{{ asset('/layout-assets/vendors/apexcharts/apexcharts.min.js') }}"></script>
+    <script src="{{ asset('/layout-assets/js/pages/dashboard.js') }}"></script>
+    <script src="{{ asset('/layout-assets/js/main.js') }}"></script>
+
 </body>
 
 </html>

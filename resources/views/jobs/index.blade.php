@@ -1,22 +1,56 @@
+<x-layout title="Tables">
 
-<x-layout title="Add Query">
+    <div class="d-grid gap-2 d-md-block">
+        <a href="{{ route('connection.index') }}" class="btn btn-sm btn-primary"><i
+                data-feather="skip-back"></i>Back</a>
+        <a href="{{ route('jobs.sql', $connection->id) }}"><button class="btn btn-primary"
+                type="button">Sql</button></a>
+        <a href="{{ route('jobs.insert', $connection->id) }}"><button class="btn btn-primary"
+                type="button">Insert</button></a>
+    </div>
 
-            <div class="row d-flex justify-content-center align-items-center h-100 mt-5">
-                <div class="col col-md-12 col-lg-8 col-xl-6">
-                    <form action="{{ route('jobs.store') }}" method="post" enctype="multipart/form-data">
-                        @csrf
+    <div>
+        <table class="table table-hover">
 
-                        <div class="mb-3">
-                            <label for="exampleFormControlTextarea1" class="form-label">Enter Query</label>
-                            <textarea class="form-control" name="query" id="exampleFormControlTextarea1"
-                                rows="3"></textarea>
-                        </div>
-                        <div class="col-sm-12 d-flex justify-content-center">
-                            <button type="submit" class="btn btn-primary me-1 mb-1">Send</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+            <thead>
+                <tr>
 
-   
-    </x-layout>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Option</th>
+                    <th></th>
+                    <th scope="3"></th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Item -->
+                @forelse ($tables as $key => $table )
+                    <tr>
+
+                        <td><span class="font-weight-normal">{{ $key }}</span></td>
+                        <td><span class="font-weight-normal">{{ $table }}</span></td>
+                        <td>
+                            <div class="d-grid gap-2 d-md-block">
+                                <a href="{{ route('jobs.view-column',[$table,$connection->id]) }}"><button class="btn btn-primary" type="button">Show</button></a>
+                                <a href=""><button class="btn btn-danger" type="button">Delete</button></a>
+                                <a href=""><button class="btn btn-warning" type="button">Edit</button></a>
+                            </div>
+
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="10">
+                            No Tables Found.
+                        </td>
+                    </tr>
+                @endforelse
+
+
+            </tbody>
+        </table>
+    </div>
+
+
+</x-layout>

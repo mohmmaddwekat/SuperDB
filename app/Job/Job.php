@@ -2,7 +2,7 @@
 namespace App\Job;
 
 interface Job{
-    public function send($message);
+    public function send($message,$connection);
 }
 
 ?>
