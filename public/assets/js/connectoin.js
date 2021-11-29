@@ -14,7 +14,8 @@ $(document).ready(function () {
             success: function (result) {
                 console.log(result[0]);
                 $("tbody").append(
-                    `<tr><td><a href="">${result[0].name}</a></td><td><a type="button" href="connection/delete/${result[0].id}" class="btn btn-danger">delete</a></td></tr>`
+                    `<tr><td><a href="">${result[0].name}</a></td><td><a type="button" href="connection/delete/${result[0].id}" class="btn btn-danger">delete</a></td></tr>
+                    <td><a type="button" href="{{ route('jobs.index', ${connection[0].id} ) }}" class="btn btn-primary">Show</a></td>`
                 );
                 $(".notfound").remove();
             },
