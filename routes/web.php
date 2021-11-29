@@ -40,6 +40,8 @@ Route::group([
 
 });
 
+Route::get('import/{id}', [importController::class, 'index'])->name('import.index');
+Route::post('import/add/{id}', [importController::class, 'add'])->name('import.add');
 
 Route::group([
     'prefix' => '/db',
