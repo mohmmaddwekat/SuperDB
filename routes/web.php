@@ -47,7 +47,7 @@ Route::group([
     
 ], function () {
 
-    Route::get('/export/{id}/{table?}', [DbController::class, 'export'])->name('export');
+    Route::get('/export/{id}/{export}/{table?}', [DbController::class, 'export'])->name('export');
 });
 
 Route::group([
