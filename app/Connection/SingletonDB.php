@@ -7,7 +7,6 @@ use PDOException;
 class SingletonDB implements Connection
 {    
     
-
     /**
      * The Singleton's instance is stored in a static field. This field is an
      * array, because we'll allow our Singleton to have subclasses. Each item in

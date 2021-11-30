@@ -44,9 +44,16 @@ Route::group([
 });
 
 
+Route::group([
+    'prefix' => '{locale}/import',
+    'as' => 'import.',
+    'middleware' => ['locale']
 
-Route::get('import/{id}', [importController::class, 'index'])->name('import.index');
-Route::post('import/add/{id}', [importController::class, 'add'])->name('import.add');
+], function () {
+    Route::get('/{id}', [importController::class, 'index'])->name('index');
+    Route::post('/{id}', [importController::class, 'add'])->name('add');
+});
+
 
 Route::group([
     'prefix' => '{locale}/db',
@@ -91,9 +98,10 @@ Route::group([
 
 ], function () {
     Route::get('/', [ConnectionController::class, 'index'])->name('index');
-    Route::get('/delete/{name}', [ConnectionController::class, 'delete'])->name('delete');
+    Route::get('/delete/{id}', [ConnectionController::class, 'delete'])->name('delete');
     Route::post('/add/{id}', [ConnectionController::class, 'add'])->name('add');
 });
+
 
 
 

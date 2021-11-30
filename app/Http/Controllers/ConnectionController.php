@@ -26,6 +26,6 @@ class ConnectionController extends Controller
       $singletonDB = SingletonDB::getInstance();
       $connection = DB::table('connection')->where('id','=',$id)->first(['name','id']);
       $singletonDB->release($connection->name,$connection->id);
-      return redirect('/connection');
+      return redirect()->route('connection.index');
     }
 }

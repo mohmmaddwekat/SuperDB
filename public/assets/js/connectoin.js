@@ -12,12 +12,12 @@ $(document).ready(function () {
                 alert(err);
             },
             success: function (result) {
-                console.log(result[0]);
                 $("tbody").append(
                     `<tr><td><a href="">${result[0].name}</a></td><td><a type="button" href="connection/delete/${result[0].id}" class="btn btn-danger">delete</a>
-                    <a type="button" href="{{ route('jobs.index', ${result[0].id} ) }}" class="btn btn-primary">Show</a></td></tr>`
+                    <a type="button" href="jobs/index/${result[0].id}" class="btn btn-primary">Show</a></td></tr>`
                 );
                 $(".notfound").remove();
+                $(".name").val("");
             },
         });
     });
