@@ -10,7 +10,7 @@
     </div>
 
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <a href="" class="mr-2"><button class="btn btn-primary"
+        <a href="{{ route('import.index', $connection->id) }}" class="mr-2"><button class="btn btn-primary"
             type="button">Import</button></a>
         <a href="{{ route('db.export', $connection->id) }}"><button class="btn btn-primary"
                 type="button">Exprt</button></a>

@@ -17,7 +17,7 @@ class CSVFiles {
            
         }
         $query .=')';
-        $DBconnection = DB::connection('conn')->table('connection')->where('id','=',$id)->first(['name','id']);
+        $DBconnection = DB::table('connection')->where('id','=',$id)->first(['name','id']);
         $link = mysqli_connect("localhost", "root", "", $DBconnection->name);
         $message = $factory->factory($query,$link);
          mysqli_close($link);
@@ -48,7 +48,7 @@ class CSVFiles {
                  
             }
             $query .=')';
-            $DBconnection = DB::connection('conn')->table('connection')->where('id','=',$id)->first(['name','id']);
+            $DBconnection = DB::table('connection')->where('id','=',$id)->first(['name','id']);
             $link = mysqli_connect("localhost", "root", "", $DBconnection->name);
             $message = $factory->factory($query,$link);
             mysqli_close($link);

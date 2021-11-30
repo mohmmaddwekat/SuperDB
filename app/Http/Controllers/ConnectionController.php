@@ -12,20 +12,19 @@ class ConnectionController extends Controller
     public function  index(){
 
       $singletonDB =  SingletonDB::getInstance();
-      // $singletonDB->changeDB('conn');
 
-      $connections = DB::connection('conn')->table('connection')->get(['name','id']);
+      $connections = DB::table('connection')->get(['name','id']);
       return view('connection',['connections'=>$connections]);
     }    
     public function add($name){
       $singletonDB = SingletonDB::getInstance();
       
       $singletonDB->create($name);
-      return DB::connection('conn')->table('connection')->where('name','=',$name)->get(['name','id'])->toArray();
+      return DB::table('connection')->where('name','=',$name)->get(['name','id'])->toArray();
     }
     public function delete($id){
       $singletonDB = SingletonDB::getInstance();
-      $connection = DB::connection('conn')->table('connection')->where('id','=',$id)->first(['name','id']);
+      $connection = DB::table('connection')->where('id','=',$id)->first(['name','id']);
       $singletonDB->release($connection->name,$connection->id);
       return redirect('/connection');
     }

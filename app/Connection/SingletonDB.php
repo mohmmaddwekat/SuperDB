@@ -24,15 +24,7 @@ class SingletonDB implements Connection
 
 
 
-    /**
-     * This is the static method that controls the access to the singleton
-     * instance. On the first run, it creates a singleton object and places it
-     * into the static field. On subsequent runs, it returns the client existing
-     * object stored in the static field.
-     *
-     * This implementation lets you subclass the Singleton class while keeping
-     * just one instance of each subclass around.
-     */
+
     public static function getInstance(): SingletonDB
     {
         $cls = static::class;
@@ -54,7 +46,7 @@ class SingletonDB implements Connection
                         $names = [
                 'name'=> $DBName
             ];
-            $conn = DB::connection('conn')->table('connection')->insert($names);
+            $conn = DB::table('connection')->insert($names);
         } catch(PDOException $e) {
             echo false;
         }
@@ -72,7 +64,7 @@ class SingletonDB implements Connection
             } catch(PDOException $e) {
                 echo false;
             }
-            $conn = DB::connection('conn')->table('connection')->delete($id);
+            $conn = DB::table('connection')->delete($id);
             $conn = null; 
         }
     // }

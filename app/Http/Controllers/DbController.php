@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\db\ComparisonOperators;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use mysqli;
 
@@ -12,7 +11,7 @@ class DbController extends Controller
     public function export($connection_id,$tables='*')
     {
 
-        $DBconnection = DB::table('connection')->where('id','=',$connection_id)->first(['name','id']);
+        $DBconnection = DB::where('id','=',$connection_id)->first(['name','id']);
 
         $db = new mysqli('localhost', 'root', '', $DBconnection->name); 
 

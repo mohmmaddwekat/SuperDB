@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $title }}</title>
 
     <link rel="stylesheet" href={{ asset('/layout-assets/css/bootstrap.css') }}>
@@ -13,8 +14,7 @@
     <link rel="stylesheet" href={{ asset('/layout-assets/vendors/perfect-scrollbar/perfect-scrollbar.css') }}>
     <link rel="stylesheet" href={{ asset('/layout-assets/css/app.css') }}>
 
-    <script src="{{ asset('https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js') }}"></script>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="shortcut icon" href={{ asset('/layout-assets/images/favicon.svg') }} type="image/x-icon">
 </head>
 
