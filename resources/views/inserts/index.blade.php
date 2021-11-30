@@ -1,6 +1,6 @@
-<x-layout title="Insert table">
+<x-layout title="{{ __('Insert table') }}">
     <div class="d-grid gap-2 d-md-block">
-        <a href="{{ route('jobs.index',  $connection->id) }}" class="btn btn-sm btn-primary"><i data-feather="skip-back"></i>Back</a>
+        <a href="{{ route('jobs.index',  $connection->id) }}" class="btn btn-sm btn-primary"><i data-feather="skip-back"></i>{{ __('Back') }}</a>
       </div>
             <div class="container">
                 <div class="row ">
@@ -9,7 +9,7 @@
                         <form action="{{ route('inserts.store',  $connection->id) }}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
-                                <label for="name table" class="form-label">Enter name of table</label>
+                                <label for="name table" class="form-label">{{ __('Enter name of table') }}</label>
                                 <input type="text" name="nametable" class="form-control" id="nametable">
                               </div>
 
@@ -17,7 +17,7 @@
                                 <div id="dynamic_field3" >
                                     <div class="form-row">
                                         <div class="col m-3">
-                                            <td><button type="button" name="add" id="add3" class="btn btn-success"><i class="fa fa-plus"></i>Add New Column</button></td>
+                                            <td><button type="button" name="add" id="add3" class="btn btn-success"><i class="fa fa-plus"></i>{{ __('Add New Column') }}</button></td>
                                         </div>
                                         
                                     </div>
@@ -26,7 +26,7 @@
                                 <div class="form-row"><br>
                                     <div class="col">
                                         <button type="submit" id='submit' name="submit" class="btn btn-primary "
-                                            value="Save">Save the form data</button>
+                                            value="Save">{{ __('Save') }}</button>
                                     </div>
                                 </div>
                                 <br>

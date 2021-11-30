@@ -1,96 +1,123 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ App::currentLocale() }}" dir="{{ APP::isLocale('ar') ? 'rtl' : 'ltr' }}">
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $title }}</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/layout-assets/img/svg/logo.svg" type="image/x-icon">
+    <!-- Custom styles -->
 
-    <link rel="stylesheet" href={{ asset('/layout-assets/css/bootstrap.css') }}>
+    @if (App::isLocale('ar'))
+        <link rel="stylesheet" href="/layout-assets/css/style.rtl.css">
+    @else
+        <link rel="stylesheet" href="/layout-assets/css/style.css">
+    @endif
 
-    <link rel="stylesheet" href={{ asset('/layout-assets/vendors/chartjs/Chart.min.css') }}>
-
-    <link rel="stylesheet" href={{ asset('/layout-assets/vendors/perfect-scrollbar/perfect-scrollbar.css') }}>
-    <link rel="stylesheet" href={{ asset('/layout-assets/css/app.css') }}>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="shortcut icon" href={{ asset('/layout-assets/images/favicon.svg') }} type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="{{ asset('https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js') }}"></script>
 </head>
 
 <body>
-    <div id="app">
-        <div id="sidebar" class='active'>
-            <div class="sidebar-wrapper active">
-                <div class="sidebar-header">
-                    <img src={{ asset("/layout-assets/images/logo.svg") }} alt="" srcset="">
+    <div class="layer"></div>
+    <!-- ! Body -->
+    <div class="page-flex">
+        <!-- ! Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-start">
+                <div class="sidebar-head">
+                    <a href="/" class="logo-wrapper" title="Home">
+                        <span class="sr-only">Home</span>
+                        <span class="icon logo" aria-hidden="true"></span>
+                        <div class="logo-text">
+                            <span class="logo-title">SuperDB</span>
+                        </div>
+
+                    </a>
+                    <button class="sidebar-toggle transparent-btn" title="Menu" type="button">
+                        <span class="sr-only">Toggle menu</span>
+                        <span class="icon menu-toggle" aria-hidden="true"></span>
+                    </button>
+                    <div class="m-2">
+                        <button class="theme-switcher gray-circle-btn" type="button" title="Switch theme">
+                            <span class="sr-only">Switch theme</span>
+                            <i class="sun-icon" data-feather="sun" aria-hidden="true"></i>
+                            <i class="moon-icon" data-feather="moon" aria-hidden="true"></i>
+                        </button>
+                    </div>
+
                 </div>
-                <div class="sidebar-menu">
-                    <ul class="menu">
-
-
-                        <li class='sidebar-title'>Main Menu</li>
-                        <li class="sidebar-item active ">
-                            <a href="index.html" class='sidebar-link'>
-                                <i data-feather="home" width="20"></i>
-                                <span>Dashboard</span>
-                            </a>
+                <div class="sidebar-body">
+                    <ul class="sidebar-body-menu">
+                        <li>
+                            <a class="active" href="/"><span class="icon home"
+                                    aria-hidden="true"></span>Dashboard</a>
                         </li>
-
-
-                        <li class="sidebar-item  has-sub">
-                            <a href="#" class='sidebar-link'>
-                                <i data-feather="briefcase" width="20"></i>
-                                <span>Database</span>
+                        <li>
+                            <a class="show-cat-btn" href="##">
+                                <span class="icon document" aria-hidden="true"></span>database
+                                <span class="category__btn transparent-btn" title="Open list">
+                                    <span class="sr-only">Open list</span>
+                                    <span class="icon arrow-down" aria-hidden="true"></span>
+                                </span>
                             </a>
-                            <ul class="submenu ">
+                            <ul class="cat-sub-menu">
                                 <li>
-                                    <a href="{{ route('connection.index') }}" >database</a>
+                                    <a href="{{ route('connection.index') }}">database</a>
                                 </li>
-
-                                <li>
-                                    <a href="" >Export</a>
-                                </li>
-
                             </ul>
                         </li>
 
-
-
-
-
-                    </ul>
                 </div>
-                <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
             </div>
-        </div>
-        <div id="main">
-            <nav class="navbar navbar-header navbar-expand navbar-light">
-                <a class="sidebar-toggler" href="#"><span class="navbar-toggler-icon"></span></a>
-                <button class="btn navbar-toggler" type="button" data-toggle="collapse"
-                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav d-flex align-items-center navbar-light ml-auto">
-                        <li class="dropdown">
-                            <a href="#" data-toggle="dropdown"
-                                class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                                <div class="avatar mr-1">
-                                    <img src="/layout-assets/images/avatar/avatar-s-1.png" alt="" srcset="">
-                                </div>
-                                <div class="d-none d-md-block d-lg-inline-block">Hi, Saugi</div>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="#"><i data-feather="user"></i> Account</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#"><i data-feather="log-out"></i> Logout</a>
-                            </div>
-                        </li>
-                    </ul>
+
+
+        </aside>
+        <div class="main-wrapper bg-info bg-gradient">
+            <!-- ! Main nav -->
+            <nav class="nav--bg ">
+                <div class="d-flex flex-row-reverse bd-highlight">
+
+
+
+
+
+                    <div class="p-2 bd-highlight">
+                        <button href="##" class="nav-user-btn dropdown-btn" type="button">
+                            <span class="text-dark">
+                                mark A.
+                            </span>
+                        </button>
+                        <ul class="users-item-dropdown nav-user-dropdown dropdown">
+                            <li><a class="danger" href="##">
+                                    <i data-feather="log-out" aria-hidden="true"></i>
+                                    <span>Log out</span>
+                                </a></li>
+                        </ul>
+                    </div>
+                    <div class="p-2 bd-highlight">
+                        <button class="lang-switcher transparent-btn" type="button">
+                            EN
+                            <i data-feather="chevron-down" aria-hidden="true"></i>
+                        </button>
+                        <ul class="lang-menu dropdown">
+                            <li><a href="##">English</a></li>
+                            <li><a href="##">Arabic</a></li>
+                        </ul>
+                    </div>
+
                 </div>
             </nav>
+
+
+
+
+            <!-- ! Main -->
+
 
             <div class="main-content container-fluid">
                 <div class="page-title">
@@ -129,27 +156,46 @@
 
             </div>
 
-            <footer class=" my-5 pt-5">
-                <div class="footer clearfix mb-0 text-muted my-5 pt-5">
-                    <div class="float-left my-5 pt-5">
-                        <p>2020 &copy; Voler</p>
-                    </div>
-                    <div class="float-right my-5 pt-5">
-                        <p>Crafted with <span class='text-danger'><i data-feather="heart"></i></span> by <a
-                                href="http://ahmadsaugi.com">Ahmad Saugi</a></p>
-                    </div>
-                </div>
-            </footer>
-        </div>
-    </div>
-    <script src="{{ asset('/layout-assets/js/feather-icons/feather.min.js') }}"></script>
-    <script src="{{ asset('/layout-assets/assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
-    <script src="{{ asset('/layout-assets/assets/js/app.js') }}"></script>
-    <script src="{{ asset('/layout-assets/vendors/chartjs/Chart.min.js') }}"></script>
-    <script src="{{ asset('/layout-assets/vendors/apexcharts/apexcharts.min.js') }}"></script>
-    <script src="{{ asset('/layout-assets/js/pages/dashboard.js') }}"></script>
-    <script src="{{ asset('/layout-assets/js/main.js') }}"></script>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+        </main>
+        <!-- ! Footer -->
+        <footer class="footer">
+            <div class="container footer--flex">
+                <div class="footer-start">
+                    <p>2021 © SuperDB </p>
+                </div>
+            </div>
+        </footer>
+    </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+    </script>
+
+    <!-- Chart library -->
+    <script src="/layout-assets/plugins/chart.min.js"></script>
+    <!-- Icons library -->
+    <script src="/layout-assets/plugins/feather.min.js"></script>
+    <!-- Custom scripts -->
+    <script src="/layout-assets/js/script.js"></script>
 </body>
 
 </html>

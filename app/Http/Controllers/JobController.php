@@ -25,6 +25,7 @@ class JobController extends Controller
         while($table = mysqli_fetch_array($result)) {
             array_push($tables,$table[0]);
         }
+        
         mysqli_close($link);
         return view('jobs.index',[
         'connection'=> $DBconnection,
