@@ -101,14 +101,26 @@
                     </div>
                     <div class="p-2 bd-highlight">
                         <button class="lang-switcher transparent-btn" type="button">
-                            EN
+                             @if (session()->get('locale') == 'en') English @endif 
+                             @if (session()->get('locale') == 'ar') Arabic @endif 
                             <i data-feather="chevron-down" aria-hidden="true"></i>
                         </button>
-                        <ul class="lang-menu dropdown">
-                            <li><a href="##">English</a></li>
-                            <li><a href="##">Arabic</a></li>
+                        <ul class="lang-menu dropdown ">
+                            <li><a href="{{ route('locale','en') }}">English</a></li>
+                            <li><a href="{{ route('locale','ar') }}">Arabic</a></li>
                         </ul>
                     </div>
+
+
+                    {{-- <div class="form-group">
+                        <select name="parent_id" class="form-control  @error('parent_id') is-invalid @enderror" id="">
+                            <option value="">select language</option>
+                            <a href="{{ route('locale','en') }}"><option value="" @if (session()->get('locale') == 'en') selected @endif>English</option></a>
+                            <a href="{{ route('locale','ar') }}"><option value="" @if (session()->get('locale') == 'ar') selected @endif>Arabic</option></a>
+
+                        </select>
+    
+                    </div> --}}
 
                 </div>
             </nav>

@@ -20,16 +20,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('{locale}/', function () {
+Route::get('/', function () {
     return view('welcome');
 })->middleware('locale');
+
+Route::get('/locale/{lang}', [LangController::class, 'locale'])->name('locale');
 
 
 //Dashboard Controller
 Route::group([
-    'prefix' => '{locale}/jobs',
+    'prefix' => '/jobs',
     'as' => 'jobs.',
-    'middleware' => ['locale']
+    'middleware' => 'locale'
     
 ], function () {
     Route::get('/{id}', [JobController::class, 'index'])->name('index');
@@ -39,15 +41,14 @@ Route::group([
 
     Route::delete('/delete-column/{id}/{table}/{column}', [JobController::class, 'deletColumn'])->name('delete-column');
 
-
-
 });
 
 
 Route::group([
-    'prefix' => '{locale}/import',
+    'prefix' => '/import',
     'as' => 'import.',
-    'middleware' => ['locale']
+    'middleware' => 'locale'
+
 
 ], function () {
     Route::get('/{id}', [importController::class, 'index'])->name('index');
@@ -56,9 +57,10 @@ Route::group([
 
 
 Route::group([
-    'prefix' => '{locale}/db',
+    'prefix' => '/db',
     'as' => 'db.',
-    'middleware' => ['locale']
+    'middleware' => 'locale'
+
 
 ], function () {
 
@@ -66,9 +68,10 @@ Route::group([
 });
 
 Route::group([
-    'prefix' => '{locale}/inserts',
+    'prefix' => '/inserts',
     'as' => 'inserts.',
-    'middleware' => ['locale']
+    'middleware' => 'locale'
+
 
 ], function () {
     Route::get('/{id}', [InsertController::class, 'index'])->name('index');
@@ -81,9 +84,10 @@ Route::group([
     Route::post('/rename-table/{id}/{table}', [InsertController::class, 'updateTable'])->name('updateTable');
 });
 Route::group([
-    'prefix' => '{locale}/sqls',
+    'prefix' => '/sqls',
     'as' => 'sqls.',
-    'middleware' => ['locale']
+    'middleware' => 'locale'
+
 
 ], function () {
 
@@ -92,9 +96,10 @@ Route::group([
 
 });
 Route::group([
-    'prefix' => '{locale}/connection',
+    'prefix' => '/connection',
     'as' => 'connection.',
-    'middleware' => ['locale']
+    'middleware' => 'locale'
+
 
 ], function () {
     Route::get('/', [ConnectionController::class, 'index'])->name('index');
