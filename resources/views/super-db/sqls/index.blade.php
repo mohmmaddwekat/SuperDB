@@ -1,11 +1,11 @@
 
 <x-layout title="{{ __('Add Query') }}">
     <div class="d-grid gap-2 d-md-block">
-        <a href="{{ route('jobs.index',  $connection->id) }}" class="btn btn-sm btn-primary"><i data-feather="skip-back"></i>{{ __('Back') }}</a>
+        <a href="{{ route('super-db.jobs.index',  $connection->id) }}" class="btn btn-sm btn-primary"><i data-feather="skip-back"></i>{{ __('Back') }}</a>
       </div>
             <div class="row d-flex justify-content-center align-items-center h-100 mt-5">
                 <div class="col col-md-12 col-lg-8 col-xl-6">
-                    <form action="{{ route('sqls.store', $connection->id) }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('super-db.sqls.store', $connection->id) }}" method="post" enctype="multipart/form-data">
                         @csrf
 
                         <div class="mb-3">

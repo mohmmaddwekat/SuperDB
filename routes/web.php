@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ConnectionController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DbController;
 use App\Http\Controllers\importController;
 use App\Http\Controllers\InsertController;
@@ -24,14 +25,24 @@ Route::get('/', function () {
     return view('welcome');
 })->middleware('locale');
 
-Route::get('/locale/{lang}', [LangController::class, 'locale'])->name('locale');
+
 
 
 //Dashboard Controller
 Route::group([
+    'prefix' => '/super-db',
+    'as' => 'super-db.',
+    'middleware' => 'locale'
+    
+], function () {
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/locale/{lang}', [LangController::class, 'locale'])->name('locale');
+
+
+Route::group([
     'prefix' => '/jobs',
     'as' => 'jobs.',
-    'middleware' => 'locale'
     
 ], function () {
     Route::get('/{id}', [JobController::class, 'index'])->name('index');
@@ -47,7 +58,6 @@ Route::group([
 Route::group([
     'prefix' => '/import',
     'as' => 'import.',
-    'middleware' => 'locale'
 
 
 ], function () {
@@ -59,7 +69,6 @@ Route::group([
 Route::group([
     'prefix' => '/db',
     'as' => 'db.',
-    'middleware' => 'locale'
 
 
 ], function () {
@@ -70,7 +79,6 @@ Route::group([
 Route::group([
     'prefix' => '/inserts',
     'as' => 'inserts.',
-    'middleware' => 'locale'
 
 
 ], function () {
@@ -86,7 +94,6 @@ Route::group([
 Route::group([
     'prefix' => '/sqls',
     'as' => 'sqls.',
-    'middleware' => 'locale'
 
 
 ], function () {
@@ -98,7 +105,6 @@ Route::group([
 Route::group([
     'prefix' => '/connection',
     'as' => 'connection.',
-    'middleware' => 'locale'
 
 
 ], function () {
@@ -110,3 +116,4 @@ Route::group([
 
 
 
+});

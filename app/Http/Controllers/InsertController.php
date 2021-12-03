@@ -12,7 +12,7 @@ class InsertController extends Controller
     public function index($id)
     {
         $connection = DB::table('connection')->where('id','=',$id)->first(['name','id']);
-        return view('inserts.index',[
+        return view('super-db.inserts.index',[
             'connection'=> $connection
         ]);
     }
@@ -59,7 +59,7 @@ class InsertController extends Controller
         $factory = new Factory;
         $message = $factory->factory($query,$link);
         mysqli_close($link);
-        return redirect()->route('inserts.index',$DBconnection->id)->with($message[0],$message[1]);
+        return redirect()->route('super-db.inserts.index',$DBconnection->id)->with($message[0],$message[1]);
 
     }
 
@@ -67,7 +67,7 @@ class InsertController extends Controller
     public function renameTable($connection_id, $name)
     {
         $DBconnection = DB::table('connection')->where('id','=',$connection_id)->first(['name','id']);
-        return view('inserts.renameTable',[
+        return view('super-db.inserts.renameTable',[
             'connection'=> $DBconnection,
             'table' => $name
         ]);
@@ -91,16 +91,16 @@ class InsertController extends Controller
         
         if($message[0]=="error"){
             $table =$oldname;
-            return redirect()->route('inserts.rename-table',[$DBconnection->id,$table ])->with($message[0],$message[1]);
+            return redirect()->route('super-db.inserts.rename-table',[$DBconnection->id,$table ])->with($message[0],$message[1]);
         }
-        return redirect()->route('jobs.index',$DBconnection->id)->with($message[0],$message[1]);
+        return redirect()->route('super-db.jobs.index',$DBconnection->id)->with($message[0],$message[1]);
     }
 
 
     public function renameColumn($connection_id,$table, $namecolumn)
     {
         $DBconnection = DB::table('connection')->where('id','=',$connection_id)->first(['name','id']);
-        return view('inserts.renameColumn',[
+        return view('super-db.inserts.renameColumn',[
             'connection'=> $DBconnection,
             'namecolumn' => $namecolumn,
             'table' =>$table
@@ -125,7 +125,7 @@ class InsertController extends Controller
 
         $viewcolumn = new viewColumn;
         $dataviewcolumn = $viewcolumn->viewColumn($connection_id,$table);
-        return view('jobs.viewcolumn',[
+        return view('super-db.jobs.viewcolumn',[
         'connection'=> $dataviewcolumn["connection"],
         'colunms' => $dataviewcolumn["colunms"],
         'rows' => $dataviewcolumn["rows"],

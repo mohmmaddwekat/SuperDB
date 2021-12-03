@@ -54,7 +54,7 @@
                 <div class="sidebar-body">
                     <ul class="sidebar-body-menu">
                         <li>
-                            <a class="active" href="/"><span class="icon home"
+                            <a class="active" href="{{ route('super-db.dashboard') }}"><span class="icon home"
                                     aria-hidden="true"></span>Dashboard</a>
                         </li>
                         <li>
@@ -67,7 +67,7 @@
                             </a>
                             <ul class="cat-sub-menu">
                                 <li>
-                                    <a href="{{ route('connection.index') }}">database</a>
+                                    <a href="{{ route('super-db.connection.index') }}">database</a>
                                 </li>
                             </ul>
                         </li>
@@ -101,26 +101,16 @@
                     </div>
                     <div class="p-2 bd-highlight">
                         <button class="lang-switcher transparent-btn" type="button">
-                             @if (session()->get('locale') == 'en') English @endif 
-                             @if (session()->get('locale') == 'ar') Arabic @endif 
+                            @if (session()->get('locale') == 'en') English @endif
+                            @if (session()->get('locale') == 'ar') Arabic @endif
                             <i data-feather="chevron-down" aria-hidden="true"></i>
                         </button>
                         <ul class="lang-menu dropdown ">
-                            <li><a href="{{ route('locale','en') }}">English</a></li>
-                            <li><a href="{{ route('locale','ar') }}">Arabic</a></li>
+                            <li><a href="{{ route('super-db.locale', 'en') }}">English</a></li>
+                            <li><a href="{{ route('super-db.locale', 'ar') }}">Arabic</a></li>
                         </ul>
                     </div>
 
-
-                    {{-- <div class="form-group">
-                        <select name="parent_id" class="form-control  @error('parent_id') is-invalid @enderror" id="">
-                            <option value="">select language</option>
-                            <a href="{{ route('locale','en') }}"><option value="" @if (session()->get('locale') == 'en') selected @endif>English</option></a>
-                            <a href="{{ route('locale','ar') }}"><option value="" @if (session()->get('locale') == 'ar') selected @endif>Arabic</option></a>
-
-                        </select>
-    
-                    </div> --}}
 
                 </div>
             </nav>

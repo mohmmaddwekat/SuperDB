@@ -30,8 +30,8 @@
    @foreach ($connections as $connection)
       <tr>
         <td><a href="">{{ $connection->name }}</a></td>
-        <td><a type="button" href="{{route('connection.delete', $connection->id ) }}" class="btn btn-danger">{{ __('Delete') }}</a>
-        <a type="button" href="{{ route('jobs.index', $connection->id ) }}" class="btn btn-primary">{{ __('Show') }}</a></td>
+        <td><a type="button" href="{{route('super-db.connection.delete', $connection->id ) }}" class="btn btn-danger">{{ __('Delete') }}</a>
+        <a type="button" href="{{ route('super-db.jobs.index', $connection->id ) }}" class="btn btn-primary">{{ __('Show') }}</a></td>
 
       </tr>
     @endforeach

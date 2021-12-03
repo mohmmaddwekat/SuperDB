@@ -1,7 +1,7 @@
 <x-layout :title="__('Table')">
 
     <div class="d-grid gap-2 d-md-block">
-        <a href="{{ route('jobs.index', $connection->id) }}" class="btn btn-sm btn-primary"><i
+        <a href="{{ route('super-db.jobs.index', $connection->id) }}" class="btn btn-sm btn-primary"><i
                 data-feather="skip-back"></i>{{ __('Back') }}</a>
 
     </div>
@@ -22,9 +22,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body d-flex justify-content-center">
-                    <a href="{{ route('db.export', [$connection->id, 'sql',$table]) }}" class="mx-2"><button
+                    <a href="{{ route('super-db.db.export', [$connection->id, 'sql',$table]) }}" class="mx-2"><button
                             class="btn btn-primary" type="button">Sql {{ __('File') }}</button></a>
-                    <a href="{{ route('db.export', [$connection->id, 'csv',$table]) }}"><button class="btn btn-primary"
+                    <a href="{{ route('super-db.db.export', [$connection->id, 'csv',$table]) }}"><button class="btn btn-primary"
                             type="button">Csv {{ __('File') }}</button></a>
                 </div>
                 <div class="modal-footer">
@@ -47,12 +47,12 @@
 
                             
                             <span class="font-weight-normal">{{ $colunm[0] }}</span>
-                            <form action="{{ route('jobs.delete-column', [$connection->id,$table,$colunm[0]]) }}" method="post" class="mx-2">
+                            <form action="{{ route('super-db.jobs.delete-column', [$connection->id,$table,$colunm[0]]) }}" method="post" class="mx-2">
                                 @csrf
                                 @method('delete')
                                 <button type="submit" class="text-danger p-0 m-0 border-0 bg-white " >{{ __('Delete') }}/</button>
                             </form>
-                            <a href="{{ route('inserts.rename-column', [$connection->id,$table,$colunm[0]]) }}" >{{ __('Rename') }}</a>
+                            <a href="{{ route('super-db.inserts.rename-column', [$connection->id,$table,$colunm[0]]) }}" >{{ __('Rename') }}</a>
                         </div>
                         </th>
                     @endforeach

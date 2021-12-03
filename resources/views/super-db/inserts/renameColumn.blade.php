@@ -3,7 +3,7 @@
         <div class="container">
                 <div class="row ">
                     <div class="col-md-8">
-                        <form action="{{ route('inserts.update-column',  [$connection->id,$table,$namecolumn]) }}" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('super-db.inserts.update-column',  [$connection->id,$table,$namecolumn]) }}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
                                 <label for="name column" class="form-label">{{ __('Enter name of column') }}</label>
