@@ -37,6 +37,10 @@ return [
     'Create' => 'إنشاء',
     'There are no databases, add a new one' => 'لا توجد قواعد بيانات ، أضف واحدة جديدة',
     'Browse your computer:' => 'تصفح جهاز الكمبيوتر الخاص بك',
+    'Dashboard' => 'لوحة التحكم',
+
+    'The number of database created' => 'عدد قاعدة البيانات التي تم إنشاؤها',
+    'The number of Users created' => 'عدد المستخدمين الذين تم إنشاؤهم',
 
     
 ];

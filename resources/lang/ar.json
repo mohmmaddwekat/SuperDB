@@ -32,8 +32,10 @@
     "Database" : "قاعدة البيانات",
     "Action" : "الاكشن",
     "Create" : "إنشاء",
-    "There are no databases, add a new one" : "لا توجد قواعد بيانات ، أضف واحدة جديدة"
+    "There are no databases, add a new one" : "لا توجد قواعد بيانات ، أضف واحدة جديدة",
+    "Dashboard" : "لوحة التحكم",
 
-
+    "The number of database created" : "عدد قاعدة البيانات التي تم إنشاؤها",
+    "The number of Users created" : "عدد المستخدمين الذين تم إنشاؤهم"
 
 }
