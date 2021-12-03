@@ -101,6 +101,7 @@
                     </div>
                     <div class="p-2 bd-highlight">
                         <button class="lang-switcher transparent-btn" type="button">
+                            @if (!session()->has('locale')) English @endif
                             @if (session()->get('locale') == 'en') English @endif
                             @if (session()->get('locale') == 'ar') Arabic @endif
                             <i data-feather="chevron-down" aria-hidden="true"></i>

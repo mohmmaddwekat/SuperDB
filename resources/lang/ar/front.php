@@ -36,8 +36,9 @@ return [
     'Action' => 'الاكشن',
     'Create' => 'إنشاء',
     'There are no databases, add a new one' => 'لا توجد قواعد بيانات ، أضف واحدة جديدة',
+    'Browse your computer:' => 'تصفح جهاز الكمبيوتر الخاص بك',
 
-
+    
 ];
 
 
