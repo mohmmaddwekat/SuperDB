@@ -1,9 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ App::currentLocale() }}" dir="{{ APP::isLocale('ar') ? 'rtl' : 'ltr' }}">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
+        <meta name="csrf-token" content="{{ csrf_token() }}">
+
         <meta name="author" content="" />
         <title>Agency - Start Bootstrap Theme</title>
         <!-- Favicon-->
@@ -20,28 +22,30 @@
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
             <div class="container">
-                <a class="navbar-brand" href="#page-top"><img src="{{ asset('/user-layout-assets/assets/img/navbar-logo.svg') }}" alt="..." /></a>
+                <a class="navbar-brand" href="#page-top" style=" color: #CEF0D4; font-family: 'Brush Script MT', Brush Script Std, cursive	; font-size: 20px; text-align: center; text-shadow: 1px 1px 10px #ffffff;">Super DB</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                     Menu
                     <i class="fas fa-bars ms-1"></i>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="#Main">Main</a></li>
                         <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
                         <li class="nav-item"><a class="nav-link" href="#team">Team</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
+        
         <!-- Masthead-->
-        <header class="masthead">
+        <header class="masthead" id="Main">
             <div class="container">
-                <div class="masthead-subheading">Welcome To Our Studio!</div>
+                <div class="masthead-subheading">Welcome To Super DB</div>
                 <div class="masthead-heading text-uppercase">It's Nice To Meet You</div>
-                <a class="btn btn-primary btn-xl text-uppercase" href="#services">Tell Me More</a>
+                <a class="btn btn-primary btn-xl text-uppercase" href="{{ route('super-db.dashboard') }}">Log In</a>
             </div>
         </header>
-        <!-- Services-->
+        {{-- <!-- Services-->
         <section class="page-section" id="services">
             <div class="container">
                 <div class="text-center">
@@ -75,7 +79,7 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> --}}
 
 
         <!-- Team-->

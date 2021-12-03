@@ -93,7 +93,7 @@
                             </span>
                         </button>
                         <ul class="users-item-dropdown nav-user-dropdown dropdown">
-                            <li><a class="danger" href="##">
+                            <li><a class="danger" href="{{ route('main') }}">
                                     <i data-feather="log-out" aria-hidden="true"></i>
                                     <span>Log out</span>
                                 </a></li>
@@ -158,24 +158,6 @@
                 </div>
 
             </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         </div>
         </main>

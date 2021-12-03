@@ -23,14 +23,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('user.index');
-})->middleware('locale');
+})->middleware('locale')->name('main');
 
 
 
 
 //Dashboard Controller
 Route::group([
-    'prefix' => '/super-db',
+    'prefix' => '/',
     'as' => 'super-db.',
     'middleware' => 'locale'
     
