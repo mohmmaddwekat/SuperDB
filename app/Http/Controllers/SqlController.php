@@ -12,7 +12,7 @@ class SqlController extends Controller
     public function index($id)
     {
         $DBconnection = DB::table('connection')->where('id','=',$id)->first(['name','id']);
-        return view('sqls.index',[
+        return view('super-db.sqls.index',[
         'connection'=> $DBconnection,
         ]);
     }
@@ -33,7 +33,7 @@ class SqlController extends Controller
         $message = $factory->factory($query,$link);
         mysqli_close($link);
 
-        return redirect()->route('sqls.index',$DBconnection->id)->with($message[0],$message[1]);
+        return redirect()->route('super-db.sqls.index',$DBconnection->id)->with($message[0],$message[1]);
     }
 
 

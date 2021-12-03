@@ -21,16 +21,10 @@ class Localization
     public function handle(Request $request, Closure $next)
     {
 
-        // $lang = $request->query('lang', Session::get('lang', App::getLocale()));
-        // Session::put('lang', $lang);
-        // App::setLocale($lang);
-        $lang = $request->route('locale');
-        URL::defaults([
-            'locale' => $lang,
-        ]);
-        Route::current()->forgetParameter('locale');
-        App::setLocale($lang);
-        
+  
+        if (session()->has('locale')) {
+            App::setLocale(session()->get('locale'));
+        }
         return $next($request);
     }
 }

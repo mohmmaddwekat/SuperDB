@@ -27,7 +27,7 @@ class JobController extends Controller
         }
         
         mysqli_close($link);
-        return view('jobs.index',[
+        return view('super-db.jobs.index',[
         'connection'=> $DBconnection,
         'tables' => $tables
         ]);
@@ -38,7 +38,8 @@ class JobController extends Controller
         
         $viewcolumn = new viewColumn;
         $dataviewcolumn = $viewcolumn->viewColumn($connection_id,$table);
-        return view('jobs.viewcolumn',[
+  
+        return view('super-db.jobs.viewcolumn',[
         'connection'=> $dataviewcolumn["connection"],
         'colunms' => $dataviewcolumn["colunms"],
         'rows' => $dataviewcolumn["rows"],
@@ -56,7 +57,7 @@ class JobController extends Controller
         $factory = new Factory;
         $message = $factory->factory($query,$link);
         mysqli_close($link);
-        return redirect()->route('jobs.index',$DBconnection->id)->with($message[0],$message[1]);
+        return redirect()->route('super-db.jobs.index',$DBconnection->id)->with($message[0],$message[1]);
 
     }
 
@@ -72,7 +73,7 @@ class JobController extends Controller
 
         $viewcolumn = new viewColumn;
         $dataviewcolumn = $viewcolumn->viewColumn($connection_id,$table);
-        return view('jobs.viewcolumn',[
+        return view('super-db.jobs.viewcolumn',[
         'connection'=> $dataviewcolumn["connection"],
         'colunms' => $dataviewcolumn["colunms"],
         'rows' => $dataviewcolumn["rows"],
@@ -90,7 +91,7 @@ class JobController extends Controller
 
         $viewcolumn = new viewColumn;
         $dataviewcolumn = $viewcolumn->viewColumn($connection_id,$table);
-        return view('jobs.viewcolumn',[
+        return view('super-db.jobs.viewcolumn',[
         'connection'=> $dataviewcolumn["connection"],
         'colunms' => $dataviewcolumn["colunms"],
         'rows' => $dataviewcolumn["rows"],

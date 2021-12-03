@@ -14,7 +14,7 @@ class ConnectionController extends Controller
       $singletonDB =  SingletonDB::getInstance();
 
       $connections = DB::table('connection')->get(['name','id']);
-      return view('connection',['connections'=>$connections]);
+      return view('super-db.connections.index',['connections'=>$connections]);
     }    
     public function add($name){
       $singletonDB = SingletonDB::getInstance();
@@ -26,6 +26,6 @@ class ConnectionController extends Controller
       $singletonDB = SingletonDB::getInstance();
       $connection = DB::table('connection')->where('id','=',$id)->first(['name','id']);
       $singletonDB->release($connection->name,$connection->id);
-      return redirect()->route('connection.index');
+      return redirect()->route('super-db.connection.index');
     }
 }

@@ -22,7 +22,7 @@ class viewColumn{
           array_push($colunms,$row);
         }
         mysqli_close($link);
-        return view('jobs.viewcolumn',[
+        return view('super-db.jobs.viewcolumn',[
         'connection'=> $DBconnection,
         'colunms' => $colunms,
         'rows' => $rows,

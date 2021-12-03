@@ -11,12 +11,12 @@ use Illuminate\Support\Facades\Storage;
 class importController extends Controller
 {
     function index($id){
-        return view('jobs.import',['id'=>$id]);
+        return view('super-db.jobs.import',['id'=>$id]);
     }
 
     function add(Request $request,$id){
         if(Storage::exists('file/'.$_FILES['formFile']['name'])){
-             return  redirect()->route('import.index',$id)->with('error','file is exists');
+             return  redirect()->route('super-db.import.index',$id)->with('error','file is exists');
         }else{  
             $file = $request->file('formFile')->storeAs('file',($_FILES['formFile']['name']));
             $data = Storage::readStream($file);
@@ -27,7 +27,7 @@ class importController extends Controller
             $csvFiles = new CSVFiles();
             $csvFiles->create($_FILES['formFile']['name'],$row[0],$id);
             $csvFiles->insart($_FILES['formFile']['name'],$row,$id);
-            return  redirect()->route('import.index',$id)->with('success','Success file have been added');
+            return  redirect()->route('super-db.import.index',$id)->with('success','Success file have been added');
         }       
 
     }

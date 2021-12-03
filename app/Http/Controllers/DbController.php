@@ -32,7 +32,7 @@ class DbController extends Controller
         }
         fclose($handle);
 
-        return redirect()->route('jobs.index',$DBconnection->id)->with("success","Database Export Successfully!");
+        return redirect()->route('super-db.jobs.index',$DBconnection->id)->with("success","Database Export Successfully!");
         
     }
 

@@ -29,6 +29,15 @@ return [
     'Rename column' => 'إعادة تسمية العمود',
     'Rename table' => 'إعادة تسمية الجدول',
     'Enter name of column' => 'أدخل اسم العمود',
+    'Databases' => 'قواعد بيانات',
+    'Add database' => 'أضافة قاعدة بيانات',
+
+    'Database' => 'قاعدة البيانات',
+    'Action' => 'الاكشن',
+    'Create' => 'إنشاء',
+    'There are no databases, add a new one' => 'لا توجد قواعد بيانات ، أضف واحدة جديدة',
+
+
 ];
 
 
