@@ -2,8 +2,10 @@
 namespace App\SystemFile;
 use App\Job\Factory;
 use Illuminate\Support\Facades\DB;
+use mysqli;
 
-class CSVFiles implements SystemFile {
+class TextFiles implements SystemFile {
+    
     function createTableQuery($tablename,$factory,$values,$id){
         $DBconnection = DB::table('connection')->where('id','=',$id)->first(['name','id']);
         $mysqli = mysqli_connect("localhost", "root", "", $DBconnection->name);
@@ -22,11 +24,14 @@ class CSVFiles implements SystemFile {
          mysqli_close($mysqli);
     }     
     function create($tablename,$file,$id){
-        $name = str_replace(".csv","", $tablename);
+
+
+        $name = str_replace(".txt","", $tablename);
         $factory = new Factory;
         $count = 0;
-
-        while (($data[] = fgetcsv($file)) !== false) {
+        while (( $data[] =fgetcsv($file)) !== false) {
+                print_r($data[$count]);
+                echo "<br><br>";
             if ($count == 0) {
                 $this->createTableQuery($name,$factory,$data[0],$id);
             }

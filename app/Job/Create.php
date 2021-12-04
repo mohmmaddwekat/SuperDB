@@ -10,8 +10,6 @@ class Create implements Job{
 
 
     public function create($query,$link){
-        
-
         if(mysqli_query($link, $query)){
             return true;
         } 

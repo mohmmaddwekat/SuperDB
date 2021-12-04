@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Job\Factory;
 use App\SystemFile\CSVFiles;
+use App\SystemFile\Factory;
+use App\SystemFile\SqlFiles;
+use App\SystemFile\TextFiles;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -17,17 +19,20 @@ class importController extends Controller
     function add(Request $request,$id){
         if(Storage::exists('file/'.$_FILES['formFile']['name'])){
              return  redirect()->route('super-db.import.index',$id)->with('error','file is exists');
-        }else{  
-            $file = $request->file('formFile')->storeAs('file',($_FILES['formFile']['name']));
-            $data = Storage::readStream($file);
-            $count =0;
-            while (($row[] = fgetcsv($data, 1000, ",")) !== FALSE) 
-            {
-            } 
-            $csvFiles = new CSVFiles();
-            $csvFiles->create($_FILES['formFile']['name'],$row[0],$id);
-            $csvFiles->insart($_FILES['formFile']['name'],$row,$id);
-            return  redirect()->route('super-db.import.index',$id)->with('success','Success file have been added');
+        }else{ 
+            $request->file('formFile')->storeAs('file',($_FILES['formFile']['name']));
+            // $data = Storage::readStream($file);
+            if ($request->type == "csv") {            
+                $csvFiles = new Factory();
+                $massege = $csvFiles->build($request->type,$_FILES['formFile']['name'],$id);
+            } else if($request->type =="text") {
+                $TextFiles = new Factory();
+                $massege = $TextFiles->build($request->type,$_FILES['formFile']['name'],$id);
+            } else if($request->type =="sql"){                
+                $SqlFiles = new Factory();
+                $massege = $SqlFiles->build($request->type,$_FILES['formFile']['name'],$id);
+            }
+            return  redirect()->route('super-db.import.index',$id)->with($massege[0],$massege[1]);
         }       
 
     }
