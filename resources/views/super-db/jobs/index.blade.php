@@ -11,6 +11,7 @@
 
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
         <a href="{{ route('super-db.import.index', $connection->id) }}" class="mr-2"><button class="btn btn-primary" type="button">{{ __('Import') }}</button></a>
+        <a href="{{ route('super-db.versionControl.index', $connection->id) }}" class="mr-2"><button class="btn btn-primary" type="button">{{ __('Version Control') }}</button></a>
 
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
             {{ __('Export') }}

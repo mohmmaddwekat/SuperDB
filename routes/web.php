@@ -8,6 +8,7 @@ use App\Http\Controllers\InsertController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\LangController;
 use App\Http\Controllers\SqlController;
+use App\Http\Controllers\VersionControlController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -47,6 +48,7 @@ Route::group([
 ], function () {
     Route::get('/{id}', [JobController::class, 'index'])->name('index');
     Route::get('view-column/{name}/{id}', [JobController::class, 'viewColumn'])->name('view-column');
+    Route::get('versionControl/{name}/{id}', [JobController::class, 'versionControl'])->name('versionControl');
 
     Route::delete('/delete-table/{id}/{name}', [JobController::class, 'deletTable'])->name('delete-table');
 
@@ -100,6 +102,18 @@ Route::group([
 
     Route::get('/{id}', [SqlController::class, 'index'])->name('index');
     Route::post('/{id}', [SqlController::class, 'store'])->name('store');
+
+});
+Route::group([
+    'prefix' => '/versionControl',
+    'as' => 'versionControl.',
+
+
+], function () {
+
+    Route::get('/{id}', [VersionControlController::class, 'index'])->name('index');
+    Route::post('/{id}', [VersionControlController::class, 'store'])->name('store');
+    Route::get('/{file}/{table}/{id}', [VersionControlController::class, 'update'])->name('update');
 
 });
 Route::group([

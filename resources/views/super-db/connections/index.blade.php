@@ -2,7 +2,7 @@
 
 
 
-<x-layout title="{{ __('Databases') }}">
+<x-layout title="{{ __('Connectopin') }}">
 
 
 
@@ -25,27 +25,23 @@
     </tr>
   </thead>
   <tbody class="body">
-   
-  @if (sizeof($connections) > 0) 
-   @foreach ($connections as $connection)
+    @if (sizeof($connections) > 0) 
+    @foreach ($connections as $connection)
+        <tr>
+          <td><a href="">{{ $connection->name }}</a></td>
+          <td><a type="button" href="{{route('super-db.connection.delete', $connection->id ) }}" class="btn btn-danger">{{ __('Delete') }}</a>
+          <a type="button" href="{{ route('super-db.jobs.index', $connection->id ) }}" class="btn btn-primary">@lang('Show') </a></td>
+        </tr>
+      @endforeach
+          @else 
+        <tr class="notfound">
+          <td colspan="2">
+          <h5 style="text-align: center;">{{ __('There are no databases, add a new one') }}</h5>
+          </td>
+        </tr>
+        @endif
       <tr>
-        <td><a href="">{{ $connection->name }}</a></td>
-        <td><a type="button" href="{{route('super-db.connection.delete', $connection->id ) }}" class="btn btn-danger">{{ __('Delete') }}</a>
-        <a type="button" href="{{ route('super-db.jobs.index', $connection->id ) }}" class="btn btn-primary">@lang('Show') </a></td>
-
       </tr>
-    @endforeach
-        @else 
-      <tr class="notfound">
-        <td colspan="2">
-        <h5 style="text-align: center;">{{ __('There are no databases, add a new one') }}</h5>
-        </td>
-      </tr>
-      @endif
-    <tr>
-
-    </tr>
-    
   </tbody>
 </table>
     </div>
@@ -66,8 +62,8 @@ $(document).ready(function () {
             },
             success: function (result) {
                 $("tbody").append(
-                    `<tr><td><a href="">${result[0].name}</a></td><td><a type="button" href="connection/delete/${result[0].id}" class="btn btn-danger">{{ __('Delete') }}</a>
-                    <a type="button" href="super-db.jobs/index/${result[0].id}" class="btn btn-primary">@lang('Show')</a></td></tr>`
+                    `<tr><td>${result[0].name}</td><td><a type="button" href="connection/delete/${result[0].id}" class="btn btn-danger">{{ __('Delete') }}</a>
+                    <a type="button" href="jobs/${result[0].id}" class="btn btn-primary">@lang('Show')</a></td></tr>`
                 );
                 $(".notfound").remove();
                 $(".name").val("");

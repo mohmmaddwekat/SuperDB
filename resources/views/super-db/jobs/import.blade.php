@@ -1,4 +1,4 @@
-<x-layout title="{{ __('Database') }}">
+<x-layout title="{{ __('import') }}">
         <div class="d-grid gap-2 d-md-block">
         <a href="{{ route('super-db.jobs.index', $id) }}" class="btn btn-sm btn-primary"><i
                 data-feather="skip-back"></i>{{ __('Back') }}</a>

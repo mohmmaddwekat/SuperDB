@@ -8,9 +8,7 @@ use Illuminate\Support\Facades\DB;
 class viewColumn{
     public function viewColumn($connection_id,$table){
         $DBconnection = DB::table('connection')->where('id','=',$connection_id)->first(['name','id']);
-        $link = mysqli_connect("localhost", "root", "", $DBconnection->name);
-
-        
+        $link = mysqli_connect("localhost", "root", "", $DBconnection->name); 
         $sqlrow = mysqli_query($link,"SELECT * FROM ".$table);
         $rows = array();
         while ($row = mysqli_fetch_assoc($sqlrow)) {

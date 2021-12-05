@@ -9,6 +9,7 @@ use App\widgets\viewColumn;
 use Facade\FlareClient\Stacktrace\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use mysqli;
 use PDO;
 
@@ -25,7 +26,6 @@ class JobController extends Controller
         while($table = mysqli_fetch_array($result)) {
             array_push($tables,$table[0]);
         }
-        
         mysqli_close($link);
         return view('super-db.jobs.index',[
         'connection'=> $DBconnection,
@@ -35,10 +35,8 @@ class JobController extends Controller
 
     public function viewColumn($table,$connection_id)
     {
-        
         $viewcolumn = new viewColumn;
         $dataviewcolumn = $viewcolumn->viewColumn($connection_id,$table);
-  
         return view('super-db.jobs.viewcolumn',[
         'connection'=> $dataviewcolumn["connection"],
         'colunms' => $dataviewcolumn["colunms"],
@@ -46,8 +44,16 @@ class JobController extends Controller
         'table' =>$dataviewcolumn["table"]
         ]);
     }
-     
 
+    public function versionControl($table,$id){
+        $DBconnection = DB::table('connection')->where('id','=',$id)->first(['name','id']);
+        $files = Storage::files($DBconnection->name."/".$table."/");
+        foreach ($files as $path) {
+             $file[] = str_replace($DBconnection->name."/".$table."/", "", "$path"); 
+        }
+        return view('super-db.versionControl.update',['files'=>$file,'table'=>$table,'id'=>$id]);
+    }
+ 
     
     public function deletTable($connection_id,$name)
     {
