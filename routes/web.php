@@ -13,6 +13,8 @@ use App\Http\Controllers\SqlController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VersionControlController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Security\ForgotPassword;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +45,7 @@ Route::group([
 
     Route::get('/login', [UserController::class, 'login'])->name('login');
     Route::post('/logout', [UserController::class, 'destroy'])->name('logout');
+
 
     Route::post('/', [UserController::class, 'storeLogin'])->name('store-login');
 });

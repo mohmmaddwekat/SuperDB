@@ -54,6 +54,8 @@ unset($__errorArgs, $__bag); ?> " >
                                 <div class="form-group mt-4  ">
                                     <button class="btn btn-primary  "><?php echo e(__('Sign Up')); ?></button>
                                 </div>
+
+                                <a href="<?php echo e(url('forgot-password')); ?>">Forgotten your password? Reset it here</a>
                               </form>
                         </div>
                     </div>

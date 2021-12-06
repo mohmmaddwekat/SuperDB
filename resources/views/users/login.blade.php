@@ -24,6 +24,8 @@
                                 <div class="form-group mt-4  ">
                                     <button class="btn btn-primary  ">{{ __('Sign Up') }}</button>
                                 </div>
+
+                                <a href="{{ url('forgot-password') }}">Forgotten your password? Reset it here</a>
                               </form>
                         </div>
                     </div>
