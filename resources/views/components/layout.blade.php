@@ -54,8 +54,8 @@
                 <div class="sidebar-body">
                     <ul class="sidebar-body-menu">
                         <li>
-                            <a class="active" href="{{ route('super-db.dashboard') }}"><span class="icon home"
-                                    aria-hidden="true"></span>Dashboard</a>
+                            <a class="active" href="{{ route('super-db.dashboard') }}"><span
+                                    class="icon home" aria-hidden="true"></span>Dashboard</a>
                         </li>
                         <li>
                             <a class="show-cat-btn" href="##">
@@ -71,6 +71,15 @@
                                 </li>
                             </ul>
                         </li>
+                        @if (Gate::allows('users.register'))
+                            <li>
+                                <a class="active" href="{{ route('users.register') }}"><span
+                                        class="icon home" aria-hidden="true"></span>register</a>
+                            </li>
+
+                        @endif
+
+
 
                 </div>
             </div>
@@ -89,14 +98,17 @@
                     <div class="p-2 bd-highlight">
                         <button href="##" class="nav-user-btn dropdown-btn" type="button">
                             <span class="text-dark">
-                                mark A.
+                                
                             </span>
                         </button>
                         <ul class="users-item-dropdown nav-user-dropdown dropdown">
-                            <li><a class="danger" href="{{ route('main') }}">
-                                    <i data-feather="log-out" aria-hidden="true"></i>
-                                    <span>Log out</span>
-                                </a></li>
+
+                            <li><a class="dropdown-item" href="#"
+                                    onclick="document.getElementById('logoutform').submit()"><i data-feather="log-out"
+                                        aria-hidden="true"></i>Logout</a></li>
+                            <form action="{{ route('users.logout') }}" id="logoutform" method="post">
+                                @csrf
+                            </form>
                         </ul>
                     </div>
                     <div class="p-2 bd-highlight">

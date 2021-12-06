@@ -6,14 +6,19 @@ use App\db\ComparisonOperators;
 use App\exportfile\Exportcsv;
 use App\exportfile\Exportsql;
 use App\exportfile\Fun;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use mysqli;
 
 class DbController extends Controller
 {
     public function export($connection_id,$export,$tables='*')
     {
-
+        $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
+        if(!in_array('super-db.jobs.index',$roles_Abilitiles)){
+            abort(403);
+        }
         $DBconnection = DB::table('connection')->where('id','=',$connection_id)->first(['name','id']);
         $db = new mysqli('localhost', 'root', '', $DBconnection->name); 
 

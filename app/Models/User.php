@@ -18,9 +18,13 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
-        'name',
+        'username',
         'email',
         'password',
+        'type',
+        'fullname',
+        'role_id',
+
     ];
 
     /**
@@ -41,4 +45,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function role(){
+        return $this->belongsTo(Role::class, 'role_id', 'id');
+    }
+
+
+    public function hasAbility($ability)
+    {
+        return $this->role->abilities()->where('code',$ability)->exists();
+    }
 }

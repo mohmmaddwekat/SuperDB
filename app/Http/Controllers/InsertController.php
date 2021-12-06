@@ -5,12 +5,18 @@ namespace App\Http\Controllers;
 use App\Job\Factory;
 use App\widgets\viewColumn;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class InsertController extends Controller
 {
     public function index($id)
     {
+        $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
+        if(!in_array('super-db.inserts.index',$roles_Abilitiles)){
+            abort(403);
+        }
         $connection = DB::table('connection')->where('id','=',$id)->first(['name','id']);
         return view('super-db.inserts.index',[
             'connection'=> $connection
@@ -19,6 +25,10 @@ class InsertController extends Controller
 
     public function store(Request $request,$connection_id)
     {
+        $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
+        if(!in_array('super-db.inserts.store',$roles_Abilitiles)){
+            abort(403);
+        }
         $DBconnection = DB::table('connection')->where('id','=',$connection_id)->first(['name','id']);
 
         $request->validate([
@@ -66,6 +76,11 @@ class InsertController extends Controller
 
     public function renameTable($connection_id, $name)
     {
+
+        $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
+        if(!in_array('super-db.inserts.rename-table',$roles_Abilitiles)){
+            abort(403);
+        }
         $DBconnection = DB::table('connection')->where('id','=',$connection_id)->first(['name','id']);
         return view('super-db.inserts.renameTable',[
             'connection'=> $DBconnection,
@@ -76,6 +91,11 @@ class InsertController extends Controller
     
     public function updateTable(Request $request,$connection_id, $oldname)
     {
+        $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
+        if(!in_array('super-db.inserts.updateTable',$roles_Abilitiles)){
+            abort(403);
+        }
+
         $request->validate([
             'nametable' => [
                 'required', 'string', 'max:255',
@@ -99,6 +119,11 @@ class InsertController extends Controller
 
     public function renameColumn($connection_id,$table, $namecolumn)
     {
+        $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
+        if(!in_array('super-db.inserts.rename-column',$roles_Abilitiles)){
+            abort(403);
+        }
+
         $DBconnection = DB::table('connection')->where('id','=',$connection_id)->first(['name','id']);
         return view('super-db.inserts.renameColumn',[
             'connection'=> $DBconnection,
@@ -109,6 +134,10 @@ class InsertController extends Controller
     
     public function updateColumn(Request $request,$connection_id,$table, $oldnamecolumn)
     {
+        $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
+        if(!in_array('super-db.inserts.update-column',$roles_Abilitiles)){
+            abort(403);
+        }
         $request->validate([
             'namecolumn' => [
                 'required', 'string', 'max:255',

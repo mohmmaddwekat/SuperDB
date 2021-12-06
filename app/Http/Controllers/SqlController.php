@@ -5,12 +5,19 @@ namespace App\Http\Controllers;
 use App\Job\Factory;
 use App\Rules\CheckNotConnectRole;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 
 class SqlController extends Controller
 {
     public function index($id)
     {
+  
+        $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
+        if(!in_array('super-db.sqls.index',$roles_Abilitiles)){
+            abort(403);
+        }
         $DBconnection = DB::table('connection')->where('id','=',$id)->first(['name','id']);
         return view('super-db.sqls.index',[
         'connection'=> $DBconnection,
@@ -20,6 +27,10 @@ class SqlController extends Controller
 
     public function store(Request $request,$id)
     {
+        $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
+        if(!in_array('super-db.sqls.store',$roles_Abilitiles)){
+            abort(403);
+        }
         $DBconnection = DB::table('connection')->where('id','=',$id)->first(['name','id']);
         $request->validate([
             'query' => [
