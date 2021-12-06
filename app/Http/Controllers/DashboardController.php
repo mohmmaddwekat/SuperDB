@@ -7,8 +7,12 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+<<<<<<< HEAD
 use Illuminate\Support\Facades\Gate;
 
+=======
+use Illuminate\Support\Facades\Log;
+>>>>>>> 842c0e4f43264792f1a3469e5cb684431aa3253b
 class DashboardController extends Controller
 {
     public function index(){
@@ -36,5 +40,10 @@ class DashboardController extends Controller
             'number_database' => $number_database,
             'chart_data'=>$data['chart_data']
         ]);
+
+
+        Log::channel('custom')->info("hello from logs");
+
+        return view ('dashboard', $data);
     }
 }

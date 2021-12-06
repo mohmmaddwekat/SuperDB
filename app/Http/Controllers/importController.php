@@ -32,15 +32,18 @@ class importController extends Controller
         }else{ 
             $request->file('formFile')->storeAs('file',($_FILES['formFile']['name']));
             // $data = Storage::readStream($file);
-            if ($request->type == "csv") {            
+            if ($request->type == "csv") {
                 $csvFiles = new Factory();
-                $massege = $csvFiles->build($request->type,$_FILES['formFile']['name'],$id);
+                $file = fopen("../storage/app/file/".$_FILES['formFile']['name'], "r");
+                $massege = $csvFiles->build($request->type,$_FILES['formFile']['name'],$id,$file);
             } else if($request->type =="text") {
                 $TextFiles = new Factory();
-                $massege = $TextFiles->build($request->type,$_FILES['formFile']['name'],$id);
+                $file = fopen("../storage/app/file/".$_FILES['formFile']['name'], "r");
+                $massege = $TextFiles->build($request->type,$_FILES['formFile']['name'],$id,$file);
             } else if($request->type =="sql"){                
                 $SqlFiles = new Factory();
-                $massege = $SqlFiles->build($request->type,$_FILES['formFile']['name'],$id);
+                $file = file_get_contents("../storage/app/file/".$_FILES['formFile']['name']);
+                $massege = $SqlFiles->build($request->type,$_FILES['formFile']['name'],$id,$file);
             }
             return  redirect()->route('super-db.import.index',$id)->with($massege[0],$massege[1]);
         }       

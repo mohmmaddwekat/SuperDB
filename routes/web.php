@@ -10,7 +10,11 @@ use App\Http\Controllers\JobController;
 use App\Http\Controllers\LangController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SqlController;
+<<<<<<< HEAD
 use App\Http\Controllers\UserController;
+=======
+use App\Http\Controllers\VersionControlController;
+>>>>>>> 842c0e4f43264792f1a3469e5cb684431aa3253b
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -55,6 +59,12 @@ Route::group([
     'middleware' => 'locale'
 
 ], function () {
+<<<<<<< HEAD
+=======
+    Route::get('/{id}', [JobController::class, 'index'])->name('index');
+    Route::get('view-column/{name}/{id}', [JobController::class, 'viewColumn'])->name('view-column');
+    Route::get('versionControl/{name}/{id}', [JobController::class, 'versionControl'])->name('versionControl');
+>>>>>>> 842c0e4f43264792f1a3469e5cb684431aa3253b
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/locale/{lang}', [LangController::class, 'locale'])->name('locale');
@@ -113,7 +123,26 @@ Route::group([
         'as' => 'sqls.',
 
 
+<<<<<<< HEAD
     ], function () {
+=======
+});
+Route::group([
+    'prefix' => '/versionControl',
+    'as' => 'versionControl.',
+
+
+], function () {
+
+    Route::get('/{id}', [VersionControlController::class, 'index'])->name('index');
+    Route::post('/{id}', [VersionControlController::class, 'store'])->name('store');
+    Route::get('/{file}/{table}/{id}', [VersionControlController::class, 'update'])->name('update');
+
+});
+Route::group([
+    'prefix' => '/connection',
+    'as' => 'connection.',
+>>>>>>> 842c0e4f43264792f1a3469e5cb684431aa3253b
 
         Route::get('/{id}', [SqlController::class, 'index'])->name('index');
         Route::post('/{id}', [SqlController::class, 'store'])->name('store');

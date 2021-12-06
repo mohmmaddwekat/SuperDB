@@ -10,7 +10,11 @@ use Facade\FlareClient\Stacktrace\File;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+<<<<<<< HEAD
 use Illuminate\Support\Facades\Gate;
+=======
+use Illuminate\Support\Facades\Storage;
+>>>>>>> 842c0e4f43264792f1a3469e5cb684431aa3253b
 use mysqli;
 use PDO;
 
@@ -30,7 +34,10 @@ class JobController extends Controller
         while ($table = mysqli_fetch_array($result)) {
             array_push($tables, $table[0]);
         }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 842c0e4f43264792f1a3469e5cb684431aa3253b
         mysqli_close($link);
         return view('super-db.jobs.index', [
             'connection' => $DBconnection,
@@ -40,6 +47,7 @@ class JobController extends Controller
 
     public function viewColumn($table, $connection_id)
     {
+<<<<<<< HEAD
 
         $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
         if(!in_array('super-db.jobs.view-column',$roles_Abilitiles)){
@@ -59,6 +67,29 @@ class JobController extends Controller
 
 
     public function deletTable($connection_id, $name)
+=======
+        $viewcolumn = new viewColumn;
+        $dataviewcolumn = $viewcolumn->viewColumn($connection_id,$table);
+        return view('super-db.jobs.viewcolumn',[
+        'connection'=> $dataviewcolumn["connection"],
+        'colunms' => $dataviewcolumn["colunms"],
+        'rows' => $dataviewcolumn["rows"],
+        'table' =>$dataviewcolumn["table"]
+        ]);
+    }
+
+    public function versionControl($table,$id){
+        $DBconnection = DB::table('connection')->where('id','=',$id)->first(['name','id']);
+        $files = Storage::files($DBconnection->name."/".$table."/");
+        foreach ($files as $path) {
+             $file[] = str_replace($DBconnection->name."/".$table."/", "", "$path"); 
+        }
+        return view('super-db.versionControl.update',['files'=>$file,'table'=>$table,'id'=>$id]);
+    }
+ 
+    
+    public function deletTable($connection_id,$name)
+>>>>>>> 842c0e4f43264792f1a3469e5cb684431aa3253b
     {
         $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
         if(!in_array('super-db.jobs.delete-table',$roles_Abilitiles)){
