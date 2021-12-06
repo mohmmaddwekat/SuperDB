@@ -28,12 +28,13 @@ class DbController extends Controller
             list($NameDB, $tables) = $comparisonoperators->ComparisonOperators($tables, $DBconnection, $db);
 
             if ($export == "csv") {
-                $handle = fopen('db/' . $NameDB . '_' . time() . '.csv', 'w+');
+
+                $handle = fopen('../storage/app/db/' . $NameDB . '_' . time() . '.csv', 'w+');
                 $csv = new Exportcsv;
                 $csv->export($tables, $db, $handle);
             }
             if ($export == "sql") {
-                $handle = fopen('db/' . $NameDB . '_' . time() . '.sql', 'w+');
+                $handle = fopen('../storage/app/db/' . $NameDB . '_' . time() . '.sql', 'w+');
                 $sql = new Exportsql;
                 $sql->export($tables, $db, $handle);
             }

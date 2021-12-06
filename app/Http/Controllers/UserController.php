@@ -85,6 +85,10 @@ class UserController extends Controller
 
     public function login()
     {
+        if (Auth::check()) {
+            return redirect()->route('super-db.dashboard');
+
+        }
         return view('users.login');
     }
     /**

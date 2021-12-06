@@ -35,7 +35,6 @@ class VersionControlController extends Controller
     }
     function update($file, $table, $id)
     {
-
         try {
             $version = new VersionContro($id);
             $version->update($file, $table);
