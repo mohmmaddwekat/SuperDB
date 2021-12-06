@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Role;
 use App\Rules\CheckNameRule;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 
 class RoleController extends Controller
@@ -17,17 +18,21 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
+        try {
+            $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
 
-        if(!in_array('super-db.roles.index',$roles_Abilitiles)){
-            abort(403);
+            if (!in_array('super-db.roles.index', $roles_Abilitiles)) {
+                abort(403);
+            }
+            return view(
+                'super-db.roles.index',
+                [
+                    'roles' => Role::with('abilities')->paginate(),
+                ]
+            );
+        } catch (Exception $e) {
+            abort(404);
         }
-        return view(
-            'super-db.roles.index',
-            [
-                'roles' => Role::with('abilities')->paginate(),
-            ]
-        );
     }
 
     /**
@@ -37,17 +42,21 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
-        if(!in_array('super-db.roles.create',$roles_Abilitiles)){
-            abort(403);
-        }
+        try {
+            $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
+            if (!in_array('super-db.roles.create', $roles_Abilitiles)) {
+                abort(403);
+            }
 
-        return view(
-            'super-db.roles.create',
-            [
-                'role' => Role::paginate(),
-            ]
-        );
+            return view(
+                'super-db.roles.create',
+                [
+                    'role' => Role::paginate(),
+                ]
+            );
+        } catch (Exception $e) {
+            abort(404);
+        }
     }
 
     /**
@@ -58,22 +67,25 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
-        if(!in_array('super-db.roles.store',$roles_Abilitiles)){
-            abort(403);
+        try {
+            $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
+            if (!in_array('super-db.roles.store', $roles_Abilitiles)) {
+                abort(403);
+            }
+            $request->validate([
+                'name' => ['required', 'string', 'min:3', 'max:255', 'unique:roles,name', new CheckNameRule],
+            ]);
+
+
+            Role::create([
+                'name' => $request->post('name'),
+
+            ]);
+
+            return redirect()->route('super-db.roles.index')->with('success', 'Roles created!');
+        } catch (Exception $e) {
+            abort(404);
         }
-        $request->validate([
-            'name' => ['required', 'string','min:3' ,'max:255','unique:roles,name', new CheckNameRule],
-        ]);
-
-
-        Role::create([
-            'name' => $request->post('name'),
-
-        ]);
-
-        return redirect()->route('super-db.roles.index')->with('success', 'Roles created!');
-        
     }
 
     /**
@@ -96,10 +108,10 @@ class RoleController extends Controller
     public function edit(Role $role)
     {
         $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
-        if(!in_array('super-db.roles.edit',$roles_Abilitiles)){
+        if (!in_array('super-db.roles.edit', $roles_Abilitiles)) {
             abort(403);
         }
-        return view('super-db.roles.edit',[
+        return view('super-db.roles.edit', [
             'role' => $role,
         ]);
     }
@@ -113,11 +125,11 @@ class RoleController extends Controller
     public function update(Request $request, Role $role)
     {
         $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
-        if(!in_array('super-db.roles.update',$roles_Abilitiles)){
+        if (!in_array('super-db.roles.update', $roles_Abilitiles)) {
             abort(403);
         }
         $request->validate([
-            'name' => ['required', 'string', 'max:255','unique:roles,name,'.$role->id, new CheckNameRule],
+            'name' => ['required', 'string', 'max:255', 'unique:roles,name,' . $role->id, new CheckNameRule],
 
 
         ]);
@@ -125,9 +137,8 @@ class RoleController extends Controller
             'name' => $request->name,
 
         ]);
-   
+
         return redirect()->route('super-db.roles.index')->with('success', 'Roles Updated!');
-    
     }
 
     /**
@@ -139,13 +150,10 @@ class RoleController extends Controller
     public function destroy(Role $role)
     {
         $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
-        if(!in_array('super-db.roles.destory',$roles_Abilitiles)){
+        if (!in_array('super-db.roles.destory', $roles_Abilitiles)) {
             abort(403);
         }
         Role::destroy($role->id);
         return  redirect()->route('super-db.roles.index')->with('success', 'Role Deleted!');
- 
     }
-
-
 }

@@ -11,6 +11,7 @@
 
     </div>
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <a href="<?php echo e(route('super-db.jobs.versionControl', [$table,$connection->id])); ?>" class="mr-2"><button class="btn btn-primary" type="button"><?php echo e(__('Version Control')); ?></button></a>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
             <?php echo e(__('Export')); ?>
 

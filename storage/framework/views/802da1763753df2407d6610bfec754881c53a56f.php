@@ -3,7 +3,7 @@
 
 
 <?php if (isset($component)) { $__componentOriginalba35371caef1eeddf45260937599d5fd5fb5dd30 = $component; } ?>
-<?php $component = $__env->getContainer()->make(App\View\Components\Layout::class, ['title' => ''.e(__('Databases')).'']); ?>
+<?php $component = $__env->getContainer()->make(App\View\Components\Layout::class, ['title' => ''.e(__('Connectopin')).'']); ?>
 <?php $component->withName('layout'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
@@ -30,27 +30,23 @@
     </tr>
   </thead>
   <tbody class="body">
-   
-  <?php if(sizeof($connections) > 0): ?> 
-   <?php $__currentLoopData = $connections; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $connection): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+    <?php if(sizeof($connections) > 0): ?> 
+    <?php $__currentLoopData = $connections; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $connection): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        <tr>
+          <td><a href=""><?php echo e($connection->name); ?></a></td>
+          <td><a type="button" href="<?php echo e(route('super-db.connection.delete', $connection->id )); ?>" class="btn btn-danger"><?php echo e(__('Delete')); ?></a>
+          <a type="button" href="<?php echo e(route('super-db.jobs.index', $connection->id )); ?>" class="btn btn-primary"><?php echo app('translator')->get('Show'); ?> </a></td>
+        </tr>
+      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+          <?php else: ?> 
+        <tr class="notfound">
+          <td colspan="2">
+          <h5 style="text-align: center;"><?php echo e(__('There are no databases, add a new one')); ?></h5>
+          </td>
+        </tr>
+        <?php endif; ?>
       <tr>
-        <td><a href=""><?php echo e($connection->name); ?></a></td>
-        <td><a type="button" href="<?php echo e(route('super-db.connection.delete', $connection->id )); ?>" class="btn btn-danger"><?php echo e(__('Delete')); ?></a>
-        <a type="button" href="<?php echo e(route('super-db.jobs.index', $connection->id )); ?>" class="btn btn-primary"><?php echo app('translator')->get('Show'); ?> </a></td>
-
       </tr>
-    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-        <?php else: ?> 
-      <tr class="notfound">
-        <td colspan="2">
-        <h5 style="text-align: center;"><?php echo e(__('There are no databases, add a new one')); ?></h5>
-        </td>
-      </tr>
-      <?php endif; ?>
-    <tr>
-
-    </tr>
-    
   </tbody>
 </table>
     </div>
@@ -71,8 +67,8 @@ $(document).ready(function () {
             },
             success: function (result) {
                 $("tbody").append(
-                    `<tr><td><a href="">${result[0].name}</a></td><td><a type="button" href="connection/delete/${result[0].id}" class="btn btn-danger"><?php echo e(__('Delete')); ?></a>
-                    <a type="button" href="super-db.jobs/index/${result[0].id}" class="btn btn-primary"><?php echo app('translator')->get('Show'); ?></a></td></tr>`
+                    `<tr><td>${result[0].name}</td><td><a type="button" href="connection/delete/${result[0].id}" class="btn btn-danger"><?php echo e(__('Delete')); ?></a>
+                    <a type="button" href="jobs/${result[0].id}" class="btn btn-primary"><?php echo app('translator')->get('Show'); ?></a></td></tr>`
                 );
                 $(".notfound").remove();
                 $(".name").val("");

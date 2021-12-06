@@ -6,6 +6,7 @@ use App\SystemFile\CSVFiles;
 use App\SystemFile\Factory;
 use App\SystemFile\SqlFiles;
 use App\SystemFile\TextFiles;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -15,14 +16,20 @@ use Illuminate\Support\Facades\Storage;
 class importController extends Controller
 {
     function index($id){
+        try{
         $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
         if(!in_array('super-db.import.index',$roles_Abilitiles)){
             abort(403);
         }
+        
         return view('super-db.jobs.import',['id'=>$id]);
+    }catch (Exception $e){
+        abort(404);
+    }
     }
 
     function add(Request $request,$id){
+        try{
         $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
         if(!in_array('super-db.import.add',$roles_Abilitiles)){
             abort(403);
@@ -47,7 +54,9 @@ class importController extends Controller
             }
             return  redirect()->route('super-db.import.index',$id)->with($massege[0],$massege[1]);
         }       
-
+        }catch (Exception $e){
+            abort(404);
+        }
     }
     
     

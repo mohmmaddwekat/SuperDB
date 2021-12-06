@@ -1,5 +1,5 @@
 <?php if (isset($component)) { $__componentOriginalba35371caef1eeddf45260937599d5fd5fb5dd30 = $component; } ?>
-<?php $component = $__env->getContainer()->make(App\View\Components\Layout::class, ['title' => ''.e(__('Database')).'']); ?>
+<?php $component = $__env->getContainer()->make(App\View\Components\Layout::class, ['title' => ''.e(__('import')).'']); ?>
 <?php $component->withName('layout'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>

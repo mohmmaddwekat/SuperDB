@@ -2,6 +2,7 @@
 namespace App\exportfile;
 
 use App\exportfile\interfaceExport;
+use App\widgets\viewColumn;
 
 class Exportsql implements interfaceExport{
 
@@ -15,26 +16,52 @@ class Exportsql implements interfaceExport{
     
             $row22 = new Fun;
             $row2 = $row22->queryCreatetable($db, $table);
-            $return .= "\n\n".$row2[1].";\n\n";
-            $return .= "INSERT INTO '$table'";
-            for($i = 0; $i < $numColumns; $i++) { 
-                while($row = $result->fetch_row()) { 
-                    $return .= " VALUES(";
-                    for($j=0; $j < $numColumns; $j++) { 
-                        $row[$j] = addslashes($row[$j]);
-                        $row[$j] = $row[$j];
-                        if (isset($row[$j]) || !isset($row[$j])) { 
-                            $return .= '"'.$row[$j].'"' ;
-                        }
-                        if ($j < ($numColumns-1)) {
-                            $return.= ',';
-                        }
-                    }
-                    $return .= ")\n";
-                }
+            
+            $return .= "DROP TABLE IF EXISTS '$table';\n";
+            $return .= $row2[1].";\n\n";
+
+            $sqlcolunms = mysqli_query($db,"SHOW COLUMNS FROM ".$table);
+            $colunms = array();
+            while($row = mysqli_fetch_array($sqlcolunms)){
+              array_push($colunms,$row);
             }
-    
-            $return .= "\n\n\n";
+            
+            $return .= "INSERT INTO '$table' (";
+
+            
+            foreach ($colunms as $key => $colunm){
+                if($key == (count($colunms)-1)){
+                    $return .="'$colunm[0]'";
+                    break;
+                }
+                $return .="'$colunm[0]'".', ';
+            }
+            $return .= ") VALUES\n";
+
+
+            $rows = Array();
+            while ($row = $result->fetch_row()) {
+                $rows[] =  $row;  
+            }
+
+            foreach ($rows as $key => $row){
+                $return .='(';
+                foreach ($row as $index => $value){
+                    if($index == (count($row)-1)){
+                        $return .="'$row[0]'";
+                        break;
+                    }
+                    $return .="'$row[0]'".', ';
+                }
+                
+                if($key == (count($rows)-1)){
+                    $return .=");\n";
+                    break;
+                }
+                $return .="),\n";
+            } 
+
+            $return .= "COMMIT;";
         }
     
         fwrite($handle,$return);
