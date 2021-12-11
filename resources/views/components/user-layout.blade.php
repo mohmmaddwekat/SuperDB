@@ -7,7 +7,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <meta name="author" content="" />
-        <title>Agency - Start Bootstrap Theme</title>
+        <title>Super-DB</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="{{ asset('/user-layout-assets/assets/favicon.ico') }}" />
         <!-- Font Awesome icons (free version)-->
@@ -16,7 +16,20 @@
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
         <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
+
         <link href="{{ asset('/user-layout-assets/css/styles.css') }}" rel="stylesheet" />
+
+        
+        @if (APP::isLocale('ar'))
+        <link href="{{ asset('/user-layout-assets/css/style-rtl.css') }}" rel="stylesheet" />
+
+        @else   
+        <link href="{{ asset('/user-layout-assets/css/styles.css') }}" rel="stylesheet" />
+        @endif
+
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
     </head>
     <body id="page-top">
         <!-- Navigation-->
@@ -29,9 +42,22 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                        <li class="nav-item"><a class="nav-link" href="#Main">Main</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#team">Team</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#Main">{{ __('Main') }}</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#services">{{ __('Services') }}</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#team">{{ __('Team') }}</a></li>
+                        <li>
+                            <div>
+                                <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    @if (!session()->has('locale')) {{ __('English') }} @endif
+                                    @if (session()->get('locale') == 'en') {{ __('English') }} @endif
+                                    @if (session()->get('locale') == 'ar') {{ __('Arabic') }} @endif
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li><a class="dropdown-item" href="{{ route('super-db.locale', 'en') }}">{{ __('English') }}</a></li>
+                                <li><a class="dropdown-item" href="{{ route('super-db.locale', 'ar') }}">{{ __('Arabic') }}</a></li>
+                                </ul>
+                              </div>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -64,5 +90,9 @@
         <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
         <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
         <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/react/16.13.1/umd/react.production.min.js'></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.13.1/umd/react-dom.production.min.js'></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/styled-components/3.2.1/styled-components.min.js'></script>
     </body>
 </html>

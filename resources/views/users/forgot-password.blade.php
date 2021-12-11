@@ -16,9 +16,9 @@
                         <div class="card-body  text-dark">
                             <form action="{{ route('password.email') }}" method="post" >
                                 @csrf
-                                <h1 class="  text-center">Reset Password</h1>
+                                <h1 class="  text-center">{{ __('Reset Password') }}</h1>
                                 <div class="form-group">
-                                    <label for="email" class="form-group ">Email</label>
+                                    <label for="email" class="form-group ">{{ __('Email') }}</label>
                                     <input type="email" name="email" name="email" class="form-control  @error('username') is-invalid @enderror">
                                   </div>
 

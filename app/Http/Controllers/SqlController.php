@@ -32,18 +32,19 @@ class SqlController extends Controller
 
     public function store(Request $request, $id)
     {
+        $DBconnection = DB::table('connection')->where('id', '=', $id)->first(['name', 'id']);
+        $request->validate([
+            'query' => [
+                'required', 'string', 'max:255',
+                new CheckNotConnectRole($DBconnection->name),
+            ],
+        ]);
         try {
             $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
             if (!in_array('super-db.sqls.store', $roles_Abilitiles)) {
                 abort(403);
             }
-            $DBconnection = DB::table('connection')->where('id', '=', $id)->first(['name', 'id']);
-            $request->validate([
-                'query' => [
-                    'required', 'string', 'max:255',
-                    new CheckNotConnectRole($DBconnection->name),
-                ],
-            ]);
+
             $link = mysqli_connect("localhost", "root", "", $DBconnection->name);
             $query = $request->post('query');
             $factory = new Factory;

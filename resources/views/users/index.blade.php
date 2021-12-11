@@ -7,10 +7,10 @@
             <div class="container">
                 <div class="masthead-subheading">Welcome To Super DB</div>
                 <div class="masthead-heading text-uppercase">It's Nice To Meet You</div>
-                <a class="btn btn-primary btn-xl text-uppercase" href="{{ route('users.login') }}">Log In</a>
+                <a class="btn btn-primary btn-xl text-uppercase" href="{{ route('users.login') }}">{{ __('Log In') }}</a>
             </div>
         </header>
-        {{-- <!-- Services-->
+        <!-- Services-->
         <section class="page-section" id="services">
             <div class="container">
                 <div class="text-center">
@@ -44,7 +44,7 @@
                     </div>
                 </div>
             </div>
-        </section> --}}
+        </section>
 
 
         <!-- Team-->

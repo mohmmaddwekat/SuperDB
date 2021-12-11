@@ -6,8 +6,6 @@
                 <div class="card">
                     <div class="card-content">
                         <div class="card-body">
-                            <!-- Validation Errors -->
-                            <x-auth-validation-errors class="mb-4" :errors="$errors" />
                             <form action="{{ route('super-db.roles.update' , $role['id'])}}" method="post"
                                 enctype="multipart/form-data">
                                 @csrf

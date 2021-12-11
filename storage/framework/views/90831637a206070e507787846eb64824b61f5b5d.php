@@ -26,7 +26,7 @@
                         <div class="card-body  text-dark">
                             <form action="<?php echo e(route('users.store-login')); ?>" method="post" >
                                 <?php echo csrf_field(); ?>
-                                <h1 class="  text-center">Sign Up</h1>
+                                <h1 class="  text-center"><?php echo e(__('Log In')); ?></h1>
                                 <div class="form-group">
                                     <label for="Username" class="form-label "><?php echo e(__('Username')); ?></label>
                                     <input type="text" value="<?php echo e(old('username')); ?>" name="username" class="form-control  <?php $__errorArgs = ['username'];
@@ -52,10 +52,10 @@ unset($__errorArgs, $__bag); ?> " >
                                   </div>
 
                                 <div class="form-group mt-4  ">
-                                    <button class="btn btn-primary  "><?php echo e(__('Sign Up')); ?></button>
+                                    <button class="btn btn-primary  "><?php echo e(__('Log In')); ?></button>
                                 </div>
 
-                                <a href="<?php echo e(url('forgot-password')); ?>">Forgotten your password? Reset it here</a>
+                                <a href="<?php echo e(url('forgot-password')); ?>"><?php echo e(__('Forgotten your password? Reset it here')); ?></a>
                               </form>
                         </div>
                     </div>

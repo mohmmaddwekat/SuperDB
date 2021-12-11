@@ -134,26 +134,4 @@ class JobController extends Controller
             // abort(404);
         }
     }
-    // public function deletRow($connection_id, $table, $column)
-    // {
-    //     // $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
-    //     // if(!in_array('super-db.jobs.',$roles_Abilitiles)){
-    //     //     abort(403);
-    //     // }
-    //     $DBconnection = DB::table('connection')->where('id', '=', $connection_id)->first(['name', 'id']);
-    //     $link = mysqli_connect("localhost", "root", "", $DBconnection->name);
-    //     $query = "ALTER TABLE $table DROP COLUMN $column;";
-    //     $factory = new Factory;
-    //     $message = $factory->factory($query, $link);
-    //     mysqli_close($link);
-
-    //     $viewcolumn = new viewColumn;
-    //     $dataviewcolumn = $viewcolumn->viewColumn($connection_id, $table);
-    //     return view('super-db.jobs.viewcolumn', [
-    //         'connection' => $dataviewcolumn["connection"],
-    //         'colunms' => $dataviewcolumn["colunms"],
-    //         'rows' => $dataviewcolumn["rows"],
-    //         'table' => $dataviewcolumn["table"]
-    //     ]);
-    // }
 }

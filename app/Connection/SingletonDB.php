@@ -46,8 +46,9 @@ class SingletonDB implements Connection
                 'name'=> $DBName
             ];
             $conn = DB::table('connection')->insert($names);
+            return $conn;
         } catch(PDOException $e) {
-            return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+            return false;
             // echo false;
         }
     }

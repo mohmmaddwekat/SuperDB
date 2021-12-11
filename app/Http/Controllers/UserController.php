@@ -44,37 +44,37 @@ class UserController extends Controller
             );
         } catch (Exception $e) {
             
-            return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
-            //abort(404);
+            abort(404);
         }
     }
 
 
     public function store(Request $request)
     {
+        $request->validate([
+            'username' => ['required', 'string', 'max:255', 'unique:users,username', 'alpha'],
+            'firstname' => ['required', 'string', 'max:40', 'alpha'],
+            'lastname' => ['required', 'string', 'max:40', 'alpha'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => [
+                'required',
+                Password::min(8)
+                    ->mixedCase()
+                    ->letters()
+                    ->numbers()
+                    ->symbols()
+                    ->uncompromised()
+            ],
+            'type' => ['required', 'in:staff,admin,reader'],
+            'role_id' => ['required', 'int', 'exists:roles,id'],
+
+        ]);
         try {
             $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
             if (!in_array('users.store', $roles_Abilitiles)) {
                 abort(403);
             }
-            $request->validate([
-                'username' => ['required', 'string', 'max:255', 'unique:users,username', 'alpha'],
-                'firstname' => ['required', 'string', 'max:40', 'alpha'],
-                'lastname' => ['required', 'string', 'max:40', 'alpha'],
-                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                'password' => [
-                    'required',
-                    Password::min(8)
-                        ->mixedCase()
-                        ->letters()
-                        ->numbers()
-                        ->symbols()
-                        ->uncompromised()
-                ],
-                'type' => ['required', 'in:staff,admin,reader'],
-                'role_id' => ['required', 'int', 'exists:roles,id'],
 
-            ]);
             User::create([
                 'username' => $request->post('username'),
                 'fullname' => $request->firstname . ' ' . $request->lastname,
@@ -88,8 +88,7 @@ class UserController extends Controller
             return redirect()->route('users.register')->with('success', 'Create new user!');
         } catch (Exception $e) {
             
-            return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
-            //abort(404);
+            abort(404);
         }
     }
 
@@ -138,6 +137,7 @@ class UserController extends Controller
     public function destroy(Request $request)
     {
         Auth::logout();
+        
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();

@@ -48,7 +48,8 @@ class DashboardController extends Controller
     
             return view ('dashboard', $data);
         }catch (Exception $e){
-            return ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+            abort(404);
+            //return ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
         }
     }
 }

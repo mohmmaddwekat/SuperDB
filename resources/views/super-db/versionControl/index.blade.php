@@ -22,7 +22,7 @@
     </ul>
     <button type="submit" class="btn btn-primary">{{ __('Save') }}</button>
 @else
-    <p class="fw-bold">There are no tables in the Database</p>
+    <p class="fw-bold">{{ __('There are no tables in the Database') }}</p>
 @endif
 </form>
 </x-layout>

@@ -10,11 +10,11 @@
                         <div class="card-body  text-dark">
                             <form method="POST" action="{{ route('password.update', $request-> email ) }}"  >
                                 @csrf
-                                <h1 class="  text-center">Reset Password</h1>
+                                <h1 class="  text-center">{{ __('Reset Password') }}</h1>
                                 <input type="hidden" name ="token" value="{{ $request->route('token') }}">
 
                                 <div class="form-group">
-                                    <label for="email" class="form-group ">Email</label>
+                                    <label for="email" class="form-group ">{{ __('Email') }}</label>
                                     <input type="email" name="email" name="email" class="form-control  @error('email') is-invalid @enderror"  value="">
                                   </div>
 

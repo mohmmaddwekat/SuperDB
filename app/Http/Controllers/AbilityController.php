@@ -48,14 +48,15 @@ class AbilityController extends Controller
      */
     public function store(Request $request, Role $role)
     {
+        $request->validate([
+            'abilitiy' => ['required', 'exists:abilities,id']
+        ]);
         try {
             $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
             if (!in_array('super-db.abilities.store', $roles_Abilitiles)) {
                 abort(403);
             }
-            $request->validate([
-                'abilitiy' => ['required', 'exists:abilities,id']
-            ]);
+  
             $abilities = $request->post('abilitiy', []);
 
             $role->abilities()->attach($abilities);
@@ -104,15 +105,16 @@ class AbilityController extends Controller
     public function update(Request $request, Role $role)
 
     {
+        $request->validate([
+            'abilitiy' => ['required']
+        ]);
         try {
             $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
             if (!in_array('super-db.abilities.update', $roles_Abilitiles)) {
                 abort(403);
             }
 
-            $request->validate([
-                'abilitiy' => ['required']
-            ]);
+   
             $abilities = $request->post('abilitiy', []);
 
 

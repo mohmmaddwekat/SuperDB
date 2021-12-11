@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Connection\ErrorHandlerMsg;
 use App\db\ComparisonOperators;
 use App\exportfile\Exportcsv;
 use App\exportfile\Exportsql;

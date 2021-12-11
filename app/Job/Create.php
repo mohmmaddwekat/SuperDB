@@ -1,16 +1,17 @@
 <?php
 namespace App\Job;
 
-use App\Rules\CheckNotConnectRole;
-use Exception;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+use App\Connection\ErrorHandlerMsg;
+
 
 class Create implements Job{
 
 
     public function create($query,$link){
         if(mysqli_query($link, $query)){
+            ErrorHandlerMsg::setLog('debug','Table Created! ::'.$query);
+            ErrorHandlerMsg::setLog('info','Table Created!');
+
             return true;
         } 
         if(!mysqli_query($link, $query)){
@@ -23,7 +24,8 @@ class Create implements Job{
             return ['success','Table Created!'];
         } 
         if($bool == false){
-          return ['error',mysqli_error($link)];
+        ErrorHandlerMsg::setLog('error',mysqli_error($link));
+          return ['error','Oops, Error performing query'];
         }    
     }
     

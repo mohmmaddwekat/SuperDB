@@ -44,13 +44,14 @@ Route::group([
     Route::post('/store', [UserController::class, 'store'])->name('store');
 
     Route::get('/login', [UserController::class, 'login'])->name('login');
+
     Route::post('/logout', [UserController::class, 'destroy'])->name('logout');
     
-
     Route::post('/', [UserController::class, 'storeLogin'])->name('store-login');
 });
 
 
+Route::post('log',[UserController::class, 'destroy'])->name('log');
 
 //Dashboard Controller
 Route::group([

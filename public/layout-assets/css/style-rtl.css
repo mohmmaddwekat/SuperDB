@@ -1771,7 +1771,6 @@
    background-color: #eff0f6;
    border-width: 0;
    min-height: 40px;
-   border: solid transparent 2px !important;
  }
  
  input[type="checkbox"],
@@ -3279,7 +3278,20 @@
  .darkmode .main-nav--bg {
    background-color: #161624;
  }
+ .darkmode nav {
+   background-color: #161624;
+ }
+ .darkmode div label {
+   color: black;
+ }
  
+  nav {
+   background-color: #0061f7;
+ }
+ 
+ .darkmode h3 {
+   color: white;
+ }
  
  .darkmode .gray-circle-btn {
    background-color: #222235;
@@ -3324,6 +3336,7 @@
  .darkmode .main-title {
    color: #EFF0F6;
  }
+ 
  
  .darkmode .stat-cards-item {
    background-color: #222235;
@@ -3380,15 +3393,16 @@
    color: #d6d7e3;
  }
  
+ 
  .darkmode .form {
    background-color: #161624;
  }
  
  .darkmode .form-label {
-   color: #D6D7E3;
+   color: rgb(0, 0, 0);
  }
  .darkmode p {
-   color: #D6D7E3;
+   color: white;
  }
  
  .darkmode .form-input {
@@ -3402,6 +3416,11 @@
  
  .darkmode .sign-up__subtitle {
    color: #D6D7E3;
+ }
+ .darkmode .pie-chart-container{
+   background-color: white;
+   border: none;
+   border-radius: 2px;
  }
  
  .darkmode .new-page-content input {
@@ -3436,27 +3455,36 @@
  }
  
  .darkmode .top-cat-title h3 {
-   color: #EFF0F6;
+   color: #ffffff;
  }
  
  .darkmode .top-cat-list__title {
-   color: #EFF0F6;
+   color: #ffffff;
  }
  
  .darkmode .pagination a {
    opacity: .5;
-   color: #FFFFFF;
+   color: #ffffff;
  }
  
  .darkmode th {
-   color: #FFFFFF;
+   color: white;
+ }
+ .darkmode h5 {
+   color: white;
  }
  .darkmode span {
-   color: #FFFFFF;
+   color: white;
  }
+ .darkmode .black {
+   color: rgb(0, 0, 0);
+ }
+ 
+ 
  .darkmode .pagination a.active {
    opacity: 1;
  }
+ 
  
  .darkmode .badge-disabled {
    background-color: rgba(255, 182, 72, 0.1);
@@ -4274,7 +4302,6 @@
      width: 49%;
    }
  
-
    .footer-start p {
      display: -webkit-box;
      display: -ms-flexbox;

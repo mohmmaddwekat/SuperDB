@@ -41,8 +41,10 @@ class ConnectionController extends Controller
       }
       $singletonDB = SingletonDB::getInstance();
 
-      $singletonDB->create($name);
-      return DB::table('connection')->where('name', '=', $name)->get(['name', 'id'])->toArray();
+      if($singletonDB->create($name)){
+        return DB::table('connection')->where('name', '=', $name)->get(['name', 'id'])->toArray();
+      }
+      return [];
     } catch (Exception $e) {
     return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
   }

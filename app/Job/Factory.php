@@ -1,7 +1,6 @@
 <?php
 namespace App\Job;
 
-use Illuminate\Support\Facades\Schema;
 
 class Factory{
     public function SplitQuery($query){

@@ -1,8 +1,9 @@
 <?php
 namespace App\Job;
 
+use App\Connection\ErrorHandlerMsg;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Schema;
+
 
 class Drop implements Job{
 
@@ -14,6 +15,8 @@ class Drop implements Job{
             abort(403);
         }
         if(mysqli_query($link, $query)){
+            ErrorHandlerMsg::setLog('debug','Table Droped! ::'.$query);
+            ErrorHandlerMsg::setLog('info','Table Droped!');
             return true;
         } 
         if(!mysqli_query($link, $query)){
@@ -25,7 +28,8 @@ class Drop implements Job{
             return ['success','Table Droped!'];
         } 
         if($bool == false){
-          return ['error',mysqli_error($link)];
+            ErrorHandlerMsg::setLog('error',mysqli_error($link));
+          return ['error','Oops, Error performing query'];
         }   
     }
 }
