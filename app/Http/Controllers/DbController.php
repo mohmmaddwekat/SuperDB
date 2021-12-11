@@ -42,7 +42,7 @@ class DbController extends Controller
 
             return redirect()->route('super-db.jobs.index', $DBconnection->id)->with("success", "Database Export Successfully!");
         } catch (Exception $e) {
-            abort(404);
+            return ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
         }
     }
 }
