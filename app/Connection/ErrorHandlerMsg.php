@@ -16,8 +16,27 @@ use Exception;
    ]; */ 
    
 class ErrorHandlerMsg{
-    
-    public static function setLog($Level , $msg){
+
+    public static  function customeExceptionMsg($classOfException , $defaultMsg){
+        $msg = $defaultMsg;
+        switch ($classOfException) {
+            case 'DivisionByZeroError':
+               $msg = "unexpected number horaay :D";
+                break;
+          
+            default:
+           
+            break;
+           
+        }
+        return $msg;
+    }
+
+
+    public static function setLog($Level , $msg, $classOfException = null){
+        if ($classOfException != null){
+            $msg =  ErrorHandlerMsg::customeExceptionMsg($classOfException, $msg);
+           }
         switch ($Level) {
             case 'emergency':
                 Log::emergency($msg);
@@ -49,17 +68,22 @@ class ErrorHandlerMsg{
         }
       
     }
-    public static function getErrorMsgWithLog($msg, $LogLevel="error", $title="Error"){
+    public static function getErrorMsgWithLog($msg,$classOfException = null, $LogLevel="error", $title="Error"){
       
-       
-        ErrorHandlerMsg::setLog($LogLevel, $msg);
+       if ($classOfException != null){
+        $msg =  ErrorHandlerMsg::customeExceptionMsg($classOfException, $msg);
+       }
+        ErrorHandlerMsg::setLog($LogLevel, $msg,$classOfException);
       if(\Request::ajax()){
         return response()->json([$title  => $msg], 400);
         }else{
         return \Redirect::back()->withErrors([$title => $msg]);
         }
     }
-    public static function getErrorMsg($msg, $title="Error"){
+    public static function getErrorMsg($msg,$classOfException=null, $title="Error"){
+        if ($classOfException != null){
+            $msg =  ErrorHandlerMsg::customeExceptionMsg($classOfException, $msg);
+           }
       
       if(\Request::ajax()){
         return response()->json([$title  => $msg], 400);
@@ -68,8 +92,8 @@ class ErrorHandlerMsg{
         }
     }
     
-    
+   
+    }
 
-}
 
 ?>
