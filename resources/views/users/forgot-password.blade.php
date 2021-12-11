@@ -14,7 +14,7 @@
                         @endif
 
                         <div class="card-body  text-dark">
-                            <form action="{{ route('password.request') }}" method="post" >
+                            <form action="{{ route('password.email') }}" method="post" >
                                 @csrf
                                 <h1 class="  text-center">Reset Password</h1>
                                 <div class="form-group">

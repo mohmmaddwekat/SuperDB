@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\Facades\Log;
+
+
 
 class UserController extends Controller
 {
@@ -18,6 +21,9 @@ class UserController extends Controller
 
     public function index()
     {
+        $message ="TEST LOG";
+        //Log::emergency($message);
+        Log::info($message);
         return view('users.index');
     }
     public function register()
@@ -37,7 +43,9 @@ class UserController extends Controller
                 ]
             );
         } catch (Exception $e) {
-            abort(404);
+            
+            return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+            //abort(404);
         }
     }
 
@@ -79,13 +87,16 @@ class UserController extends Controller
 
             return redirect()->route('users.register')->with('success', 'Create new user!');
         } catch (Exception $e) {
-            abort(404);
+            
+            return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+            //abort(404);
         }
     }
 
     public function login()
     {
         if (Auth::check()) {
+
             return redirect()->route('super-db.dashboard');
 
         }
@@ -97,6 +108,8 @@ class UserController extends Controller
      * @param  \App\Http\Requests\Auth\LoginRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
+
+
     public function storeLogin(Request $request)
     {
         $credentials = $request->validate([

@@ -24,7 +24,8 @@ class InsertController extends Controller
                 'connection' => $connection
             ]);
         } catch (Exception $e) {
-            abort(404);
+            return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+            //abort(404);
         }
     }
 
@@ -77,7 +78,7 @@ class InsertController extends Controller
             mysqli_close($link);
             return redirect()->route('super-db.inserts.index', $DBconnection->id)->with($message[0], $message[1]);
         } catch (Exception $e) {
-            abort(404);
+            return ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
         }
     }
 
@@ -95,7 +96,8 @@ class InsertController extends Controller
                 'table' => $name
             ]);
         } catch (Exception $e) {
-            abort(404);
+            return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+            // abort(404);
         }
     }
 
@@ -126,7 +128,8 @@ class InsertController extends Controller
             }
             return redirect()->route('super-db.jobs.index', $DBconnection->id)->with($message[0], $message[1]);
         } catch (Exception $e) {
-            abort(404);
+            return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+            //abort(404);
         }
     }
 
@@ -146,7 +149,8 @@ class InsertController extends Controller
                 'table' => $table
             ]);
         } catch (Exception $e) {
-            abort(404);
+            return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+            // abort(404);
         }
     }
 
@@ -180,7 +184,8 @@ class InsertController extends Controller
                 'table' => $dataviewcolumn["table"]
             ]);
         } catch (Exception $e) {
-            abort(404);
+            return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+            // abort(404);
         }
     }
 }

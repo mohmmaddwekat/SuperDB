@@ -8,12 +8,15 @@
                         <x-auth-validation-errors class="mb-4 " :errors="$errors" />
 
                         <div class="card-body  text-dark">
-                            <form action="{{ route('password.email',$request-> email  ) }}" method="post" >
+                            <form method="POST" action="{{ route('password.update', $request-> email ) }}"  >
                                 @csrf
                                 <h1 class="  text-center">Reset Password</h1>
                                 <input type="hidden" name ="token" value="{{ $request->route('token') }}">
 
-                
+                                <div class="form-group">
+                                    <label for="email" class="form-group ">Email</label>
+                                    <input type="email" name="email" name="email" class="form-control  @error('email') is-invalid @enderror"  value="">
+                                  </div>
 
                                   <div class="form-group">
                                     <label for="Password" class="form-label ">{{ __('Password') }}</label>
@@ -21,8 +24,8 @@
                                   </div>
 
                                   <div class="form-group">
-                                    <label for="Password_confirmation" class="form-label ">{{ __('Confirm Password') }}</label>
-                                    <input type="password"  name="password_conformation" class="form-control  @error('password') is-invalid @enderror " >
+                                    <label for="password_confirmation" class="form-label ">{{ __('Confirm Password') }}</label>
+                                    <input type="password"  name="password_confirmation" class="form-control  @error('password') is-invalid @enderror " >
                                   </div>
 
                                 

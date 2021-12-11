@@ -3,8 +3,9 @@
 
 
 <x-layout title="{{ __('Connectopin') }}">
+  <div id="errDiv">
 
-
+  </div>
 
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
     <div class="row g-3">
@@ -58,9 +59,14 @@ $(document).ready(function () {
             type: "POST",
             dataType: "json",
             error: function (xhr, status, err) {
-                alert(err);
+          
+          var jsonResponse = JSON.parse(xhr.responseText);
+         viewError("Error", Object.values(jsonResponse)[0]);
+         
+           
             },
             success: function (result) {
+          
                 $("tbody").append(
                     `<tr><td>${result[0].name}</td><td><a type="button" href="connection/delete/${result[0].id}" class="btn btn-danger">{{ __('Delete') }}</a>
                     <a type="button" href="jobs/${result[0].id}" class="btn btn-primary">@lang('Show')</a></td></tr>`

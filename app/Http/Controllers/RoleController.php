@@ -31,7 +31,8 @@ class RoleController extends Controller
                 ]
             );
         } catch (Exception $e) {
-            abort(404);
+            return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+            // abort(404);
         }
     }
 
@@ -55,7 +56,8 @@ class RoleController extends Controller
                 ]
             );
         } catch (Exception $e) {
-            abort(404);
+            return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+            //abort(404);
         }
     }
 
@@ -84,7 +86,8 @@ class RoleController extends Controller
 
             return redirect()->route('super-db.roles.index')->with('success', 'Roles created!');
         } catch (Exception $e) {
-            abort(404);
+            return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+            //abort(404);
         }
     }
 

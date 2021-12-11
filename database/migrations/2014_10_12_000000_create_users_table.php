@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->enum('type', ['super-admin','admin','staff','reader']);
 
             $table->timestamps();
+            $table->rememberToken();
         });
     }
 

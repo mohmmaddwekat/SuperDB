@@ -40,7 +40,8 @@ class JobController extends Controller
                 'tables' => $tables
             ]);
         } catch (Exception $e) {
-            abort(404);
+            return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+            //abort(404);
         }
     }
 
@@ -61,7 +62,8 @@ class JobController extends Controller
                 'table' => $dataviewcolumn["table"]
             ]);
         } catch (Exception $e) {
-            abort(404);
+            return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+            //abort(404);
         }
     }
 
@@ -77,7 +79,8 @@ class JobController extends Controller
             }
             return view('super-db.versionControl.update', ['files' => $file, 'table' => $table, 'id' => $id]);
         } catch (Exception $e) {
-            abort(404);
+            return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+            //  abort(404);
         }
     }
 
@@ -98,7 +101,8 @@ class JobController extends Controller
             mysqli_close($link);
             return redirect()->route('super-db.jobs.index', $DBconnection->id)->with($message[0], $message[1]);
         } catch (Exception $e) {
-            abort(404);
+            return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+            // abort(404);
         }
     }
 
@@ -126,7 +130,8 @@ class JobController extends Controller
                 'table' => $dataviewcolumn["table"]
             ]);
         } catch (Exception $e) {
-            abort(404);
+            return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+            // abort(404);
         }
     }
     // public function deletRow($connection_id, $table, $column)

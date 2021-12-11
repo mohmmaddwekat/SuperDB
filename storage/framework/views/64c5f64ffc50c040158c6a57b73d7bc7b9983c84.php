@@ -16,9 +16,9 @@
     <?php else: ?>
         <link rel="stylesheet" href="/layout-assets/css/style.css">
     <?php endif; ?>
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet"/>
     <script src="<?php echo e(asset('https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js')); ?>"></script>
 </head>
 
@@ -190,13 +190,32 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
-
     <!-- Chart library -->
     <script src="/layout-assets/plugins/chart.min.js"></script>
     <!-- Icons library -->
     <script src="/layout-assets/plugins/feather.min.js"></script>
+<!-- toastr library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <!-- Custom scripts -->
+    <script src="/layout-assets/js/addOn.js"></script>
     <script src="/layout-assets/js/script.js"></script>
+    <?php if($errors->any()): ?>
+    <?php $__errorArgs = ['msg'];
+$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
+if ($__bag->has($__errorArgs[0])) :
+if (isset($message)) { $__messageOriginal = $message; }
+$message = $__bag->first($__errorArgs[0]); ?>  
+    <script>
+       viewError("Error",<?php echo e($message); ?>)
+    </script>
+    <?php unset($message);
+if (isset($__messageOriginal)) { $message = $__messageOriginal; }
+endif;
+unset($__errorArgs, $__bag); ?>
+    <?php endif; ?>
+    <script>
+      // viewError("error msg","error header")
+    </script>
 </body>
 
 </html>
