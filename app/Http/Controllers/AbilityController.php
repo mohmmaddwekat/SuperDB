@@ -124,8 +124,7 @@ class AbilityController extends Controller
 
             return redirect()->route('super-db.roles.index')->with('success', 'Roles with Abilities upated!');
         } catch (Exception $e) {
-            return ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
-            //abort(404);
+            abort(404);
         }
     }
 }

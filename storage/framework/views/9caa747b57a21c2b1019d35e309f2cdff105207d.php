@@ -14,7 +14,7 @@
                         <form action="<?php echo e(route('super-db.inserts.store',  $connection->id)); ?>" method="post" enctype="multipart/form-data">
                             <?php echo csrf_field(); ?>
                             <div class="mb-3">
-                                <label for="name table" class="form-label"><?php echo e(__('Enter name of table')); ?></label>
+                                <label for="name table" class="form-label dark"><?php echo e(__('Enter name of table')); ?></label>
                                 <input type="text" name="nametable" class="form-control" id="nametable">
                               </div>
 

@@ -4,7 +4,7 @@ use App\Http\Controllers\AbilityController;
 use App\Http\Controllers\ConnectionController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DbController;
-use App\Http\Controllers\importController;
+use App\Http\Controllers\ImportController;
 use App\Http\Controllers\InsertController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\LangController;
@@ -86,8 +86,8 @@ Route::group([
 
 
     ], function () {
-        Route::get('/{id}', [importController::class, 'index'])->name('index');
-        Route::post('/{id}', [importController::class, 'add'])->name('add');
+        Route::get('/{id}', [ImportController::class, 'index'])->name('index');
+        Route::post('/{id}', [ImportController::class, 'add'])->name('add');
     });
 
 

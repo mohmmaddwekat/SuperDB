@@ -9,8 +9,6 @@ class Create implements Job{
 
     public function create($query,$link){
         if(mysqli_query($link, $query)){
-            ErrorHandlerMsg::setLog('debug','Table Created! ::'.$query);
-            ErrorHandlerMsg::setLog('info','Table Created!');
 
             return true;
         } 
@@ -24,7 +22,6 @@ class Create implements Job{
             return ['success','Table Created!'];
         } 
         if($bool == false){
-        ErrorHandlerMsg::setLog('error',mysqli_error($link));
           return ['error','Oops, Error performing query'];
         }    
     }

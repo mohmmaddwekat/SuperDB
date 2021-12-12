@@ -1,12 +1,12 @@
 <?php
-namespace App\exportfile;
+namespace App\RestoreDB\ExportDB;
 
 
-class Fun implements interfacefun{
+class MangeDataBase {
 
-    public function storeSCV($numColumns,$result,$handle){
-        for($i = 0; $i < $numColumns; $i++) {         
-        while($row = $result->fetch_row()) { 
+    public function storeSCV($numColumns,$rows,$handle){
+
+        while($row = $rows->fetch_row()) { 
             $data= array();
             for($j=0; $j < $numColumns; $j++) { 
                 $row[$j] = addslashes($row[$j]);
@@ -15,7 +15,6 @@ class Fun implements interfacefun{
             }
             fputcsv($handle, $data);
         }
-    }
     }
     /**
     * get query for create table 
@@ -64,5 +63,49 @@ class Fun implements interfacefun{
         } 
         
          return [$NameDB, $tables];
+    }
+
+    /**
+    * 
+    * set name of columns in sql file
+    */
+    public function storeNameOfColumns($nameColunms,$return){
+
+        
+        foreach ($nameColunms as $key => $colunm){
+            if($key == (count($nameColunms)-1)){
+                $return .="`$colunm`";
+                break;
+            }
+            $return .="`$colunm`".', ';
+            
+        }
+        return $return;
+        
+    }
+    
+    /**
+    * 
+    *store data to sql file 
+    * 
+    */ 
+    public function storeDataOfSQl($rows,$return){
+        foreach ($rows as $key => $row){
+            $return .='(';
+            foreach ($row as $index => $value){
+                if($index == (count($row)-1)){
+                    $return .="'$value'";
+                    break;
+                }
+                $return .="'$value'".', ';
+            }
+            
+            if($key == (count($rows)-1)){
+                $return .=");\n";
+                break;
+            }
+            $return .="),\n";
+        }
+        return $return;
     }
 }

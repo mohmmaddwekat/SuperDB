@@ -1,5 +1,5 @@
 <?php
-namespace App\SystemFile;
+namespace App\RestoreDB\ImportDB;
 class Factory{
     public function build($name,$tablename,$id,$file){
         if ($name == "csv") {

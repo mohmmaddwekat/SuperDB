@@ -24,8 +24,7 @@ class SqlController extends Controller
                 'connection' => $DBconnection,
             ]);
         } catch (Exception $e) {
-            return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
-            //abort(404);
+            abort(404);
         }
     }
 
@@ -53,8 +52,7 @@ class SqlController extends Controller
 
             return redirect()->route('super-db.sqls.index', $DBconnection->id)->with($message[0], $message[1]);
         } catch (Exception $e) {
-            return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
-            // abort(404);
+            abort(404);
         }
     }
 }

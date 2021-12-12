@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\ErrorHandlerMsg;
-use App\SystemFile\Factory;
+use App\RestoreDB\ImportDB\Factory;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
-class importController extends Controller
+class ImportController extends Controller
 {
     function index($id){
         try{

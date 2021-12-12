@@ -1,15 +1,15 @@
 <?php
-namespace App\VersionContro;
+namespace App\RestoreDB\VersionControl;
 
-use App\exportfile\Exportsql;
-use App\exportfile\Fun;
-use App\SystemFile\Factory;
+use App\RestoreDB\ExportDB\ExportAsSQL;
+use App\RestoreDB\ExportDB\MangeDataBase;
+use App\RestoreDB\ImportDB\Factory;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use mysqli;
 use PDO;
 
-class VersionContro {
+class VersionControl {
     private $DBconnection;
     private $conn;
     function __construct($id)
@@ -30,11 +30,11 @@ class VersionContro {
         return $tables;
     }
     function store($tables){
-        $comparisonoperators =new Fun;
+        $comparisonoperators =new MangeDataBase;
         list($NameDB, $tables) = $comparisonoperators->ComparisonOperators($tables,$this->DBconnection,$this->conn);
         $handle = Storage::makeDirectory($this->DBconnection->name."/".$tables[0]."/");
         $handle = fopen("../storage/app/".$this->DBconnection->name."/".$tables[0]."/".$NameDB."_".time().'.sql','w+');
-        $sql = new Exportsql;
+        $sql = new ExportAsSQL;
         $sql->export($tables, $this->conn, $handle);
         fclose($handle);        
     }

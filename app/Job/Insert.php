@@ -11,8 +11,6 @@ class Insert implements Job
         public function insert($query, $link)
         {
                 if (mysqli_query($link, $query)) {
-                        ErrorHandlerMsg::setLog('debug','Data inserted! ::'.$query);
-                        ErrorHandlerMsg::setLog('info','Data inserted!');
                         return true;
                 }
                 if (!mysqli_query($link, $query)) {
@@ -25,7 +23,6 @@ class Insert implements Job
                         return ['success','Data inserted!'];
                 } 
                 if($bool == false){
-                       ErrorHandlerMsg::setLog('error',mysqli_error($link));
                       return ['error','Oops, Error performing query'];
                 }              
         }

@@ -1,7 +1,7 @@
 <?php
-namespace App\exportfile;
+namespace App\RestoreDB\ExportDB;
 
-interface interfaceExport{
+interface ExportInterface{
     public function export($tables, $db, $handle);
 }
 
