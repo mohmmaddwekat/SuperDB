@@ -44,8 +44,8 @@ return [
 
     'Create new Roles' => 'قم بإنشاء أدوار جديدة',
     'List Roles' => 'قائمة الأدوار',
-    '# abilities' => 'رقم القدرات',
-    'Edit abilities' => 'تعديل القدرات',
+    '# permissions' => 'رقم القدرات',
+    'Edit permissions' => 'تعديل القدرات',
     'Edit' => 'تعديل',
     'Edit Role' => 'تعديل الدور',
     'Add' => 'اضافة',
@@ -78,9 +78,9 @@ return [
     'Staff' => 'طاقم عمل',
     'Reader'=> 'قارئ',
     'Type of roles'=> 'نوع الأدوار',
-    'Create abilities' => 'اضافة القدرات',
+    'Create permissions' => 'اضافة القدرات',
     'Add admin permissions :' => 'إضافة أذونات المسؤول:',
-    'Create New abilities' => 'اضافة قدرات جديدة',
+    'Create New permissions' => 'اضافة قدرات جديدة',
 
 
     'Reset Password' => 'إعادة تعيين كلمة المرور',

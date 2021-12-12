@@ -2,7 +2,7 @@
 namespace App\Job;
 
 
-class Factory{
+class QueryHandler{
     public function SplitQuery($query){
         $order = array("\r\n", "\r", "", ",", ";");
         $query = str_replace($order, "", $query);
@@ -12,27 +12,27 @@ class Factory{
         return $query;
     }
 
-    public function factory($query,$link){
+    public function handleQueries($query,$mysqlConnection){
         $splitquery = $this->SplitQuery($query);
         if (in_array('CREATE', $splitquery)) {
             $create = new  Create();
-            $bool = $create->create($query,$link);
-            return $create->send($bool,$link);
+            $bool = $create->create($query,$mysqlConnection);
+            return $create->send($bool,$mysqlConnection);
         }
         if (in_array('DROP', $splitquery) and !in_array('ALTER', $splitquery)) {
             $drop = new  Drop();
-            $bool = $drop->drop($query,$link);
-            return $drop->send($bool,$link);
+            $bool = $drop->drop($query,$mysqlConnection);
+            return $drop->send($bool,$mysqlConnection);
         }
         if (in_array('ALTER', $splitquery)) {
             $alter = new  Alter();
-            $bool= $alter->alter($query,$link);
-            return $alter->send($bool,$link);
+            $bool= $alter->alter($query,$mysqlConnection);
+            return $alter->send($bool,$mysqlConnection);
         }
         if (in_array('INSERT', $splitquery)) {
             $insert = new  Insert();
-            $bool = $insert->insert($query,$link);
-            return $insert->send($bool,$link);
+            $bool = $insert->insert($query,$mysqlConnection);
+            return $insert->send($bool,$mysqlConnection);
         }
         return ['error','Oops. Something went wrong'];
     }

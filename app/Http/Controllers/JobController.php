@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Job\Factory;
+use App\Job\QueryHandler;
 use App\Models\Job;
 use App\Rules\CheckNotConnectRole;
 use App\widgets\viewColumn;
@@ -22,8 +23,8 @@ class JobController extends Controller
         try {
 
 
-            $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
-            if (!in_array('super-db.jobs.index', $roles_Abilitiles)) {
+            $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
+            if (!in_array('super-db.jobs.index', $roles_permissions)) {
                 abort(403);
             }
             $DBconnection = DB::table('connection')->where('id', '=', $id)->first(['name', 'id']);
@@ -47,8 +48,8 @@ class JobController extends Controller
     public function viewColumn($table, $connection_id)
     {
         try {
-            $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
-            if (!in_array('super-db.jobs.view-column', $roles_Abilitiles)) {
+            $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
+            if (!in_array('super-db.jobs.view-column', $roles_permissions)) {
                 abort(403);
             }
             $viewcolumn = new viewColumn;
@@ -85,16 +86,16 @@ class JobController extends Controller
     public function deletTable($connection_id, $name)
     {
         try {
-            $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
-            if (!in_array('super-db.jobs.delete-table', $roles_Abilitiles)) {
+            $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
+            if (!in_array('super-db.jobs.delete-table', $roles_permissions)) {
                 abort(403);
             }
 
             $DBconnection = DB::table('connection')->where('id', '=', $connection_id)->first(['name', 'id']);
             $link = mysqli_connect("localhost", "root", "", $DBconnection->name);
             $query = "DROP TABLE $name;";
-            $factory = new Factory;
-            $message = $factory->factory($query, $link);
+            $factory = new QueryHandler;
+            $message = $factory->handleQueries($query, $link);
             mysqli_close($link);
             return redirect()->route('super-db.jobs.index', $DBconnection->id)->with($message[0], $message[1]);
         } catch (Exception $e) {
@@ -106,15 +107,15 @@ class JobController extends Controller
     public function deletColumn($connection_id, $table, $column)
     {
         try {
-            $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
-            if (!in_array('super-db.jobs.delete-column', $roles_Abilitiles)) {
+            $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
+            if (!in_array('super-db.jobs.delete-column', $roles_permissions)) {
                 abort(403);
             }
             $DBconnection = DB::table('connection')->where('id', '=', $connection_id)->first(['name', 'id']);
             $link = mysqli_connect("localhost", "root", "", $DBconnection->name);
             $query = "ALTER TABLE $table DROP COLUMN $column;";
-            $factory = new Factory;
-            $message = $factory->factory($query, $link);
+            $factory = new QueryHandler;
+            $message = $factory->handleQueries($query, $link);
             mysqli_close($link);
 
             $viewcolumn = new viewColumn;

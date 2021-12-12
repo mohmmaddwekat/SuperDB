@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\AbilityController;
+use App\Http\Controllers\UsersPermissionsController;
 use App\Http\Controllers\ConnectionController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DbController;
@@ -13,7 +13,7 @@ use App\Http\Controllers\SqlController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VersionControlController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Security\ForgotPassword;
+
 
 
 /*
@@ -148,7 +148,7 @@ Route::group([
 
     ], function () {
         Route::get('/', [ConnectionController::class, 'index'])->name('index');
-        Route::get('/delete/{id}', [ConnectionController::class, 'delete'])->name('delete');
+        Route::get('/delete/{id}', [ConnectionController::class, 'deleteDBConnection'])->name('delete');
         Route::post('/add/{id}', [ConnectionController::class, 'add'])->name('add');
     });
 
@@ -166,15 +166,15 @@ Route::group([
         Route::put('/{role}', [RoleController::class, 'update'])->name('update');
         Route::delete('/{role}', [RoleController::class, 'destroy'])->name('destroy');
     });
-    //abilities Controller
+    //permissions Controller
     Route::group([
-        'prefix' => '/abilities',
-        'as' => 'abilities.',
+        'prefix' => '/permissions',
+        'as' => 'permissions.',
     ], function () {
 
-        Route::get('/create/{role}', [AbilityController::class, 'create'])->name('create');
-        Route::post('/{role}', [AbilityController::class, 'store'])->name('store');
-        Route::get('/{role}', [AbilityController::class, 'edit'])->name('edit');
-        Route::put('/{role}', [AbilityController::class, 'update'])->name('update');
+        Route::get('/create/{role}', [UsersPermissionsController::class, 'createUserRole'])->name('create');
+        Route::post('/{role}', [UsersPermissionsController::class, 'store'])->name('store');
+        Route::get('/{role}', [UsersPermissionsController::class, 'editRolePermissions'])->name('edit');
+        Route::put('/{role}', [UsersPermissionsController::class, 'updateUserRole'])->name('update');
     });
 });

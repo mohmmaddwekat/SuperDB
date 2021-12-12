@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRolesAbilitiesTable extends Migration
+class CreateRolespermissionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateRolesAbilitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('roles_abilities', function (Blueprint $table) {
+        Schema::create('roles_permissions', function (Blueprint $table) {
             $table->foreignId('role_id')->constrained('roles', 'id')->cascadeOnDelete();
-            $table->foreignId('ability_id')->constrained('abilities', 'id')->cascadeOnDelete();
-            $table->primary(['role_id', 'ability_id']);
+            $table->foreignId('permission_id')->constrained('permissions', 'id')->cascadeOnDelete();
+            $table->primary(['role_id', 'permission_id']);
             $table->softDeletes();
         });
     }
@@ -28,6 +28,6 @@ class CreateRolesAbilitiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('roles_abilities');
+        Schema::dropIfExists('roles_permissions');
     }
 }

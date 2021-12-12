@@ -18,8 +18,8 @@ class DashboardController extends Controller
         try{
            
            // throw new \Exception('Error found');
-            $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
-            if(!in_array('super-db.dashboard',$roles_Abilitiles)){
+            $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
+            if(!in_array('super-db.dashboard',$roles_permissions)){
                 abort(403);
             }
     

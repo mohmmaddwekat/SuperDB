@@ -3,23 +3,23 @@ namespace App\Job;
 
 
 
-class Alter implements Job{
+class Alter implements JobInterface{
 
-    public function alter($query,$link){
-        if(mysqli_query($link, $query)){
+    public function alter($query,$mysqlConnection){
+        if(mysqli_query($mysqlConnection, $query)){
 
 
             return true;
         } 
-        if(!mysqli_query($link, $query)){
+        if(!mysqli_query($mysqlConnection, $query)){
           return false;
         }    
     }
-    public function send($bool,$link) {
-        if($bool == true){
+    public function send($isSucceeded,$mysqlConnection) {
+        if($isSucceeded == true){
             return ['success','Alter Created!'];
         } 
-        if($bool == false){
+        if($isSucceeded == false){
           return ['error','Oops, Error performing query'];
         }    
 

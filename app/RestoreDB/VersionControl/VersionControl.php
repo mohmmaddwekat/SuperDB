@@ -1,47 +1,62 @@
 <?php
-namespace App\RestoreDB\VersionControl;
+namespace App\RestoreDB\snapshotControl;
 
 use App\RestoreDB\ExportDB\ExportAsSQL;
 use App\RestoreDB\ExportDB\MangeDataBase;
-use App\RestoreDB\ImportDB\Factory;
+use App\RestoreDB\ImportDB\ImportHandler;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use mysqli;
-use PDO;
+
 
 class VersionControl {
-    private $DBconnection;
-    private $conn;
+    private $connectionName;
+    private $mysqlConnection;
+ 
+    /*
+    *Constructor to create database connection using connection details (port, connection name)
+    */
     function __construct($id)
     {
-        $this->DBconnection = DB::table('connection')->where('id','=',$id)->first(['name','id']);
-        $this->conn = new mysqli('localhost', 'root', '', $this->DBconnection->name);
+        $this->connectionName = DB::table('connection')->where('id','=',$id)->first(['name']);
+        $this->mysqlConnection = new mysqli('localhost', 'root', '', $this->connectionName->name);
     }
+
+    /*
+        *Show connection if created successfully
+        */
     function show(){
         $tables = null;
-        if ($this->conn->connect_error) {
-            die("Connection with the database failed: </br>" . $this->conn->connect_error);
+        if ($this->mysqlConnection->connect_error) {
+            die("Connection with the database failed: </br>" . $this->mysqlConnection->connect_error);
         }
-        if($result = $this->conn->query('SHOW TABLES')){
-        while($row = mysqli_fetch_array($result, MYSQLI_NUM)){
+        if($query = $this->mysqlConnection->query('SHOW TABLES')){
+        while($row = mysqli_fetch_array($query, MYSQLI_NUM)){
             $tables[] = $row[0];
         }
         }
         return $tables;
     }
+    /*
+    *Take snapshot by storing the database in a SQL file
+    */
     function store($tables){
-        $comparisonoperators =new MangeDataBase;
-        list($NameDB, $tables) = $comparisonoperators->ComparisonOperators($tables,$this->DBconnection,$this->conn);
-        $handle = Storage::makeDirectory($this->DBconnection->name."/".$tables[0]."/");
-        $handle = fopen("../storage/app/".$this->DBconnection->name."/".$tables[0]."/".$NameDB."_".time().'.sql','w+');
+        $comparisonOperators =new MangeDataBase;
+        list($NameDB, $tables) = $comparisonOperators->comparisonOperators($tables,$this->connectionName,$this->mysqlConnection);
+        $file = Storage::makeDirectory($this->connectionName->name."/".$tables[0]."/");
+        $file = fopen("../storage/app/".$this->connectionName->name."/".$tables[0]."/".$NameDB."_".time().'.sql','w+');
         $sql = new ExportAsSQL;
-        $sql->export($tables, $this->conn, $handle);
-        fclose($handle);        
+        $sql->export($tables, $this->mysqlConnection, $file);
+        fclose($file);        
     }
+
+    /*
+    *Update the newly snapshot taken
+    */
     function update($file,$table){
-        $version = new Factory();
-        $file = file_get_contents("../storage/app/".$this->DBconnection->name."/".$table."/".$file);
-        $version->build('sql',$table,$this->DBconnection->id,$file);
+        $snapshot = new ImportHandler();
+        $file = file_get_contents("../storage/app/".$this->connectionName->name."/".$table."/".$file);
+        $snapshot->handleImport('sql',$table,$this->connectionName->id,$file);
     }
 
 }

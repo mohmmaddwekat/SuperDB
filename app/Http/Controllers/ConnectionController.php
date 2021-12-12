@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Connection\CreateMySQLDataBase;
 use App\Exceptions\ErrorHandlerMsg;
-use App\Connection\MysqlDB;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -13,12 +14,12 @@ class ConnectionController extends Controller
   public function  index()
   {
     try {
-      $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
-      if (!in_array('super-db.connection.index', $roles_Abilitiles)) {
+      $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
+      if (!in_array('super-db.connection.index', $roles_permissions)) {
         abort(403);
       }
-      $connections = DB::table('connection')->get(['name', 'id']);
-      return view('super-db.connections.index', ['connections' => $connections]);
+      $databases = DB::table('connection')->get(['name', 'id']);
+      return view('super-db.connections.index', ['connections' => $databases]);
     } catch (Exception $e) {
       ErrorHandlerMsg::setLog('erorr',$e->getMessage());
       return ErrorHandlerMsg::getErrorMsgWithLog("You must be logged in");
@@ -27,12 +28,12 @@ class ConnectionController extends Controller
   public function add($name)
   {
       try {
-      $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
-      if (!in_array('super-db.connection.add', $roles_Abilitiles)) {
+      $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
+      if (!in_array('super-db.connection.add', $roles_permissions)) {
         abort(403);
       }
-      $MysqlDB = MysqlDB::getInstance();
-      if($MysqlDB->create($name)){
+      $MysqlDB = CreateMySQLDataBase::getInstance();
+      if($MysqlDB->createDatabase($name)){
         return DB::table('connection')->where('name', '=', $name)->get(['name', 'id'])->toArray();
       }
       return [];
@@ -41,16 +42,16 @@ class ConnectionController extends Controller
     return [];
   }
 }
-  public function delete($id)
+  public function deleteDBConnection($id)
   {
     try {
-      $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
-      if (!in_array('super-db.connection.delete', $roles_Abilitiles)) {
+      $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
+      if (!in_array('super-db.connection.delete', $roles_permissions)) {
         abort(403);
       }
-      $MysqlDB = MysqlDB::getInstance();
+      $MysqlDB = CreateMySQLDataBase::getInstance();
       $connection = DB::table('connection')->where('id', '=', $id)->first(['name', 'id']);
-      $MysqlDB->release($connection->name, $connection->id);
+      $MysqlDB->releaseDatabase($connection->name, $connection->id);
       return redirect()->route('super-db.connection.index');
     } catch (Exception $e) {
       ErrorHandlerMsg::setLog('erorr',$e->getMessage());

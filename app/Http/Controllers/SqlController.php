@@ -15,8 +15,8 @@ class SqlController extends Controller
     public function index($id)
     {
         try {
-            $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
-            if (!in_array('super-db.sqls.index', $roles_Abilitiles)) {
+            $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
+            if (!in_array('super-db.sqls.index', $roles_permissions)) {
                 abort(403);
             }
             $DBconnection = DB::table('connection')->where('id', '=', $id)->first(['name', 'id']);
@@ -39,8 +39,8 @@ class SqlController extends Controller
             ],
         ]);
         try {
-            $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
-            if (!in_array('super-db.sqls.store', $roles_Abilitiles)) {
+            $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
+            if (!in_array('super-db.sqls.store', $roles_permissions)) {
                 abort(403);
             }
 

@@ -1,7 +1,7 @@
 <x-layout title="{{ __('Connection') }}">
 
   @php
-  $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
+  $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
        
 @endphp
 
@@ -11,7 +11,7 @@
   <input type="text" class="form-control name" placeholder="{{ __('Add database') }}">
 </div>
 <div class="col-sm">
-  @if (in_array('super-db.connection.add',$roles_Abilitiles))
+  @if (in_array('super-db.connection.add',$roles_permissions))
   <button type="button" class="btn btn-primary connection">{{ __('Create') }}</button>
   @endif
 </div>
@@ -32,10 +32,10 @@
         <td>{{ $connection->name }}</td>
        
         <td>
-          @if (in_array('super-db.connection.delete',$roles_Abilitiles))
+          @if (in_array('super-db.connection.delete',$roles_permissions))
           <a type="button" href="{{route('super-db.connection.delete', $connection->id ) }}" class="btn btn-danger">{{ __('Delete') }}</a>
           @endif
-          @if (in_array('super-db.jobs.index',$roles_Abilitiles))
+          @if (in_array('super-db.jobs.index',$roles_permissions))
 
           <a type="button" href="{{ route('super-db.jobs.index', $connection->id ) }}" class="btn btn-primary">@lang('Show') </a></td>
           @endif

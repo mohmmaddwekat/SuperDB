@@ -3,8 +3,11 @@ namespace App\RestoreDB\ExportDB;
 
 
 class MangeDataBase {
-
-    public function storeSCV($numColumns,$rows,$handle){
+ /*
+ *fetch all rows 
+ *store them in csv
+ */
+    public function storeCSV($numColumns,$rows,$file){
 
         while($row = $rows->fetch_row()) { 
             $data= array();
@@ -13,41 +16,45 @@ class MangeDataBase {
                 $row[$j] = $row[$j];
                 array_push($data, $row[$j]);
             }
-            fputcsv($handle, $data);
+            fputcsv($file, $data);
         }
     }
     /**
     * get query for create table 
     */
-    public function queryCreatetable($db, $table){
-        $sqli_query = $db->query("SHOW CREATE TABLE $table");
-        $queryCreate = $sqli_query->fetch_row();
+    public function createTableBySQLQuery($db, $table){
+        $query = $db->query("SHOW CREATE TABLE $table");
+        $queryCreate = $query->fetch_row();
         return $queryCreate;
     }
 
     /**
-    * get rows then save him in csv
+    * get rows then save them in csv
     */
-    public function getalltable($db, $table){
-        $result = $db->query("SELECT * FROM $table");
-        $numColumns = $result->field_count;
-        return [$numColumns, $result ];
+    public function getAllTables($db, $table){
+        $query = $db->query("SELECT * FROM $table");
+        $numColumns = $query->field_count;
+        return [$numColumns, $query ];
     }
 
 
     /**
     * get all columns in table
     */
-    public function getallcolumns($db, $table){
-        $sql_colunms = $db->query("SHOW COLUMNS FROM ".$table);
-        $colunms = array();
-        while($row = mysqli_fetch_array($sql_colunms)){
-          array_push($colunms,$row[0]);
+    public function getAllColumns($db, $table){
+        $sql_columns = $db->query("SHOW COLUMNS FROM ".$table);
+        $columns = array();
+        while($row = mysqli_fetch_array($sql_columns)){
+          array_push($columns,$row[0]);
         }
-        return $colunms;
+        return $columns;
     }
 
-    public  function ComparisonOperators($tables,$DBconnection,$db)
+    /*
+    *explode table/all tables 
+    *rename file according to tables selected 
+    */
+    public  function comparisonOperators($tables,$connectionName,$db)
     {
         if($tables != '*') { 
             $NameDB = $tables.'_table';
@@ -55,11 +62,11 @@ class MangeDataBase {
         }
         if($tables == '*') { 
             $tables = array();
-            $result = $db->query("SHOW TABLES");
-            while($row = $result->fetch_row()) { 
+            $query = $db->query("SHOW TABLES");
+            while($row = $query->fetch_row()) { 
                 $tables[] = $row[0];
             }
-            $NameDB =$DBconnection->name.'_db';
+            $NameDB =$connectionName->name.'_db';
         } 
         
          return [$NameDB, $tables];
@@ -69,18 +76,18 @@ class MangeDataBase {
     * 
     * set name of columns in sql file
     */
-    public function storeNameOfColumns($nameColunms,$return){
+    public function storeNameOfColumns($namecolumns,$query){
 
         
-        foreach ($nameColunms as $key => $colunm){
-            if($key == (count($nameColunms)-1)){
-                $return .="`$colunm`";
+        foreach ($namecolumns as $key => $column){
+            if($key == (count($namecolumns)-1)){
+                $query .="`$column`";
                 break;
             }
-            $return .="`$colunm`".', ';
+            $query .="`$column`".', ';
             
         }
-        return $return;
+        return $query;
         
     }
     
@@ -89,23 +96,23 @@ class MangeDataBase {
     *store data to sql file 
     * 
     */ 
-    public function storeDataOfSQl($rows,$return){
+    public function storeDataOfSQl($rows,$query){
         foreach ($rows as $key => $row){
-            $return .='(';
+            $query .='(';
             foreach ($row as $index => $value){
                 if($index == (count($row)-1)){
-                    $return .="'$value'";
+                    $query .="'$value'";
                     break;
                 }
-                $return .="'$value'".', ';
+                $query .="'$value'".', ';
             }
             
             if($key == (count($rows)-1)){
-                $return .=");\n";
+                $query .=");\n";
                 break;
             }
-            $return .="),\n";
+            $query .="),\n";
         }
-        return $return;
+        return $query;
     }
 }

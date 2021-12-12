@@ -13,8 +13,8 @@ class ImportController extends Controller
 {
     function index($id){
         try{
-        $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
-        if(!in_array('super-db.import.index',$roles_Abilitiles)){
+        $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
+        if(!in_array('super-db.import.index',$roles_permissions)){
             abort(403);
         }
         
@@ -31,8 +31,8 @@ class ImportController extends Controller
             'type'    =>['required','in:csv,txt,sql'],
         ]);
         try{
-        $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
-        if(!in_array('super-db.import.add',$roles_Abilitiles)){
+        $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
+        if(!in_array('super-db.import.add',$roles_permissions)){
             abort(403);
         }
         if(Storage::exists('file/'.$_FILES['formFile']['name'])){
@@ -44,11 +44,11 @@ class ImportController extends Controller
                 $csvFiles = new Factory();
                 $file = fopen("../storage/app/file/".$_FILES['formFile']['name'], "r");
                 $massege = $csvFiles->build($request->type,$_FILES['formFile']['name'],$id,$file);
-            } else if($request->type =="text") {
+            } if($request->type =="text") {
                 $TextFiles = new Factory();
                 $file = fopen("../storage/app/file/".$_FILES['formFile']['name'], "r");
                 $massege = $TextFiles->build($request->type,$_FILES['formFile']['name'],$id,$file);
-            } else if($request->type =="sql"){                
+            } if($request->type =="sql"){                
                 $SqlFiles = new Factory();
                 $file = file_get_contents("../storage/app/file/".$_FILES['formFile']['name']);
                 $massege = $SqlFiles->build($request->type,$_FILES['formFile']['name'],$id,$file);

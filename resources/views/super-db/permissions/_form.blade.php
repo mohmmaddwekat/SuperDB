@@ -1,15 +1,15 @@
 <div class="form-group">
     <label for="" class="text-capitalize">{{ __('Add admin permissions') }}</label>
     <div>
-        @foreach ($abilities as $abilitiy)
+        @foreach ($permissions as $permission)
 
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" name="abilitiy[]" value="{{ $abilitiy->id }}" @if (in_array($abilitiy['id'], $roles_Abilitiles)) checked @endif >
+                <input class="form-check-input" type="checkbox" name="permissions[]" value="{{ $permission->id }}" @if (in_array($permission['id'], $roles_permissions)) checked @endif >
                 <label class="form-check-label text-capitalize">
-                    {{ $abilitiy->explain }}
+                    {{ $permission->explain }}
                 </label>
             </div>
-            @if ($abilitiy->id % 8 === 0)
+            @if ($permission->id % 8 === 0)
                 <hr class="pt-1">
             @endif
         @endforeach

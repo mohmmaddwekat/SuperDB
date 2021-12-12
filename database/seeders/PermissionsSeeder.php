@@ -5,9 +5,9 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class AbilitySeeder extends Seeder
+class PermissionsSeeder extends Seeder
 {
-    protected $abilities =[
+    protected $permissions =[
 
 
         'super-db.connection.index' => 'can show connections',
@@ -41,10 +41,10 @@ class AbilitySeeder extends Seeder
         'super-db.roles.edit' =>'can edit roles',
         'super-db.roles.update' =>'can update roles',
         'super-db.roles.destory' =>'can delete roels',
-        'super-db.abilities.create' =>'can add abilites',
-        'super-db.abilities.store' =>'can store abilites',
-        'super-db.abilities.edit' =>'can edit abilites',
-        'super-db.abilities.update' =>'can update abilites',
+        'super-db.permissions.create' =>'can add abilites',
+        'super-db.permissions.store' =>'can store abilites',
+        'super-db.permissions.edit' =>'can edit abilites',
+        'super-db.permissions.update' =>'can update abilites',
 
         ];
     /**
@@ -54,8 +54,8 @@ class AbilitySeeder extends Seeder
      */
     public function run()
     {
-        foreach($this->abilities as $code => $explain){
-            DB::table('abilities')->insert([
+        foreach($this->permissions as $code => $explain){
+            DB::table('permissions')->insert([
                 'code' => $code,
                 'explain' => $explain
             ]);

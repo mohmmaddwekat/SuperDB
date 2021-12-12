@@ -6,10 +6,10 @@ use PDO;
 use Illuminate\Support\Facades\DB;
 use PDOException;
 
-class MysqlDB implements Connection
+class CreateMySQLDataBase implements ConnectionInterface
 {    
     private static $instances = [];
-    public static function getInstance(): MysqlDB
+    public static function getInstance(): CreateMySQLDataBase
     {
         $cls = static::class;
         if (!isset(self::$instances[$cls])) {
@@ -23,21 +23,21 @@ class MysqlDB implements Connection
      * @param  string $DBName Connection name
      * @return bool
      */
-    public function create($DBName){        
+    public function createDatabase($DBName){        
             try {
-                $conn = new PDO("mysql:host=localhost", env('DB_USERNAME'));
-                $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                $sql = "CREATE DATABASE $DBName";
-                $conn->exec($sql);
+                $mysqlConnection = new PDO("mysql:host=localhost", env('DB_USERNAME'));
+                $mysqlConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                $sqlQuery = "CREATE DATABASE $DBName";
+                $mysqlConnection->exec($sqlQuery);
                 $name = [
                     'name'=> $DBName
                 ];
-                ErrorHandlerMsg::setLog('debug',"The connection has been successfully established");
+                ErrorHandlerMsg::setLog('info',"The connection has been successfully established");
                 $database = DB::table('connection')->insert($name);
                 ErrorHandlerMsg::setLog('info',"$DBName connection has been added to the database");
                 return $database;
             } catch(PDOException $e) {
-                ErrorHandlerMsg::setLog('erorr',$e->getMessage());
+                ErrorHandlerMsg::setLog('error',$e->getMessage());
                 return false;
             }
         }
@@ -49,17 +49,17 @@ class MysqlDB implements Connection
       * @param  int $id Connection id
       * @return void
       */
-     public function release($DBName,$id)
+     public function releaseDatabase($DBName,$id)
     {
          if (!is_null(static::$instances)) { 
             static::$instances = null;        
             try {
-                $conn = new PDO("mysql:host=localhost", env('DB_USERNAME'));
-                $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                $sql = "DROP DATABASE $DBName";
-                $conn->exec($sql);
-                $conn = null;
-                ErrorHandlerMsg::setLog('debug',"The connection has been successfully deleted");
+                $mysqlConnection = new PDO("mysql:host=localhost", env('DB_USERNAME'));
+                $mysqlConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                $sqlQuery = "DROP DATABASE $DBName";
+                $mysqlConnection->exec($sqlQuery); //execute query
+                $mysqlConnection = null;
+                ErrorHandlerMsg::setLog('info',"The connection has been successfully deleted");
                 $database = DB::table('connection')->delete($id);
                 ErrorHandlerMsg::setLog('info',"$DBName connection has been deleted from the database");
             } catch(PDOException $e) {

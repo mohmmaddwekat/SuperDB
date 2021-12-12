@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Ability extends Model
+class Permissions extends Model
 {
     use HasFactory;
 
@@ -21,6 +21,6 @@ class Ability extends Model
 
     public function roles()
     {
-        return $this->belongsToMany(Role::class, 'roles_abilities');
+        return $this->belongsToMany(Role::class, 'roles_permissions');
     }
 }

@@ -1,7 +1,7 @@
 <?php
 namespace App\Connection;
 
-interface  Connection {
+interface  ConnectionInterface {
         
       /**
       * Create connection.
@@ -9,7 +9,7 @@ interface  Connection {
       * @param  string $DBName
       * @return bool
       */
-     public function create($DBName);
+     public function createDatabase($DBName);
 
      
      /**
@@ -19,7 +19,7 @@ interface  Connection {
       * @param  int $id
       * @return void
       */
-     public function release($DBName,$id);
+     public function releaseDatabase($DBName,$id);
 }
 
 ?>

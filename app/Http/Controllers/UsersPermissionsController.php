@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\ErrorHandlerMsg;
-use App\Models\Ability;
+use App\Models\Permissions;
 use App\Models\Role;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AbilityController extends Controller
+class UsersPermissionsController extends Controller
 {
 
 
@@ -18,21 +18,21 @@ class AbilityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Role $role)
+    public function createUserRole(Role $role)
     {
         try {
 
-            $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
-            if (!in_array('super-db.abilities.create', $roles_Abilitiles)) {
+            $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
+            if (!in_array('super-db.permissions.create', $roles_permissions)) {
                 abort(403);
             }
 
             return view(
-                'super-db.abilities.create',
+                'super-db.permissions.create',
                 [
-                    'abilities' => Ability::all(),
+                    'permissions' => Permissions::all(),
                     'role' => $role,
-                    'roles_Abilitiles' => [],
+                    'roles_permissions' => [],
                 ]
             );
         } catch (Exception $e) {
@@ -50,19 +50,19 @@ class AbilityController extends Controller
     public function store(Request $request, Role $role)
     {
         $request->validate([
-            'abilitiy' => ['required', 'exists:abilities,id']
+            'permissions' => ['required', 'exists:permissions,id']
         ]);
         try {
-            $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
-            if (!in_array('super-db.abilities.store', $roles_Abilitiles)) {
+            $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
+            if (!in_array('super-db.permissions.store', $roles_permissions)) {
                 abort(403);
             }
   
-            $abilities = $request->post('abilitiy', []);
+            $permissions = $request->post('permissions', []);
 
-            $role->abilities()->attach($abilities);
+            $role->permissions()->attach($permissions);
 
-            return redirect()->route('super-db.roles.index')->with('success', 'Roles with Abilities Created!');
+            return redirect()->route('super-db.roles.index')->with('success', 'Roles with Permissions Created!');
         } catch (Exception $e) {
             return ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
             //abort(404);
@@ -75,20 +75,20 @@ class AbilityController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit(Role $role)
+    public function editRolePermissions(Role $role)
     {
         try {
-            $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
-            if (!in_array('super-db.abilities.edit', $roles_Abilitiles)) {
+            $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
+            if (!in_array('super-db.permissions.edit', $roles_permissions)) {
                 abort(403);
             }
-            $roles_Abilitiles = $role->abilities()->pluck('id')->toArray();
+            $roles_permissions = $role->permissions()->pluck('id')->toArray();
             return view(
-                'super-db.abilities.edit',
+                'super-db.permissions.edit',
                 [
-                    'abilities' => Ability::all(),
+                    'permissions' => Permissions::all(),
                     'role' => $role,
-                    'roles_Abilitiles' => $roles_Abilitiles,
+                    'roles_permissions' => $roles_permissions,
                 ]
             );
         } catch (Exception $e) {
@@ -103,26 +103,26 @@ class AbilityController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Role $role)
+    public function updateUserRole(Request $request, Role $role)
 
     {
         $request->validate([
-            'abilitiy' => ['required']
+            'permissions' => ['required']
         ]);
         try {
-            $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
-            if (!in_array('super-db.abilities.update', $roles_Abilitiles)) {
+            $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
+            if (!in_array('super-db.permissions.update', $roles_permissions)) {
                 abort(403);
             }
 
    
-            $abilities = $request->post('abilitiy', []);
+            $permissions = $request->post('permission', []);
 
 
             //detach is invert  sync //attach add without check if exits in db 
-            $role->abilities()->sync($abilities);
+            $role->permissions()->sync($permissions);
 
-            return redirect()->route('super-db.roles.index')->with('success', 'Roles with Abilities upated!');
+            return redirect()->route('super-db.roles.index')->with('success', 'Roles with Permissions upated!');
         } catch (Exception $e) {
             abort(404);
         }

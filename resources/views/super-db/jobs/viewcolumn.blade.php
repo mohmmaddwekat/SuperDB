@@ -1,6 +1,6 @@
 <x-layout :title="__('Table')">
     @php
-    $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
+    $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
          
   @endphp
     <div class="d-grid gap-2 d-md-block">
@@ -26,11 +26,11 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body d-flex justify-content-center">
-                    @if (in_array('super-db.db.export',$roles_Abilitiles))
+                    @if (in_array('super-db.db.export',$roles_permissions))
                     <a href="{{ route('super-db.db.export', [$connection->id, 'sql']) }}" class="mx-2"><button
                             class="btn btn-primary" type="button">Sql {{ __('File') }}</button></a>
                             @endif     
-                    @if (in_array('super-db.db.export',$roles_Abilitiles))        
+                    @if (in_array('super-db.db.export',$roles_permissions))        
                     <a href="{{ route('super-db.db.export', [$connection->id, 'csv']) }}"><button class="btn btn-primary"
                             type="button">Csv {{ __('File') }}</button></a>
                             @endif 
@@ -55,14 +55,14 @@
 
                             
                             <span class="font-weight-normal">{{ $colunm[0] }}</span>
-                            @if (in_array('super-db.jobs.delete-column',$roles_Abilitiles))
+                            @if (in_array('super-db.jobs.delete-column',$roles_permissions))
                             <form action="{{ route('super-db.jobs.delete-column', [$connection->id,$table,$colunm[0]]) }}" method="post" class="mx-2">
                                 @csrf
                                 @method('delete')
                                 <button type="submit" class="text-danger p-0 m-0 border-0 bg-white " >{{ __('Delete') }}/</button>
                             </form>
                             @endif
-                            @if (in_array('super-db.inserts.rename-column',$roles_Abilitiles))
+                            @if (in_array('super-db.inserts.rename-column',$roles_permissions))
                             <a href="{{ route('super-db.inserts.rename-column', [$connection->id,$table,$colunm[0]]) }}" >{{ __('Rename') }}</a>
                             @endif
                         </div>
