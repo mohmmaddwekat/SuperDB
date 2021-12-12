@@ -46,7 +46,7 @@
             </thead>
             <tbody>
                 <!-- Item -->
-                @forelse ($roles as $role)
+                @foreach ($roles as $role)
                     <tr>
                         <td>
                             <a class="font-weight-bold">
@@ -103,13 +103,13 @@
 
                         </td>
                     </tr>
-                @empty
+                @endif
                     <tr>
                         <td colspan="10">
                             No Roles Found.
                         </td>
                     </tr>
-                @endforelse
+                @endforeach
 
 
             </tbody>

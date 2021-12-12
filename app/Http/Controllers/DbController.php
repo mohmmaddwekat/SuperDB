@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Connection\ErrorHandlerMsg;
-use App\db\ComparisonOperators;
+use App\Exceptions\ErrorHandlerMsg;
 use App\exportfile\Exportcsv;
 use App\exportfile\Exportsql;
 use App\exportfile\Fun;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate;
 use mysqli;
 
 class DbController extends Controller
@@ -24,12 +22,9 @@ class DbController extends Controller
             }
             $DBconnection = DB::table('connection')->where('id', '=', $connection_id)->first(['name', 'id']);
             $db = new mysqli('localhost', 'root', '', $DBconnection->name);
-
             $comparisonoperators = new Fun;
             list($NameDB, $tables) = $comparisonoperators->ComparisonOperators($tables, $DBconnection, $db);
-
             if ($export == "csv") {
-
                 $handle = fopen('../storage/app/db/' . $NameDB . '_' . time() . '.csv', 'w+');
                 $csv = new Exportcsv;
                 $csv->export($tables, $db, $handle);
@@ -40,7 +35,6 @@ class DbController extends Controller
                 $sql->export($tables, $db, $handle);
             }
             fclose($handle);
-
             return redirect()->route('super-db.jobs.index', $DBconnection->id)->with("success", "Database Export Successfully!");
         } catch (Exception $e) {
             return ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());

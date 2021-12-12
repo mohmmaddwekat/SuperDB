@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Connection\ErrorHandlerMsg;
+use App\Exceptions\ErrorHandlerMsg;
 use App\Job\Factory;
 use App\widgets\viewColumn;
 use Exception;
@@ -25,7 +25,7 @@ class InsertController extends Controller
                 'connection' => $connection
             ]);
         } catch (Exception $e) {
-            return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+            return ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
             //abort(404);
         }
     }
@@ -98,7 +98,7 @@ class InsertController extends Controller
                 'table' => $name
             ]);
         } catch (Exception $e) {
-            return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+            return ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
             // abort(404);
         }
     }
@@ -131,7 +131,7 @@ class InsertController extends Controller
             }
             return redirect()->route('super-db.jobs.index', $DBconnection->id)->with($message[0], $message[1]);
         } catch (Exception $e) {
-            return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+            return ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
             //abort(404);
         }
     }
@@ -152,7 +152,7 @@ class InsertController extends Controller
                 'table' => $table
             ]);
         } catch (Exception $e) {
-            return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+            return ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
             // abort(404);
         }
     }
@@ -188,7 +188,7 @@ class InsertController extends Controller
                 'table' => $dataviewcolumn["table"]
             ]);
         } catch (Exception $e) {
-            return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+            return ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
             // abort(404);
         }
     }

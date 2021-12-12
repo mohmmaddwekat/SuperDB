@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\ErrorHandlerMsg;
 use App\Models\Ability;
 use App\Models\Role;
 use Exception;
@@ -35,7 +36,7 @@ class AbilityController extends Controller
                 ]
             );
         } catch (Exception $e) {
-            return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+            return ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
             // abort(404);
         }
     }
@@ -63,7 +64,7 @@ class AbilityController extends Controller
 
             return redirect()->route('super-db.roles.index')->with('success', 'Roles with Abilities Created!');
         } catch (Exception $e) {
-            return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+            return ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
             //abort(404);
         }
     }
@@ -91,7 +92,7 @@ class AbilityController extends Controller
                 ]
             );
         } catch (Exception $e) {
-            return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+            return ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
             // abort(404);
         }
     }
@@ -123,7 +124,7 @@ class AbilityController extends Controller
 
             return redirect()->route('super-db.roles.index')->with('success', 'Roles with Abilities upated!');
         } catch (Exception $e) {
-            return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+            return ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
             //abort(404);
         }
     }

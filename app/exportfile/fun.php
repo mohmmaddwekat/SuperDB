@@ -4,6 +4,19 @@ namespace App\exportfile;
 
 class Fun implements interfacefun{
 
+    public function storeSCV($numColumns,$result,$handle){
+        for($i = 0; $i < $numColumns; $i++) {         
+        while($row = $result->fetch_row()) { 
+            $data= array();
+            for($j=0; $j < $numColumns; $j++) { 
+                $row[$j] = addslashes($row[$j]);
+                $row[$j] = $row[$j];
+                array_push($data, $row[$j]);
+            }
+            fputcsv($handle, $data);
+        }
+    }
+    }
     /**
     * get query for create table 
     */

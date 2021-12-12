@@ -1,25 +1,36 @@
 <?php
 namespace App\SystemFile;
+
+use App\Exceptions\ErrorHandlerMsg;
 use App\Job\Factory;
+use Exception;
 use Illuminate\Support\Facades\DB;
 
 class CSVFiles implements SystemFile {
-    function createTableQuery($tablename,$factory,$values,$id){
-        $DBconnection = DB::table('connection')->where('id','=',$id)->first(['name','id']);
-        $mysqli = mysqli_connect("localhost", "root", "", $DBconnection->name);
-        if ($mysqli->query("SHOW TABLES LIKE'".$tablename."'")) {        
-            $query = 'CREATE TABLE '.$tablename.' ( ';
-            foreach($values as $key=>$value){
-                if ($key == count($values)-1) {
-                    $query .= $value.' VARCHAR(255) not null';
-                    break;
+    function buildTableQuery($tablename,$factory,$values,$id){
+        try{
+            $DBconnection = DB::table('connection')->where('id','=',$id)->first(['name','id']);
+            $mysqli = mysqli_connect("localhost", "root", "", $DBconnection->name);
+            // if ($mysqli->query("SHOW TABLES LIKE'".$tablename."'")) {        
+                $query = 'CREATE TABLE '.$tablename.' ( ';
+                foreach($values as $key=>$value){
+                    if ($key == count($values)-1) {
+                        $query .= $value.' VARCHAR(255) not null';
+                        break;
+                    }
+                    $query .= $value.' VARCHAR(255) not null,';
                 }
-                $query .= $value.' VARCHAR(255) not null,';
-            }
-            $query .=')';
-            $factory->factory($query,$mysqli);
+                $query .=')';
+                $factory->factory($query,$mysqli);
+                ErrorHandlerMsg::setLog('debug',"The table has been successfully established");
+            // }
+            
+        }catch(Exception $e){
+            ErrorHandlerMsg::setLog('erorr',$e->getMessage());
+        }finally{
+            mysqli_close($mysqli);
         }
-         mysqli_close($mysqli);
+
     }     
     function create($tablename,$file,$id){
         $name = str_replace(".csv","", $tablename);
@@ -28,7 +39,7 @@ class CSVFiles implements SystemFile {
 
         while (($data[] = fgetcsv($file)) !== false) {
             if ($count == 0) {
-                $this->createTableQuery($name,$factory,$data[0],$id);
+                $this->buildTableQuery($name,$factory,$data[0],$id);
             }
             if ($count>0) {
                 $this->insartTableQuery($name,$factory,$data[0],$data[$count],$id);
@@ -39,27 +50,34 @@ class CSVFiles implements SystemFile {
     }
 
      function insartTableQuery($tablename,$factory,$colName,$values,$id){
-        $query = 'INSERT INTO '.$tablename.' ( ';
-        foreach($colName as $key=>$column){
-            if ($key == count($colName)-1){
-                $query .= $column;
-                break;
+         try{
+            $query = 'INSERT INTO '.$tablename.' ( ';
+            foreach($colName as $key=>$column){
+                if ($key == count($colName)-1){
+                    $query .= $column;
+                    break;
+                }
+                $query .= $column.',';
             }
-            $query .= $column.',';
-        }
-        $query .=')VALUES (';
-        foreach ($values as $key=>$value){
-            if ($key == count($values)-1) {
-                $query  .= "'$value'";
-                break;
+            $query .=')VALUES (';
+            foreach ($values as $key=>$value){
+                if ($key == count($values)-1) {
+                    $query  .= "'$value'";
+                    break;
+                }
+                $query  .= "'$value',";   
             }
-            $query  .= "'$value',";   
-        }
-        $query .=')';
-        $DBconnection = DB::table('connection')->where('id','=',$id)->first(['name','id']);
-        $mysqli = mysqli_connect("localhost", "root", "", $DBconnection->name);
-        $factory->factory($query,$mysqli);
-        mysqli_close($mysqli);
+            $query .=')';
+            $DBconnection = DB::table('connection')->where('id','=',$id)->first(['name','id']);
+            $mysqli = mysqli_connect("localhost", "root", "", $DBconnection->name);
+            $factory->factory($query,$mysqli);
+         }catch(Exception $e){
+
+         }finally{
+             mysqli_close($mysqli);
+         }
+        
+        
     }
 }
 ?>

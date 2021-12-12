@@ -1,5 +1,5 @@
 <?php
-namespace App\Connection;
+namespace App\Exceptions;
 
 use Illuminate\Support\Facades\Log;
 use Exception;
@@ -83,8 +83,7 @@ class ErrorHandlerMsg{
     public static function getErrorMsg($msg,$classOfException=null, $title="Error"){
         if ($classOfException != null){
             $msg =  ErrorHandlerMsg::customeExceptionMsg($classOfException, $msg);
-           }
-      
+           }      
       if(\Request::ajax()){
         return response()->json([$title  => $msg], 400);
         }else{
