@@ -40,7 +40,7 @@
               <a href="<?php echo e(route('super-db.dashboard')); ?>" class="logo-wrapper" title="Home">
                   <span class="icon logo" aria-hidden="true"></span>
                   <div class="logo-text">
-                      <span class="logo-title">SuperDB</span>
+                      <span class="logo-title glitch" data-text=" Super DB">Super DB</span>
                       <span class="logo-subtitle"><?php echo e(__($title)); ?></span>
                   </div>
   
