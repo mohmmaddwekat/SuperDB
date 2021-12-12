@@ -1,13 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Connection\ErrorHandlerMsg;
 use App\Connection\ChangeDB;
 use App\Connection\SingletonDB;
 use Exception;
+//use App\Exceptions;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
 
 class ConnectionController extends Controller
 {
@@ -24,24 +26,29 @@ class ConnectionController extends Controller
       $connections = DB::table('connection')->get(['name', 'id']);
       return view('super-db.connections.index', ['connections' => $connections]);
     } catch (Exception $e) {
-      abort(404);
+      return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+      //abort(404);
     }
   }
   public function add($name)
   {
     try {
+    
+    //throw new \Exception("custome");
       $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
       if (!in_array('super-db.connection.add', $roles_Abilitiles)) {
         abort(403);
       }
       $singletonDB = SingletonDB::getInstance();
 
-      $singletonDB->create($name);
-      return DB::table('connection')->where('name', '=', $name)->get(['name', 'id'])->toArray();
+      if($singletonDB->create($name)){
+        return DB::table('connection')->where('name', '=', $name)->get(['name', 'id'])->toArray();
+      }
+      return [];
     } catch (Exception $e) {
-      abort(404);
-    }
+    return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
   }
+}
   public function delete($id)
   {
     try {
@@ -54,7 +61,8 @@ class ConnectionController extends Controller
       $singletonDB->release($connection->name, $connection->id);
       return redirect()->route('super-db.connection.index');
     } catch (Exception $e) {
-      abort(404);
+      return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+      //  abort(404);
     }
   }
 }

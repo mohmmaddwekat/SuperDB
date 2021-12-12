@@ -10,7 +10,7 @@
                         <div class="card-body  text-dark">
                             <form action="{{ route('users.store-login') }}" method="post" >
                                 @csrf
-                                <h1 class="  text-center">Sign Up</h1>
+                                <h1 class="  text-center">{{ __('Log In') }}</h1>
                                 <div class="form-group">
                                     <label for="Username" class="form-label ">{{ __('Username') }}</label>
                                     <input type="text" value="{{ old('username')}}" name="username" class="form-control  @error('username') is-invalid @enderror">
@@ -22,8 +22,10 @@
                                   </div>
 
                                 <div class="form-group mt-4  ">
-                                    <button class="btn btn-primary  ">{{ __('Sign Up') }}</button>
+                                    <button class="btn btn-primary  ">{{ __('Log In') }}</button>
                                 </div>
+
+                                <a href="{{ url('forgot-password') }}">{{ __('Forgotten your password? Reset it here') }}</a>
                               </form>
                         </div>
                     </div>

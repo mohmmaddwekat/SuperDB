@@ -46,8 +46,10 @@ class SingletonDB implements Connection
                 'name'=> $DBName
             ];
             $conn = DB::table('connection')->insert($names);
+            return $conn;
         } catch(PDOException $e) {
-            echo false;
+            return false;
+            // echo false;
         }
     }
 
@@ -61,7 +63,8 @@ class SingletonDB implements Connection
                 $sql = "DROP DATABASE $DBName";
                 $conn->exec($sql);
             } catch(PDOException $e) {
-                echo false;
+                return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+                //echo false;
             }
             $conn = DB::table('connection')->delete($id);
             $conn = null; 

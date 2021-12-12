@@ -1,5 +1,5 @@
 <div class="form-group">
-    <label for="" class="text-capitalize">Add admin permissions</label>
+    <label for="" class="text-capitalize">{{ __('Add admin permissions') }}</label>
     <div>
         @foreach ($abilities as $abilitiy)
 
@@ -20,7 +20,7 @@
 <div class="flex items-center justify-end mt-4 " style="font-family: Arial, Helvetica, sans-serif;">
 
     <button class="ml-4">
-        {{ $savelabel }}
+        {{ __($savelabel) }}
 
     </button>
 </div>

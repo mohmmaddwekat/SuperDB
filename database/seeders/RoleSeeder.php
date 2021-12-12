@@ -9,9 +9,9 @@ class RoleSeeder extends Seeder
 {
     protected $roles = [
         'super-admin',
-        'admin',
-        'staff',
-        'reader',
+        'Admin',
+        'Staff',
+        'Reader',
     ];
     /**
      * Run the database seeds.

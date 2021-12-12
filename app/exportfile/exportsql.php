@@ -17,7 +17,7 @@ class Exportsql implements interfaceExport{
             $row22 = new Fun;
             $row2 = $row22->queryCreatetable($db, $table);
             
-            $return .= "DROP TABLE IF EXISTS '$table';\n";
+            $return .= "DROP TABLE IF EXISTS $table;\n";
             $return .= $row2[1].";\n\n";
 
             $sqlcolunms = mysqli_query($db,"SHOW COLUMNS FROM ".$table);
@@ -26,15 +26,15 @@ class Exportsql implements interfaceExport{
               array_push($colunms,$row);
             }
             
-            $return .= "INSERT INTO '$table' (";
+            $return .= "INSERT INTO $table (";
 
             
             foreach ($colunms as $key => $colunm){
                 if($key == (count($colunms)-1)){
-                    $return .="'$colunm[0]'";
+                    $return .="$colunm[0]";
                     break;
                 }
-                $return .="'$colunm[0]'".', ';
+                $return .="$colunm[0]".', ';
             }
             $return .= ") VALUES\n";
 
@@ -48,10 +48,10 @@ class Exportsql implements interfaceExport{
                 $return .='(';
                 foreach ($row as $index => $value){
                     if($index == (count($row)-1)){
-                        $return .="'$row[0]'";
+                        $return .="'$value'";
                         break;
                     }
-                    $return .="'$row[0]'".', ';
+                    $return .="'$value'".', ';
                 }
                 
                 if($key == (count($rows)-1)){
@@ -63,7 +63,7 @@ class Exportsql implements interfaceExport{
 
             $return .= "COMMIT;";
         }
-    
+
         fwrite($handle,$return);
     }
 

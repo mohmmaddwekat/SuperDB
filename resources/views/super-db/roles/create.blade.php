@@ -6,8 +6,6 @@
                 <div class="card">
                     <div class="card-content">
                         <div class="card-body">
-                            <!-- Validation Errors -->
-                            <x-auth-validation-errors class="mb-4" :errors="$errors" />
                             <form method="POST" action="{{ route('super-db.roles.store') }}">
                                 @csrf
                                 @include('super-db.roles._form',[

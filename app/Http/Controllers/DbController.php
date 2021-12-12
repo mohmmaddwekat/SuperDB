@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Connection\ErrorHandlerMsg;
 use App\db\ComparisonOperators;
 use App\exportfile\Exportcsv;
 use App\exportfile\Exportsql;
@@ -42,7 +43,7 @@ class DbController extends Controller
 
             return redirect()->route('super-db.jobs.index', $DBconnection->id)->with("success", "Database Export Successfully!");
         } catch (Exception $e) {
-            abort(404);
+            return ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
         }
     }
 }

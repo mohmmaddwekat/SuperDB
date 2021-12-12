@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Connection\ErrorHandlerMsg;
 use App\Job\Factory;
 use App\widgets\viewColumn;
 use Exception;
@@ -24,12 +25,28 @@ class InsertController extends Controller
                 'connection' => $connection
             ]);
         } catch (Exception $e) {
-            abort(404);
+            return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+            //abort(404);
         }
     }
 
     public function store(Request $request, $connection_id)
     {
+        $request->validate([
+            'nametable' => [
+                'required', 'string', 'max:255',
+
+            ],
+            'colunm' => [
+                'required', 'max:255',
+            ],
+            'type' => [
+                'required'
+            ],
+            'length' => [
+                'required'
+            ],
+        ]);
         try {
             $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
             if (!in_array('super-db.inserts.store', $roles_Abilitiles)) {
@@ -37,21 +54,7 @@ class InsertController extends Controller
             }
             $DBconnection = DB::table('connection')->where('id', '=', $connection_id)->first(['name', 'id']);
 
-            $request->validate([
-                'nametable' => [
-                    'required', 'string', 'max:255',
 
-                ],
-                'colunm' => [
-                    'required', 'max:255',
-                ],
-                'type' => [
-                    'required'
-                ],
-                'length' => [
-                    'required'
-                ],
-            ]);
             $nametable = $request->post('nametable');
             $colunms = $request->post('colunm');
             $types = $request->post('type');
@@ -77,7 +80,7 @@ class InsertController extends Controller
             mysqli_close($link);
             return redirect()->route('super-db.inserts.index', $DBconnection->id)->with($message[0], $message[1]);
         } catch (Exception $e) {
-            abort(404);
+            return ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
         }
     }
 
@@ -95,23 +98,25 @@ class InsertController extends Controller
                 'table' => $name
             ]);
         } catch (Exception $e) {
-            abort(404);
+            return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+            // abort(404);
         }
     }
 
     public function updateTable(Request $request, $connection_id, $oldname)
     {
+        $request->validate([
+            'nametable' => [
+                'required', 'string', 'max:255',
+            ],
+        ]);
         try {
             $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
             if (!in_array('super-db.inserts.updateTable', $roles_Abilitiles)) {
                 abort(403);
             }
 
-            $request->validate([
-                'nametable' => [
-                    'required', 'string', 'max:255',
-                ],
-            ]);
+
             $DBconnection = DB::table('connection')->where('id', '=', $connection_id)->first(['name', 'id']);
             $link = mysqli_connect("localhost", "root", "", $DBconnection->name);
             $newname = $request->post('nametable');
@@ -126,7 +131,8 @@ class InsertController extends Controller
             }
             return redirect()->route('super-db.jobs.index', $DBconnection->id)->with($message[0], $message[1]);
         } catch (Exception $e) {
-            abort(404);
+            return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+            //abort(404);
         }
     }
 
@@ -146,22 +152,24 @@ class InsertController extends Controller
                 'table' => $table
             ]);
         } catch (Exception $e) {
-            abort(404);
+            return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+            // abort(404);
         }
     }
 
     public function updateColumn(Request $request, $connection_id, $table, $oldnamecolumn)
     {
+        $request->validate([
+            'namecolumn' => [
+                'required', 'string', 'max:255',
+            ],
+        ]);
         try {
             $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
             if (!in_array('super-db.inserts.update-column', $roles_Abilitiles)) {
                 abort(403);
             }
-            $request->validate([
-                'namecolumn' => [
-                    'required', 'string', 'max:255',
-                ],
-            ]);
+
 
             $DBconnection = DB::table('connection')->where('id', '=', $connection_id)->first(['name', 'id']);
             $link = mysqli_connect("localhost", "root", "", $DBconnection->name);
@@ -180,7 +188,8 @@ class InsertController extends Controller
                 'table' => $dataviewcolumn["table"]
             ]);
         } catch (Exception $e) {
-            abort(404);
+            return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+            // abort(404);
         }
     }
 }

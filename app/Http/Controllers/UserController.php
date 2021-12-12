@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\Facades\Log;
+
+
 
 class UserController extends Controller
 {
@@ -18,6 +21,9 @@ class UserController extends Controller
 
     public function index()
     {
+        $message ="TEST LOG";
+        //Log::emergency($message);
+        Log::info($message);
         return view('users.index');
     }
     public function register()
@@ -37,6 +43,7 @@ class UserController extends Controller
                 ]
             );
         } catch (Exception $e) {
+            
             abort(404);
         }
     }
@@ -44,29 +51,30 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'username' => ['required', 'string', 'max:255', 'unique:users,username', 'alpha'],
+            'firstname' => ['required', 'string', 'max:40', 'alpha'],
+            'lastname' => ['required', 'string', 'max:40', 'alpha'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => [
+                'required',
+                Password::min(8)
+                    ->mixedCase()
+                    ->letters()
+                    ->numbers()
+                    ->symbols()
+                    ->uncompromised()
+            ],
+            'type' => ['required', 'in:staff,admin,reader'],
+            'role_id' => ['required', 'int', 'exists:roles,id'],
+
+        ]);
         try {
             $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
             if (!in_array('users.store', $roles_Abilitiles)) {
                 abort(403);
             }
-            $request->validate([
-                'username' => ['required', 'string', 'max:255', 'unique:users,username', 'alpha'],
-                'firstname' => ['required', 'string', 'max:40', 'alpha'],
-                'lastname' => ['required', 'string', 'max:40', 'alpha'],
-                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-                'password' => [
-                    'required',
-                    Password::min(8)
-                        ->mixedCase()
-                        ->letters()
-                        ->numbers()
-                        ->symbols()
-                        ->uncompromised()
-                ],
-                'type' => ['required', 'in:staff,admin,reader'],
-                'role_id' => ['required', 'int', 'exists:roles,id'],
 
-            ]);
             User::create([
                 'username' => $request->post('username'),
                 'fullname' => $request->firstname . ' ' . $request->lastname,
@@ -79,6 +87,7 @@ class UserController extends Controller
 
             return redirect()->route('users.register')->with('success', 'Create new user!');
         } catch (Exception $e) {
+            
             abort(404);
         }
     }
@@ -86,6 +95,7 @@ class UserController extends Controller
     public function login()
     {
         if (Auth::check()) {
+
             return redirect()->route('super-db.dashboard');
 
         }
@@ -97,6 +107,8 @@ class UserController extends Controller
      * @param  \App\Http\Requests\Auth\LoginRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
+
+
     public function storeLogin(Request $request)
     {
         $credentials = $request->validate([
@@ -125,6 +137,7 @@ class UserController extends Controller
     public function destroy(Request $request)
     {
         Auth::logout();
+        
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();

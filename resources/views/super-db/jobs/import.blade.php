@@ -1,4 +1,4 @@
-<x-layout title="{{ __('import') }}">
+<x-layout title="{{ __('Import') }}">
         <div class="d-grid gap-2 d-md-block">
         <a href="{{ route('super-db.jobs.index', $id) }}" class="btn btn-sm btn-primary"><i
                 data-feather="skip-back"></i>{{ __('Back') }}</a>
@@ -8,9 +8,9 @@
         <div class="d-grid gap-2 d-md-flex justify-content-md-center">
             <div class="col-5">
                 <select class="form-select" name="type" aria-label="Default select example">
-                    <option value="csv" selected>CSV File</option>
-                    <option value="text">Text File</option>
-                    <option value="sql">SQL File</option>
+                    <option value="csv" selected>CSV {{ __('File') }}</option>
+                    <option value="text">Text {{ __('File') }}</option>
+                    <option value="sql">SQL {{ __('File') }}</option>
                 </select>
             </div>
         </div>

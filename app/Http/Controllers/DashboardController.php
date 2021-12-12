@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Connection\ErrorHandlerMsg;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
 use Illuminate\Support\Facades\Log;
+
 class DashboardController extends Controller
 {
 
+    
     public function index(){
 
         try{
+           
+           // throw new \Exception('Error found');
             $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
             if(!in_array('super-db.dashboard',$roles_Abilitiles)){
                 abort(403);
@@ -45,7 +49,7 @@ class DashboardController extends Controller
             return view ('dashboard', $data);
         }catch (Exception $e){
             abort(404);
+            //return ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
         }
-
     }
 }

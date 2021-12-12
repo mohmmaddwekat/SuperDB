@@ -31,7 +31,8 @@ class RoleController extends Controller
                 ]
             );
         } catch (Exception $e) {
-            abort(404);
+            return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+            // abort(404);
         }
     }
 
@@ -55,7 +56,8 @@ class RoleController extends Controller
                 ]
             );
         } catch (Exception $e) {
-            abort(404);
+            return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+            //abort(404);
         }
     }
 
@@ -67,14 +69,15 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => ['required', 'string', 'min:3', 'max:255', 'unique:roles,name', new CheckNameRule],
+        ]);
         try {
             $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
             if (!in_array('super-db.roles.store', $roles_Abilitiles)) {
                 abort(403);
             }
-            $request->validate([
-                'name' => ['required', 'string', 'min:3', 'max:255', 'unique:roles,name', new CheckNameRule],
-            ]);
+
 
 
             Role::create([
@@ -130,8 +133,6 @@ class RoleController extends Controller
         }
         $request->validate([
             'name' => ['required', 'string', 'max:255', 'unique:roles,name,' . $role->id, new CheckNameRule],
-
-
         ]);
         $role->update([
             'name' => $request->name,

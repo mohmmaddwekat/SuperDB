@@ -2,9 +2,8 @@
 
 namespace App\Job;
 
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
+use App\Connection\ErrorHandlerMsg;
+
 
 class Insert implements Job
 {
@@ -12,6 +11,8 @@ class Insert implements Job
         public function insert($query, $link)
         {
                 if (mysqli_query($link, $query)) {
+                        ErrorHandlerMsg::setLog('debug','Data inserted! ::'.$query);
+                        ErrorHandlerMsg::setLog('info','Data inserted!');
                         return true;
                 }
                 if (!mysqli_query($link, $query)) {
@@ -21,10 +22,11 @@ class Insert implements Job
         public function send($bool,$link)
         {
                 if($bool == true){
-                        return ['success','INSERTed data!'];
+                        return ['success','Data inserted!'];
                 } 
                 if($bool == false){
-                      return ['error',mysqli_error($link)];
+                       ErrorHandlerMsg::setLog('error',mysqli_error($link));
+                      return ['error','Oops, Error performing query'];
                 }              
         }
 }

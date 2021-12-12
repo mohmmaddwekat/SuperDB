@@ -16,7 +16,8 @@ class VersionControlController extends Controller
             $tables = $version->show($id);
             return view('super-db.versionControl.index', ['id' => $id, 'tables' => $tables]);
         } catch (Exception $e) {
-            abort(404);
+            return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+            //abort(404);
         }
     }
     function store(Request $request, $id)
@@ -30,7 +31,8 @@ class VersionControlController extends Controller
             }
             return redirect()->route('super-db.jobs.index', $id);
         } catch (Exception $e) {
-            abort(404);
+            return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+            //abort(404);
         }
     }
     function update($file, $table, $id)
@@ -40,7 +42,8 @@ class VersionControlController extends Controller
             $version->update($file, $table);
             return redirect()->route('super-db.jobs.view-column', [$table, $id]);
         } catch (Exception $e) {
-            abort(404);
+            return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+            //abort(404);
         }
     }
 }

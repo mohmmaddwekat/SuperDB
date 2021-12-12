@@ -24,7 +24,8 @@ class importController extends Controller
         
         return view('super-db.jobs.import',['id'=>$id]);
     }catch (Exception $e){
-        abort(404);
+        return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+        //abort(404);
     }
     }
 
@@ -55,7 +56,8 @@ class importController extends Controller
             return  redirect()->route('super-db.import.index',$id)->with($massege[0],$massege[1]);
         }       
         }catch (Exception $e){
-            abort(404);
+            return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+            //abort(404);
         }
     }
     

@@ -1,5 +1,5 @@
 <?php if (isset($component)) { $__componentOriginalba35371caef1eeddf45260937599d5fd5fb5dd30 = $component; } ?>
-<?php $component = $__env->getContainer()->make(App\View\Components\Layout::class, ['title' => ''.e(__('import')).'']); ?>
+<?php $component = $__env->getContainer()->make(App\View\Components\Layout::class, ['title' => ''.e(__('Import')).'']); ?>
 <?php $component->withName('layout'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
@@ -13,9 +13,9 @@
         <div class="d-grid gap-2 d-md-flex justify-content-md-center">
             <div class="col-5">
                 <select class="form-select" name="type" aria-label="Default select example">
-                    <option value="csv" selected>CSV File</option>
-                    <option value="text">Text File</option>
-                    <option value="sql">SQL File</option>
+                    <option value="csv" selected>CSV <?php echo e(__('File')); ?></option>
+                    <option value="text">Text <?php echo e(__('File')); ?></option>
+                    <option value="sql">SQL <?php echo e(__('File')); ?></option>
                 </select>
             </div>
         </div>

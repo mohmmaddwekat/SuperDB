@@ -1,12 +1,16 @@
 <?php
 namespace App\Job;
 
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+use App\Connection\ErrorHandlerMsg;
+
+
 class Alter implements Job{
 
     public function alter($query,$link){
         if(mysqli_query($link, $query)){
+            ErrorHandlerMsg::setLog('debug','Alter Created! ::'.$query);
+            ErrorHandlerMsg::setLog('info','Alter Created!');
+
             return true;
         } 
         if(!mysqli_query($link, $query)){
@@ -18,9 +22,9 @@ class Alter implements Job{
             return ['success','Alter Created!'];
         } 
         if($bool == false){
-          return ['error',mysqli_error($link)];
+          ErrorHandlerMsg::setLog('error',mysqli_error($link));
+          return ['error','Oops, Error performing query'];
         }    
-        //return redirect()->route('jobs.index',$connection->id)->with($message[0],$message[1]);
 
     }
 }
