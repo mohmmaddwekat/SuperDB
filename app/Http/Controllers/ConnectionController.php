@@ -14,6 +14,7 @@ class ConnectionController extends Controller
   public function  index()
   {
     try {
+      ErrorHandlerMsg::setLog('info'," Connection controller entered");
       $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
       if (!in_array('super-db.connection.index', $roles_permissions)) {
         abort(403);
@@ -52,8 +53,10 @@ class ConnectionController extends Controller
       $MysqlDB = CreateMySQLDataBase::getInstance();
       $connection = DB::table('connection')->where('id', '=', $id)->first(['name', 'id']);
       $MysqlDB->releaseDatabase($connection->name, $connection->id);
+      ErrorHandlerMsg::setLog('info'," Database of name $connection->name has been deleted");
       return redirect()->route('super-db.connection.index');
     } catch (Exception $e) {
+      ErrorHandlerMsg::setLog('debug'," Failed to delete the dataase of name $connection->name");
       ErrorHandlerMsg::setLog('erorr',$e->getMessage());
        abort(404);
     }

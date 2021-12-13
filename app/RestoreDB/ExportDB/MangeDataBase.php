@@ -35,6 +35,8 @@ class MangeDataBase {
         $query = $db->query("SELECT * FROM $table");
         $numColumns = $query->field_count;
         return [$numColumns, $query ];
+        ErrorHandlerMsg::setLog('debug',"$query rows are stored in csv");
+
     }
 
 
@@ -48,6 +50,8 @@ class MangeDataBase {
           array_push($columns,$row[0]);
         }
         return $columns;
+        ErrorHandlerMsg::setLog('debug',"Got all columns in the table");
+
     }
 
     /*
@@ -88,6 +92,7 @@ class MangeDataBase {
             
         }
         return $query;
+        ErrorHandlerMsg::setLog('debug',"$query columns are set in SQL file");
         
     }
     
@@ -114,5 +119,7 @@ class MangeDataBase {
             $query .="),\n";
         }
         return $query;
+        ErrorHandlerMsg::setLog('debug',"$query is stored in SQL file");
+
     }
 }

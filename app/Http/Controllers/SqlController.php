@@ -8,11 +8,14 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Exceptions\ErrorHandlerMsg;
 
 class SqlController extends Controller
 {
     public function index($id)
     {
+
+        ErrorHandlerMsg::setLog('debug',"SQL controller entered");
         try {
             $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
             if (!in_array('super-db.sqls.index', $roles_permissions)) {

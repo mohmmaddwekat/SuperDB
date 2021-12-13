@@ -6,17 +6,19 @@
 <?php $component->withAttributes([]); ?>
 
   <?php
-  $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
+  $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
        
 ?>
 
   <div class="d-grid gap-2 d-md-flex justify-content-md-end">
   <div class="row g-3">
 <div class="col-sm-7">
+   <?php if(in_array('super-db.connection.add',$roles_permissions)): ?>
   <input type="text" class="form-control name" placeholder="<?php echo e(__('Add database')); ?>">
+  <?php endif; ?>
 </div>
 <div class="col-sm">
-  <?php if(in_array('super-db.connection.add',$roles_Abilitiles)): ?>
+  <?php if(in_array('super-db.connection.add',$roles_permissions)): ?>
   <button type="button" class="btn btn-primary connection"><?php echo e(__('Create')); ?></button>
   <?php endif; ?>
 </div>
@@ -34,13 +36,13 @@
   <?php if(sizeof($connections) > 0): ?> 
   <?php $__currentLoopData = $connections; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $connection): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
       <tr>
-        <td><?php echo e($connection->name); ?></td>
+        <td><span class="font-weight-normal"><?php echo e($connection->name); ?></span></td>
        
         <td>
-          <?php if(in_array('super-db.connection.delete',$roles_Abilitiles)): ?>
+          <?php if(in_array('super-db.connection.delete',$roles_permissions)): ?>
           <a type="button" href="<?php echo e(route('super-db.connection.delete', $connection->id )); ?>" class="btn btn-danger"><?php echo e(__('Delete')); ?></a>
           <?php endif; ?>
-          <?php if(in_array('super-db.jobs.index',$roles_Abilitiles)): ?>
+          <?php if(in_array('super-db.jobs.index',$roles_permissions)): ?>
 
           <a type="button" href="<?php echo e(route('super-db.jobs.index', $connection->id )); ?>" class="btn btn-primary"><?php echo app('translator')->get('Show'); ?> </a></td>
           <?php endif; ?>

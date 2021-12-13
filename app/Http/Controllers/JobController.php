@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use PDO;
+use App\Exceptions\ErrorHandlerMsg;
 
 class JobController extends Controller
 {
@@ -16,6 +17,8 @@ class JobController extends Controller
     public function index($id)
     {
         try {
+            ErrorHandlerMsg::setLog('debug',"Job controller entered");
+
             $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
             if (!in_array('super-db.jobs.index', $roles_permissions)) {
                 abort(403);

@@ -5,13 +5,12 @@
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php $component->withAttributes([]); ?>
 
+        <?php
+        $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
+             
+      ?>
 
-    <?php if(session()->has('success')): ?>
-        <div class="alert alert-success" role="alert">
-            <?php echo e(session()->get('success')); ?>
 
-        </div>
-    <?php endif; ?>
 
 
     <div class="card card-body border-light shadow-sm table-wrapper table-responsive pt-0">
@@ -20,9 +19,12 @@
 
                 <div class="col col-md-6 col-lg-3 col-xl-4 ">
                     <div class="btn-group m-2">
+                        <?php if(in_array('super-db.roles.create',$roles_permissions)): ?>
                         <a href="<?php echo e(route('super-db.roles.create')); ?>"><button class="btn btn-primary btn-sm  "
                                 aria-haspopup="true" aria-expanded="false"> <span class="fas fa-plus mr-2"><i
                                         data-feather="plus-circle"></i><?php echo e(__('Create new Roles')); ?></span></button></a>
+
+                        <?php endif; ?>
                     </div>
                 </div>
 
@@ -38,14 +40,14 @@
                 <tr>
                     <th class="dataTable-sorter">#</th>
                     <th><?php echo e(__('Name')); ?></th>
-                    <th><?php echo e(__('# abilities')); ?></th>
+                    <th><?php echo e(__('# permissions')); ?></th>
                     <th></th>
                     <th class="" scope="2"><?php echo e(__('Options')); ?></th>
                 </tr>
             </thead>
             <tbody>
                 <!-- Item -->
-                <?php $__empty_1 = true; $__currentLoopData = $roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                <?php $__currentLoopData = $roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <tr>
                         <td>
                             <a class="font-weight-bold">
@@ -57,8 +59,8 @@
                             <span class="font-weight-normal"> <?php echo e($role['name']); ?></span>
                         </td>
                         <td>
-                            <?php $__currentLoopData = $role->abilities; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ability): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <span class=""><?php echo e($ability->pivot->ability_id); ?></span>
+                            <?php $__currentLoopData = $role->permissions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $permission): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <span class=""><?php echo e($permission->pivot->permission_id); ?></span>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </td>
                         <td>
@@ -68,21 +70,26 @@
                         <td>
                             <div class="btn-group mb-1 text-dark">
 
-
+                                <?php if(in_array('super-db.roles.edit',$roles_permissions)): ?>
                                     <a class="dropdown-item icon icon-left"
                                         href="<?php echo e(route('super-db.roles.edit', [$role['id']])); ?>"><span
                                             class="fas fa-edit mr-2"><i data-feather="edit"></i><?php echo e(__('Edit')); ?></span></a>
                                     
-
-                                    <?php if(count($role->abilities) == 0): ?>
+                                <?php endif; ?>
+                                    <?php if(count($role->permissions) == 0): ?>
+                                        <?php if(in_array('super-db.permissions.create',$roles_permissions)): ?>
                                         <a class="dropdown-item icon icon-left"
-                                            href="<?php echo e(route('super-db.abilities.create', $role['id'])); ?>"><span
-                                                class="fas fa-edit mr-2"><i data-feather="edit"></i><?php echo e(__('Create abilities')); ?></span></a>
+                                            href="<?php echo e(route('super-db.permissions.create', $role['id'])); ?>"><span
+                                                class="fas fa-edit mr-2"><i data-feather="edit"></i><?php echo e(__('Create permissions')); ?></span></a>
+                                        <?php endif; ?>
                                     <?php else: ?>
+                                        <?php if(in_array('super-db.permissions.edit',$roles_permissions)): ?>
                                         <a class="dropdown-item icon icon-left"
-                                            href="<?php echo e(route('super-db.abilities.edit', $role['id'])); ?>"><span
-                                                class="fas fa-edit mr-2"><i data-feather="edit"></i><?php echo e(__('Edit abilities')); ?></span></a>
+                                            href="<?php echo e(route('super-db.permissions.edit', $role['id'])); ?>"><span
+                                                class="fas fa-edit mr-2"><i data-feather="edit"></i><?php echo e(__('Edit permissions')); ?></span></a>
+                                            
                                     <?php endif; ?>
+                                    <?php if(in_array('super-db.roles.destroy',$roles_permissions)): ?>
                                     <form action="<?php echo e(route('super-db.roles.destroy', $role['id'])); ?>" method="post">
                                         <?php echo csrf_field(); ?>
                                         <?php echo method_field('delete'); ?>
@@ -90,6 +97,7 @@
                                                 class="fas fa-trash-alt mr-2"><i
                                                     data-feather="trash"></i><?php echo e(__('Delete')); ?></span></button>
                                     </form>
+                                    <?php endif; ?>        
 
 
                             </div>
@@ -97,13 +105,13 @@
 
                         </td>
                     </tr>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
+                <?php endif; ?>
                     <tr>
                         <td colspan="10">
                             No Roles Found.
                         </td>
                     </tr>
-                <?php endif; ?>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
 
             </tbody>

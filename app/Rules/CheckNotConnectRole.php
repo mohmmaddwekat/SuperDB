@@ -30,6 +30,7 @@ class CheckNotConnectRole implements Rule
             $link = mysqli_connect("localhost", "root", "", $this->connection);
             return true;
         } catch (\Throwable $th) {
+            ErrorHandlerMsg::setLog('debug',"Error while creating connection");
             return false;
         }        
     }
@@ -41,6 +42,6 @@ class CheckNotConnectRole implements Rule
      */
     public function message()
     {
-        return 'Could not connect of database.';
+        return 'Could not connect to database.';
     }
 }

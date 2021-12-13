@@ -17,14 +17,16 @@ class ExportAsCSV implements ExportInterface{
             */
             $columnsNames = $createQuery->getAllColumns($db, $table);
             fputcsv($file, $columnsNames);
+            ErrorHandlerMsg::setLog('debug',"$columnsNames are stored in csv");
 
             /**
             * get rows then save them in csv
             */
             list($numColumns,$rows)= $createQuery->getAllTables($db, $table);
             
-            
             $createQuery->storeCSV($numColumns,$rows,$file);
+            ErrorHandlerMsg::setLog('debug',"Rows are stored in csv");
+
         }
     }
 

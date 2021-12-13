@@ -18,6 +18,7 @@ class ExportController extends Controller
             
             $exportHandler  =new ExportHandler ;
             $connectionName = $exportHandler->handleExport($export, $connection_id,$tables );
+            ErrorHandlerMsg::setLog('info',"$connectionName exported");
             return redirect()->route('super-db.jobs.index', $connectionName->id)->with("success", "Database Export Successfully!");
        
     }

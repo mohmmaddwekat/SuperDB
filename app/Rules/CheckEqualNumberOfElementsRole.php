@@ -4,6 +4,8 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 
+use App\Exceptions\ErrorHandlerMsg;
+
 class CheckEqualNumberOfElementsRole implements Rule
 {
     /**
@@ -25,6 +27,7 @@ class CheckEqualNumberOfElementsRole implements Rule
      */
     public function passes($attribute, $value)
     {
+        ErrorHandlerMsg::setLog('debug',"Role validation passes entered");
         $query = $value;
         $order = array("\r\n", "\n", "\r","",",",";");
         $query =str_replace($order, "", $query);

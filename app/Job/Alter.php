@@ -1,5 +1,7 @@
 <?php
 namespace App\Job;
+use App\Exceptions\ErrorHandlerMsg;
+use Illuminate\Support\Facades\Log;
 
 
 
@@ -17,10 +19,12 @@ class Alter implements JobInterface{
     }
     public function send($isSucceeded,$mysqlConnection) {
         if($isSucceeded == true){
+            ErrorHandlerMsg::setLog('info'," Table renamed ",null);
             return ['success','Alter Created!'];
         } 
         if($isSucceeded == false){
-          return ['error','Oops, Error performing query'];
+          ErrorHandlerMsg::setLog('info'," Error while performing (alter table) query ",null);
+          return ['error','Oops! Error performing query'];
         }    
 
     }

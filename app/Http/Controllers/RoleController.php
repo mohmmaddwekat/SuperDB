@@ -20,6 +20,7 @@ class RoleController extends Controller
     public function index()
     {
         try {
+            ErrorHandlerMsg::setLog('info',"Role controller entered by authorized user");
             $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
 
             if (!in_array('super-db.roles.index', $roles_permissions)) {
@@ -33,6 +34,7 @@ class RoleController extends Controller
             );
         } catch (Exception $e) {
             return ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+            ErrorHandlerMsg::setLog('debug',"Unauthorized operation");
             // abort(404);
         }
     }
@@ -49,7 +51,7 @@ class RoleController extends Controller
             if (!in_array('super-db.roles.create', $roles_permissions)) {
                 abort(403);
             }
-
+            ErrorHandlerMsg::setLog('info',"ٌRole is created");
             return view(
                 'super-db.roles.create',
                 [
@@ -155,7 +157,9 @@ class RoleController extends Controller
         if (!in_array('super-db.roles.destory', $roles_permissions)) {
             abort(403);
         }
+        ErrorHandlerMsg::setLog('info',"Role has been deleted");
         Role::destroy($role->id);
+        ErrorHandlerMsg::setLog('info',"Role has been edited");
         return  redirect()->route('super-db.roles.index')->with('success', 'Role Deleted!');
     }
 }

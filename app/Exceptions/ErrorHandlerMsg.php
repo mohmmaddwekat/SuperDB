@@ -3,26 +3,18 @@ namespace App\Exceptions;
 
 use Illuminate\Support\Facades\Log;
 use Exception;
-
-     /*const LogLevels =[
-    'emergency',
-    'critical',
-    'alert',
-    'error',
-    'warning',
-    'notice',
-    'debug',
-    'info'
-   ]; */ 
    
 class ErrorHandlerMsg{
 
     public static  function customeExceptionMsg($classOfException , $defaultMsg){
         $msg = $defaultMsg;
         switch ($classOfException) {
-            case 'DivisionByZeroError':
-               $msg = "unexpected number horaay :D";
+            case 'PDOException':
+               $msg = "Error while creating connection!";
                 break;
+            case 'FileException':
+                $msg = "Error whileimporting the file";
+
           
             default:
            
@@ -80,6 +72,7 @@ class ErrorHandlerMsg{
         return \Redirect::back()->withErrors([$title => $msg]);
         }
     }
+
     public static function getErrorMsg($msg,$classOfException=null, $title="Error"){
         if ($classOfException != null){
             $msg =  ErrorHandlerMsg::customeExceptionMsg($classOfException, $msg);

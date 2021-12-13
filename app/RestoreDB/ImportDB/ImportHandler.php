@@ -9,7 +9,7 @@ class ImportHandler{
             $query = fopen("../storage/app/file/".$tableName, "r");
             $sqlFiles = new ImportAsCSV();
             $sqlFiles->createTable($tableName,$query,$id);
-            return ['success','Success file have been added'];
+            return ['success','Success file has been added'];
         }
          if ($name == "txt") {
             $query = fopen("../storage/app/file/".$tableName, "r");
@@ -21,8 +21,9 @@ class ImportHandler{
             $query = file_get_contents("../storage/app/file/".$tableName);
             $sqlFiles = new ImportAsSQL();
             $sqlFiles->createTable($tableName,$query,$id);
-            return ['success','Success file have been added'];
+            return ['success','Success file has been added'];
         }
+        ErrorHandlerMsg::setLog('debug',"Error while handling import");
         return ['error','Oops. Something went wrong'];
     }
 

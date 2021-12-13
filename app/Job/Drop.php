@@ -2,6 +2,8 @@
 namespace App\Job;
 
 use Illuminate\Support\Facades\Auth;
+use App\Exceptions\ErrorHandlerMsg;
+use Illuminate\Support\Facades\Log;
 
 
 class Drop implements JobInterface{
@@ -22,10 +24,12 @@ class Drop implements JobInterface{
     }
     public function send($bool,$link) {
         if($bool == true){
+            ErrorHandlerMsg::setLog('info'," Table Dropped",null);
             return ['success','Table Droped!'];
         } 
         if($bool == false){
-          return ['error','Oops, Error performing query'];
+          ErrorHandlerMsg::setLog('debug'," Error while performing drop query",null);
+          return ['error','Oops! Error performing query'];
         }   
     }
 }

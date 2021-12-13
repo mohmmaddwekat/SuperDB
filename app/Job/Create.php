@@ -1,7 +1,8 @@
 <?php
 namespace App\Job;
 
-use App\Connection\ErrorHandlerMsg;
+use App\Exceptions\ErrorHandlerMsg;
+use Illuminate\Support\Facades\Log;
 
 
 class Create implements JobInterface{
@@ -19,10 +20,12 @@ class Create implements JobInterface{
 
     public function send($bool,$link) {
         if($bool == true){
+            ErrorHandlerMsg::setLog('info'," Table has been created ",null);
             return ['success','Table Created!'];
         } 
         if($bool == false){
-          return ['error','Oops, Error performing query'];
+          ErrorHandlerMsg::setLog('debug',"Error while performing (create table) query ",null);
+          return ['error','Oops! Error performing query'];
         }    
     }
     

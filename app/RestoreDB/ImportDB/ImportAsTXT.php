@@ -10,6 +10,7 @@ class ImportAsTXT implements ImportInterface {
    *Insert data to database
    */
     function createTable($tableName,$file,$id){
+        try{
         $name = str_replace(".txt","", $tableName);
         $queryHandler = new QueryHandler;
         $updateTable =new ImportAsCSV;
@@ -23,7 +24,14 @@ class ImportAsTXT implements ImportInterface {
             }
             $count++;
         }
+    }catch(FileException $e){
+        ErrorHandlerMsg::setLog('error',$e->getMessage());
+        ErrorHandlerMsg::setLog('debug',"Error while importing file.");
+        throw new FileExcpetion($msg,$query,$mysqlConnection);
+
+    }finally{
         fclose($file);
+    }
     }
 
 }

@@ -12,17 +12,15 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Log;
-
+use App\Exceptions\ErrorHandlerMsg;
 
 
 class UserController extends Controller
 {
 
-
     public function index()
     {
-        $message ="TEST LOG";
-        //Log::emergency($message);
+        $message =" Main controller entered index";
         Log::info($message);
         return view('users.index');
     }
@@ -30,12 +28,11 @@ class UserController extends Controller
     {
         try {
 
-
             $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
             if (!in_array('users.register', $roles_permissions)) {
                 abort(403);
             }
-
+            ErrorHandlerMsg::setLog('info',"A new user has been created");
             return view(
                 'users.register',
                 [
@@ -119,6 +116,7 @@ class UserController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
+            ErrorHandlerMsg::setLog('debug',"A user logged in SuperDB");
             return redirect()->intended('dashboard')->with('success', 'Welcome To Super DB!');
         }
 
@@ -136,6 +134,7 @@ class UserController extends Controller
      */
     public function destroy(Request $request)
     {
+        ErrorHandlerMsg::setLog('debug',"User logged out of SuperDB");
         Auth::logout();
         
         $request->session()->invalidate();

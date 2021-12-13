@@ -5,11 +5,16 @@ namespace App\Http\Controllers;
 use App\RestoreDB\SnapshotControl\VersionControl;
 use Exception;
 use Illuminate\Http\Request;
+use App\Exceptions\ErrorHandlerMsg;
+use Illuminate\Support\Facades\Log;
+
+
 
 class VersionControlController extends Controller
 {
     function index($id)
     {
+        ErrorHandlerMsg::setLog('info'," Version Control controller entered ",null);
         try {
             $version = new VersionControl($id);
             $tables = $version->show($id);

@@ -36,14 +36,17 @@ class ImportController extends Controller
             abort(403);
         }
         if(Storage::exists('file/'.$_FILES['formFile']['name'])){
-             return  redirect()->route('super-db.import.index',$id)->with('error','file is exists');
+            ErrorHandlerMsg::setLog('debug',"Error while importing a file, trying to import an existing file");
+             return  redirect()->route('super-db.import.index',$id)->with('error','File exists');
         }
         $request->file('formFile')->storeAs('file',($_FILES['formFile']['name']));
             $handle = new ImportHandler();
             $massege = $handle->handleImport($request->type,$_FILES['formFile']['name'],$id);
+            ErrorHandlerMsg::setLog('info',"File impoerted");
         return  redirect()->route('super-db.import.index',$id)->with($massege[0],$massege[1]);      
         }catch (Exception $e){
             return ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+            ErrorHandlerMsg::setLog('debug',"Error while importing a file");
             //abort(404);
         }
     }

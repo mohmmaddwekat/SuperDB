@@ -4,6 +4,8 @@ namespace App\Connection;
 use App\Exceptions\ErrorHandlerMsg;
 use PDO;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+
 use PDOException;
 
 class CreateMySQLDataBase implements ConnectionInterface
@@ -34,9 +36,10 @@ class CreateMySQLDataBase implements ConnectionInterface
                 ];
                 ErrorHandlerMsg::setLog('info',"The connection has been successfully established");
                 $database = DB::table('connection')->insert($name);
-                ErrorHandlerMsg::setLog('info',"$DBName connection has been added to the database");
+                ErrorHandlerMsg::setLog('info',"A connection of name $DBName has been added to the database");
                 return $database;
             } catch(PDOException $e) {
+                ErrorHandlerMsg::setLog('debug',"PDO Exception happened here!!");
                 ErrorHandlerMsg::setLog('error',$e->getMessage());
                 return false;
             }
@@ -60,11 +63,12 @@ class CreateMySQLDataBase implements ConnectionInterface
                 $mysqlConnection->exec($sqlQuery); //execute query
                 $mysqlConnection = null;
                 ErrorHandlerMsg::setLog('info',"The connection has been successfully deleted");
+
                 $database = DB::table('connection')->delete($id);
                 ErrorHandlerMsg::setLog('info',"$DBName connection has been deleted from the database");
             } catch(PDOException $e) {
-                ErrorHandlerMsg::setLog('erorr',$e->getMessage());
-                return ErrorHandlerMsg::getErrorMsgWithLog("An error occurred The connection was not deleted");
+                ErrorHandlerMsg::setLog('error',$e->getMessage());
+                return ErrorHandlerMsg::getErrorMsgWithLog("An error occurred! The connection was not deleted");
             }
         }
     }

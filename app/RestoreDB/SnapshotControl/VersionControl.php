@@ -7,7 +7,9 @@ use App\RestoreDB\ImportDB\ImportAsSQL;
 use App\RestoreDB\ImportDB\ImportHandler;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 use mysqli;
+use App\Exceptions\ErrorHandlerMsg;
 
 
 class VersionControl {
@@ -48,8 +50,10 @@ class VersionControl {
         $file = fopen("../storage/app/".$this->DBconnection->name."/".$tables[0]."/".$NameDB."_".time().'.sql','w+');
         $sql = new ExportAsSQL;
         $sql->export($tables, $this->mysqlConnection, $file);
+        ErrorHandlerMsg::setLog('info',"Snapshot of $NameDB has been taken",null);
         fclose($file);        
     }
+
 
     /*
     *Update the newly snapshot taken
@@ -58,6 +62,8 @@ class VersionControl {
         $snapshot = new ImportAsSQL();
         $query = file_get_contents("../storage/app/".$this->DBconnection->name."/".$table."/".$file);
         $snapshot->createTable($table,$query,$id);
+        ErrorHandlerMsg::setLog('info',"Snapshot of table $table has been renamed",null);
+
     }
 }
 ?>

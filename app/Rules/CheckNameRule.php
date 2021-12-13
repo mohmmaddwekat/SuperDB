@@ -35,6 +35,6 @@ class CheckNameRule implements Rule
      */
     public function message()
     {
-        return 'The :attribute must be have jast string';
+        return 'The :attribute must only contain strings';
     }
 }

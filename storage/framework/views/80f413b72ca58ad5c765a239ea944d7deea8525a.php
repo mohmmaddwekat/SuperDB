@@ -5,7 +5,7 @@
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php $component->withAttributes([]); ?>
     <?php
-    $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
+    $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
          
   ?>
     <div class="d-grid gap-2 d-md-block">
@@ -14,7 +14,9 @@
 
     </div>
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+         <?php if(in_array('super-db.jobs.versionControl',$roles_permissions)): ?>
             <a href="<?php echo e(route('super-db.jobs.versionControl', [$table,$connection->id])); ?>" class="mr-2"><button class="btn btn-primary" type="button"><?php echo e(__('Version Control')); ?></button></a>
+        <?php endif; ?>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
             <?php echo e(__('Export')); ?>
 
@@ -32,11 +34,11 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body d-flex justify-content-center">
-                    <?php if(in_array('super-db.db.export',$roles_Abilitiles)): ?>
+                    <?php if(in_array('super-db.db.export',$roles_permissions)): ?>
                     <a href="<?php echo e(route('super-db.db.export', [$connection->id, 'sql'])); ?>" class="mx-2"><button
                             class="btn btn-primary" type="button">Sql <?php echo e(__('File')); ?></button></a>
                             <?php endif; ?>     
-                    <?php if(in_array('super-db.db.export',$roles_Abilitiles)): ?>        
+                    <?php if(in_array('super-db.db.export',$roles_permissions)): ?>        
                     <a href="<?php echo e(route('super-db.db.export', [$connection->id, 'csv'])); ?>"><button class="btn btn-primary"
                             type="button">Csv <?php echo e(__('File')); ?></button></a>
                             <?php endif; ?> 
@@ -61,14 +63,14 @@
 
                             
                             <span class="font-weight-normal"><?php echo e($colunm[0]); ?></span>
-                            <?php if(in_array('super-db.jobs.delete-column',$roles_Abilitiles)): ?>
+                            <?php if(in_array('super-db.jobs.delete-column',$roles_permissions)): ?>
                             <form action="<?php echo e(route('super-db.jobs.delete-column', [$connection->id,$table,$colunm[0]])); ?>" method="post" class="mx-2">
                                 <?php echo csrf_field(); ?>
                                 <?php echo method_field('delete'); ?>
                                 <button type="submit" class="text-danger p-0 m-0 border-0 bg-white " ><?php echo e(__('Delete')); ?>/</button>
                             </form>
                             <?php endif; ?>
-                            <?php if(in_array('super-db.inserts.rename-column',$roles_Abilitiles)): ?>
+                            <?php if(in_array('super-db.inserts.rename-column',$roles_permissions)): ?>
                             <a href="<?php echo e(route('super-db.inserts.rename-column', [$connection->id,$table,$colunm[0]])); ?>" ><?php echo e(__('Rename')); ?></a>
                             <?php endif; ?>
                         </div>

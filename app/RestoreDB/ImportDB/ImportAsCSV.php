@@ -25,7 +25,7 @@ class ImportAsCSV implements ImportInterface {
                 $query .=')';
                 $queryHandler->handleQueries($query,$mysqlConnection);
                 ErrorHandlerMsg::setLog('info',"The table has been successfully established");            
-        }catch(Exception $e){
+        }catch(FileException $e){
             ErrorHandlerMsg::setLog('error',$e->getMessage());
         }finally{
             mysqli_close($mysqlConnection);
@@ -37,6 +37,7 @@ class ImportAsCSV implements ImportInterface {
    *Import database from csv file
    */
     function createTable($tablename,$file,$id){
+        try{
         $name = str_replace(".csv","", $tablename);
         $queryHandler = new QueryHandler;
         $count = 0;
@@ -50,8 +51,16 @@ class ImportAsCSV implements ImportInterface {
             }
             $count++;
         }
+    }catch(FileException $e){
+        ErrorHandlerMsg::setLog('error',$e->getMessage());
+        ErrorHandlerMsg::setLog('debug',"Error while importing file.");
+        throw new FileExcpetion($msg,$query,$mysqlConnection);
+
+    }finally{
         fclose($file);
     }
+
+ }
 /*
 *Insert data to database by executing SQL query
 */
@@ -77,8 +86,11 @@ class ImportAsCSV implements ImportInterface {
             $connectionName = DB::table('connection')->where('id','=',$id)->first(['name']);
             $mysqlConnection = mysqli_connect("localhost", "root", "", $connectionName->name);
             $queryHandler->handleQueries($query,$mysqlConnection);
+
+            ErrorHandlerMsg::setLog('info',"$mysqlConnection has been created",null);
          }catch(Exception $e){
              ErrorHandlerMsg::setLog('error',$e->getMessage());
+             ErrorHandlerMsg::setLog('info',"Error creating $mysqlConnection connection",null);
          }finally{
              mysqli_close($mysqlConnection);
          }
