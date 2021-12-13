@@ -40,19 +40,19 @@
                     Menu
                     <i class="fas fa-bars ms-1"></i>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarResponsive">
+                <div class=" collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
                         <li class="nav-item"><a class="nav-link" href="#Main">{{ __('Main') }}</a></li>
                         <li class="nav-item"><a class="nav-link" href="#services">{{ __('Services') }}</a></li>
                         <li class="nav-item"><a class="nav-link" href="#team">{{ __('Team') }}</a></li>
-                        <li>
+                        <li class="lang-switcher-wrapper">
                             <div>
                                 <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     @if (!session()->has('locale')) {{ __('English') }} @endif
                                     @if (session()->get('locale') == 'en') {{ __('English') }} @endif
                                     @if (session()->get('locale') == 'ar') {{ __('Arabic') }} @endif
                                 </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <ul class="dropdown-menu lang-switcher-wrapper" aria-labelledby="navbarDropdownMenuLink">
                                 <li><a class="dropdown-item" href="{{ route('super-db.locale', 'en') }}">{{ __('English') }}</a></li>
                                 <li><a class="dropdown-item" href="{{ route('super-db.locale', 'ar') }}">{{ __('Arabic') }}</a></li>
                                 </ul>

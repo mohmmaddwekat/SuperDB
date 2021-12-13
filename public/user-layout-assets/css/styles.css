@@ -12052,3 +12052,16 @@ section#contact form#contactForm :-ms-input-placeholder {
     transform: skew(-3deg);
   }
 }
+
+.lang-switcher {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.1875;
+  letter-spacing: 0.75px;
+  color: #767676;
+}
+
+.lang-switcher-wrapper {
+  position: relative;
+}
+ 

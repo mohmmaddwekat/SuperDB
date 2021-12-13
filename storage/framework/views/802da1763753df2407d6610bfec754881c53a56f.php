@@ -51,7 +51,7 @@
         <?php else: ?> 
       <tr class="notfound">
         <td colspan="2">
-        <h5 style="text-align: center;"><?php echo e(__('There are no databases, add a new one')); ?></h5>
+        <h5 style="text-align: center;"><span class="font-weight-normal"><?php echo e(__('There are no databases, add a new one')); ?></span></h5>
         </td>
       </tr>
       <?php endif; ?>

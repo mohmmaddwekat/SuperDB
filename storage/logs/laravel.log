@@ -2530,3 +2530,111 @@
 [2021-12-13 21:43:34] local.INFO:  Version Control controller entered   
 [2021-12-13 21:43:36] local.DEBUG: Job controller entered  
 [2021-12-13 21:44:29] local.DEBUG: Job controller entered  
+[2021-12-13 22:20:40] local.INFO:  Main controller entered index  
+[2021-12-13 22:20:46] local.DEBUG: Dashboard controller entered by authorized user  
+[2021-12-13 22:20:53] local.DEBUG: User logged out of SuperDB  
+[2021-12-13 22:20:53] local.INFO:  Main controller entered index  
+[2021-12-13 22:20:57] local.DEBUG: Dashboard controller entered by authorized user  
+[2021-12-13 22:20:59] local.INFO:  Connection controller entered  
+[2021-12-13 22:20:59] local.INFO: Trying to get property 'role' of non-object  
+[2021-12-13 22:20:59] local.ERROR: You must be logged in  
+[2021-12-13 22:20:59] local.INFO:  Main controller entered index  
+[2021-12-13 22:21:03] local.INFO:  Connection controller entered  
+[2021-12-13 22:21:03] local.INFO: Trying to get property 'role' of non-object  
+[2021-12-13 22:21:03] local.ERROR: You must be logged in  
+[2021-12-13 22:21:04] local.INFO:  Main controller entered index  
+[2021-12-13 22:21:35] local.INFO:  Connection controller entered  
+[2021-12-13 22:21:35] local.INFO: Trying to get property 'role' of non-object  
+[2021-12-13 22:21:35] local.ERROR: You must be logged in  
+[2021-12-13 22:21:35] local.INFO:  Main controller entered index  
+[2021-12-13 22:21:43] local.INFO: Role controller entered by authorized user  
+[2021-12-13 22:21:43] local.DEBUG: Unauthorized operation  
+[2021-12-13 22:21:49] local.DEBUG: Job controller entered  
+[2021-12-13 22:22:01] local.DEBUG: A user logged in SuperDB  
+[2021-12-13 22:22:01] local.DEBUG: Dashboard controller entered by authorized user  
+[2021-12-13 22:22:11] local.INFO:  Connection controller entered  
+[2021-12-13 22:22:17] local.INFO: The connection has been successfully established  
+[2021-12-13 22:22:17] local.INFO: A connection of name test has been added to the database  
+[2021-12-13 22:22:18] local.DEBUG: Job controller entered  
+[2021-12-13 22:22:26] local.DEBUG: Job controller entered  
+[2021-12-13 22:22:37] local.DEBUG: Error while performing (create table) query   
+[2021-12-13 22:22:51] local.DEBUG: Error while performing (create table) query   
+[2021-12-13 22:23:05] local.INFO:  Table has been created   
+[2021-12-13 22:23:06] local.DEBUG: Job controller entered  
+[2021-12-13 22:23:13] local.INFO:  Error while performing (alter table) query   
+[2021-12-13 22:23:18] local.INFO:  Error while performing (alter table) query   
+[2021-12-13 22:23:20] local.INFO:  Table renamed   
+[2021-12-13 22:23:22] local.INFO:  Table renamed   
+[2021-12-13 22:23:31] local.DEBUG: Job controller entered  
+[2021-12-13 22:23:46] local.DEBUG: SQL controller entered  
+[2021-12-13 22:23:48] local.INFO:  Table has been created   
+[2021-12-13 22:23:48] local.DEBUG: SQL controller entered  
+[2021-12-13 22:23:54] local.INFO:  Data has been inserted to the table  
+[2021-12-13 22:23:54] local.DEBUG: SQL controller entered  
+[2021-12-13 22:23:57] local.DEBUG: SQL controller entered  
+[2021-12-13 22:23:58] local.INFO:  Data has been inserted to the table  
+[2021-12-13 22:23:59] local.DEBUG: SQL controller entered  
+[2021-12-13 22:23:59] local.DEBUG: Job controller entered  
+[2021-12-13 22:24:07] local.DEBUG: Job controller entered  
+[2021-12-13 22:24:09] local.INFO:  Version Control controller entered   
+[2021-12-13 22:24:14] local.INFO: Snapshot of customers_table has been taken  
+[2021-12-13 22:24:14] local.INFO: Snapshot of test_table has been taken  
+[2021-12-13 22:24:14] local.DEBUG: Job controller entered  
+[2021-12-13 22:24:28] local.DEBUG: Job controller entered  
+[2021-12-13 22:24:36] local.DEBUG: Job controller entered  
+[2021-12-13 22:24:40] local.INFO: preparing sql query to be inserted  
+[2021-12-13 22:24:40] local.INFO: Snapshot of table customers has been renamed  
+[2021-12-13 22:24:45] local.INFO:  Table renamed   
+[2021-12-13 22:24:46] local.INFO:  Table renamed   
+[2021-12-13 22:24:48] local.INFO:  Table renamed   
+[2021-12-13 22:24:49] local.INFO:  Table renamed   
+[2021-12-13 22:24:50] local.INFO:  Table renamed   
+[2021-12-13 22:24:55] local.INFO: preparing sql query to be inserted  
+[2021-12-13 22:24:56] local.INFO: Snapshot of table customers has been renamed  
+[2021-12-13 22:25:02] local.DEBUG: Job controller entered  
+[2021-12-13 22:25:05] local.INFO: A new user has been created  
+[2021-12-13 22:25:10] local.INFO: Role controller entered by authorized user  
+[2021-12-13 22:25:14] local.DEBUG: Dashboard controller entered by authorized user  
+[2021-12-13 22:27:24] local.DEBUG: Dashboard controller entered by authorized user  
+[2021-12-13 22:27:46] local.DEBUG: Dashboard controller entered by authorized user  
+[2021-12-13 22:27:49] local.DEBUG: Dashboard controller entered by authorized user  
+[2021-12-13 22:27:57] local.DEBUG: Dashboard controller entered by authorized user  
+[2021-12-13 22:28:04] local.DEBUG: Dashboard controller entered by authorized user  
+[2021-12-13 22:28:08] local.DEBUG: Dashboard controller entered by authorized user  
+[2021-12-13 22:28:16] local.DEBUG: Dashboard controller entered by authorized user  
+[2021-12-13 22:28:27] local.DEBUG: Dashboard controller entered by authorized user  
+[2021-12-13 22:28:48] local.DEBUG: Dashboard controller entered by authorized user  
+[2021-12-13 22:29:12] local.DEBUG: Dashboard controller entered by authorized user  
+[2021-12-13 22:30:29] local.DEBUG: Dashboard controller entered by authorized user  
+[2021-12-13 22:31:07] local.DEBUG: User logged out of SuperDB  
+[2021-12-13 22:31:07] local.INFO:  Main controller entered index  
+[2021-12-13 22:31:18] local.INFO:  Language Controller entered  
+[2021-12-13 22:31:18] local.INFO:  Language switched   
+[2021-12-13 22:31:18] local.INFO:  Main controller entered index  
+[2021-12-13 22:31:26] local.INFO:  Language Controller entered  
+[2021-12-13 22:31:26] local.INFO:  Language switched   
+[2021-12-13 22:31:26] local.INFO:  Main controller entered index  
+[2021-12-13 22:32:39] local.INFO:  Main controller entered index  
+[2021-12-13 22:36:13] local.INFO:  Main controller entered index  
+[2021-12-13 22:36:17] local.INFO:  Language Controller entered  
+[2021-12-13 22:36:17] local.INFO:  Language switched   
+[2021-12-13 22:36:17] local.INFO:  Main controller entered index  
+[2021-12-13 22:36:18] local.INFO:  Language Controller entered  
+[2021-12-13 22:36:18] local.INFO:  Language switched   
+[2021-12-13 22:36:18] local.INFO:  Main controller entered index  
+[2021-12-13 22:36:22] local.INFO:  Language Controller entered  
+[2021-12-13 22:36:22] local.INFO:  Language switched   
+[2021-12-13 22:36:22] local.INFO:  Main controller entered index  
+[2021-12-13 22:36:24] local.INFO:  Language Controller entered  
+[2021-12-13 22:36:24] local.INFO:  Language switched   
+[2021-12-13 22:36:24] local.INFO:  Main controller entered index  
+[2021-12-13 22:36:26] local.INFO:  Language Controller entered  
+[2021-12-13 22:36:26] local.INFO:  Language switched   
+[2021-12-13 22:36:26] local.INFO:  Main controller entered index  
+[2021-12-13 22:36:27] local.INFO:  Language Controller entered  
+[2021-12-13 22:36:27] local.INFO:  Language switched   
+[2021-12-13 22:36:28] local.INFO:  Main controller entered index  
+[2021-12-13 22:36:30] local.INFO:  Language Controller entered  
+[2021-12-13 22:36:30] local.INFO:  Language switched   
+[2021-12-13 22:36:30] local.INFO:  Main controller entered index  
+[2021-12-13 22:36:43] local.INFO:  Main controller entered index  

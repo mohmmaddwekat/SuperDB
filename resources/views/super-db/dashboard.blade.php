@@ -7,7 +7,7 @@
                 </div>
                 <div class="stat-cards-info text-center">
                     <p class="stat-cards-info__num">{{ __('The number of database created') }}</p>
-                    <p class="stat-cards-info__title">{{ $number_database }}</p>
+                    <p class="stat-cards-info__title">{{ $numberOfdatabase }}</p>
                 </div>
             </article>
         </div>
@@ -20,7 +20,7 @@
                 </div>
                 <div class="stat-cards-info text-center">
                     <p class="stat-cards-info__num">{{ __('The number of Users created') }}</p>
-                    <p class="stat-cards-info__title">0</p>
+                    <p class="stat-cards-info__title">{{ $numberOfUsers }}</p>
                 </div>
             </article>
         </div>

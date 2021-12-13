@@ -12,7 +12,7 @@
                 </div>
                 <div class="stat-cards-info text-center">
                     <p class="stat-cards-info__num"><?php echo e(__('The number of database created')); ?></p>
-                    <p class="stat-cards-info__title"><?php echo e($number_database); ?></p>
+                    <p class="stat-cards-info__title"><?php echo e($numberOfdatabase); ?></p>
                 </div>
             </article>
         </div>
@@ -25,7 +25,7 @@
                 </div>
                 <div class="stat-cards-info text-center">
                     <p class="stat-cards-info__num"><?php echo e(__('The number of Users created')); ?></p>
-                    <p class="stat-cards-info__title">0</p>
+                    <p class="stat-cards-info__title"><?php echo e($numberOfUsers); ?></p>
                 </div>
             </article>
         </div>

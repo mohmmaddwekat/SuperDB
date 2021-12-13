@@ -35,11 +35,11 @@
                 </div>
                 <div class="modal-body d-flex justify-content-center">
                     <?php if(in_array('super-db.db.export',$roles_permissions)): ?>
-                    <a href="<?php echo e(route('super-db.db.export', [$connection->id, 'sql'])); ?>" class="mx-2"><button
+                    <a href="<?php echo e(route('super-db.db.export', [$connection->id, 'sql',$table])); ?>" class="mx-2"><button
                             class="btn btn-primary" type="button">Sql <?php echo e(__('File')); ?></button></a>
                             <?php endif; ?>     
                     <?php if(in_array('super-db.db.export',$roles_permissions)): ?>        
-                    <a href="<?php echo e(route('super-db.db.export', [$connection->id, 'csv'])); ?>"><button class="btn btn-primary"
+                    <a href="<?php echo e(route('super-db.db.export', [$connection->id, 'csv',$table])); ?>"><button class="btn btn-primary"
                             type="button">Csv <?php echo e(__('File')); ?></button></a>
                             <?php endif; ?> 
                 </div>

@@ -14,7 +14,7 @@
                         <?php echo csrf_field(); ?>
 
                         <div class="mb-3">
-                            <label for="exampleFormControlTextarea1" class="form-label"><?php echo e(__('Enter Query')); ?></label>
+                            <label for="exampleFormControlTextarea1" class="form-label"><span class="font-weight-normal"><?php echo e(__('Enter Query')); ?></span></label>
                             <textarea class="form-control" name="query" id="exampleFormControlTextarea1"
                                 rows="3"></textarea>
                         </div>

@@ -13,10 +13,9 @@
 
 
 
-    <div class="card card-body border-light shadow-sm table-wrapper table-responsive pt-0">
+    <div class="card card-body shadow-sm table-wrapper table-responsive pt-0 main-content">
         <div class="row my-2">
             <div class="btn-toolbar">
-
                 <div class="col col-md-6 col-lg-3 col-xl-4 ">
                     <div class="btn-group m-2">
                         <?php if(in_array('super-db.roles.create',$roles_permissions)): ?>
@@ -34,7 +33,7 @@
 
 
         </div>
-        <table class="table table-hover">
+        <table class="table table-hover ">
 
             <thead>
                 <tr>
@@ -47,13 +46,13 @@
             </thead>
             <tbody>
                 <!-- Item -->
-                <?php $__currentLoopData = $roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <?php $__empty_1 = true; $__currentLoopData = $roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                     <tr>
                         <td>
-                            <a class="font-weight-bold">
-                                <?php echo e($role['id']); ?>
+                            <span class="font-weight-bold">
+                                <?php echo e($role['id']-1); ?>
 
-                            </a>
+                            </span>
                         </td>
                         <td>
                             <span class="font-weight-normal"> <?php echo e($role['name']); ?></span>
@@ -89,6 +88,7 @@
                                                 class="fas fa-edit mr-2"><i data-feather="edit"></i><?php echo e(__('Edit permissions')); ?></span></a>
                                             
                                     <?php endif; ?>
+                                    <?php endif; ?>
                                     <?php if(in_array('super-db.roles.destroy',$roles_permissions)): ?>
                                     <form action="<?php echo e(route('super-db.roles.destroy', $role['id'])); ?>" method="post">
                                         <?php echo csrf_field(); ?>
@@ -105,13 +105,13 @@
 
                         </td>
                     </tr>
-                <?php endif; ?>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                     <tr>
                         <td colspan="10">
                             No Roles Found.
                         </td>
                     </tr>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                <?php endif; ?>
 
 
             </tbody>

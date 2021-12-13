@@ -31,8 +31,9 @@ class DashboardController extends Controller
             if(!in_array('super-db.dashboard',$roles_permissions)){
                 abort(404);
             }
-    
-            $number_database = DB::table('connection')->count();
+            $numberOfUsers = DB::table('users')->count();
+
+            $numberOfdatabase = DB::table('connection')->count();
             $record= DB::table('connection')->select(DB::raw("COUNT(*) as count"), DB::raw("DATE(created_at) as date_name"), DB::raw("date(created_at) as date"))
             ->where('created_at', '>', Carbon::today()->subDay(10))
             ->groupBy('date_name','date')
@@ -40,7 +41,7 @@ class DashboardController extends Controller
             ->get();
       
             $data = [];
-     
+            
             foreach($record as $row) {
                $data['label'][] = $row->date_name;
                $data['data'][] = (int) $row->count;
@@ -48,8 +49,9 @@ class DashboardController extends Controller
         
            $data['chart_data'] = json_encode($data);
             return view('super-db.dashboard',[
-                'number_database' => $number_database,
-                'chart_data'=>$data['chart_data']
+                'numberOfdatabase' => $numberOfdatabase,
+                'chart_data'=>$data['chart_data'],
+                'numberOfUsers' => $numberOfUsers
             ]);
     
     

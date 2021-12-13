@@ -111,8 +111,7 @@
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                     <tr>
                         <td colspan="10">
-                            <?php echo e(__('No Tables Found.')); ?>
-
+                            <span class="font-weight-normal"><?php echo e(__('No Tables Found.')); ?></span>
                         </td>
                     </tr>
                 <?php endif; ?>
