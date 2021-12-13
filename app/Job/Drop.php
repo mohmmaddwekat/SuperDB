@@ -4,13 +4,13 @@ namespace App\Job;
 use Illuminate\Support\Facades\Auth;
 
 
-class Drop implements Job{
+class Drop implements JobInterface{
 
     public function drop($query,$link){
 
         $cant = array('super-db.connection.delete','super-db.jobs.delete-table','super-db.jobs.delete-column' );
-        $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
-        if(!array_intersect( $cant,$roles_Abilitiles)){
+        $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
+        if(!array_intersect( $cant,$roles_permissions)){
             abort(403);
         }
         if(mysqli_query($link, $query)){

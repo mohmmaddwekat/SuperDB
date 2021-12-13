@@ -9,7 +9,7 @@
                         <form action="{{ route('super-db.inserts.store',  $connection->id) }}" method="post" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
-                                <label for="name table" class="form-label dark">{{ __('Enter name of table') }}</label>
+                                <label for="name table" class="form-label dark"><span class="font-weight-normal">{{ __('Enter name of table') }}</span></label>
                                 <input type="text" name="nametable" class="form-control" id="nametable">
                               </div>
 

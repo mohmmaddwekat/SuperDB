@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\ErrorHandlerMsg;
 use Illuminate\Http\Request;
 use App\Models\Role;
 use App\Rules\CheckNameRule;
@@ -19,19 +20,19 @@ class RoleController extends Controller
     public function index()
     {
         try {
-            $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
+            $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
 
-            if (!in_array('super-db.roles.index', $roles_Abilitiles)) {
+            if (!in_array('super-db.roles.index', $roles_permissions)) {
                 abort(403);
             }
             return view(
                 'super-db.roles.index',
                 [
-                    'roles' => Role::with('abilities')->paginate(),
+                    'roles' => Role::with('permissions')->paginate(),
                 ]
             );
         } catch (Exception $e) {
-            return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+            return ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
             // abort(404);
         }
     }
@@ -44,8 +45,8 @@ class RoleController extends Controller
     public function create()
     {
         try {
-            $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
-            if (!in_array('super-db.roles.create', $roles_Abilitiles)) {
+            $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
+            if (!in_array('super-db.roles.create', $roles_permissions)) {
                 abort(403);
             }
 
@@ -56,7 +57,7 @@ class RoleController extends Controller
                 ]
             );
         } catch (Exception $e) {
-            return \App\Connection\ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+            return ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
             //abort(404);
         }
     }
@@ -73,8 +74,8 @@ class RoleController extends Controller
             'name' => ['required', 'string', 'min:3', 'max:255', 'unique:roles,name', new CheckNameRule],
         ]);
         try {
-            $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
-            if (!in_array('super-db.roles.store', $roles_Abilitiles)) {
+            $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
+            if (!in_array('super-db.roles.store', $roles_permissions)) {
                 abort(403);
             }
 
@@ -110,8 +111,8 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
-        $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
-        if (!in_array('super-db.roles.edit', $roles_Abilitiles)) {
+        $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
+        if (!in_array('super-db.roles.edit', $roles_permissions)) {
             abort(403);
         }
         return view('super-db.roles.edit', [
@@ -127,8 +128,8 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
-        $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
-        if (!in_array('super-db.roles.update', $roles_Abilitiles)) {
+        $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
+        if (!in_array('super-db.roles.update', $roles_permissions)) {
             abort(403);
         }
         $request->validate([
@@ -150,8 +151,8 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
-        if (!in_array('super-db.roles.destory', $roles_Abilitiles)) {
+        $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
+        if (!in_array('super-db.roles.destory', $roles_permissions)) {
             abort(403);
         }
         Role::destroy($role->id);

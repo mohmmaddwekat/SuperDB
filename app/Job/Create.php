@@ -4,7 +4,7 @@ namespace App\Job;
 use App\Connection\ErrorHandlerMsg;
 
 
-class Create implements Job{
+class Create implements JobInterface{
 
 
     public function create($query,$link){

@@ -8,10 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 class ExportController extends Controller
 {
-
-    /*
-    *Export database to sql file 
-    */
     public function export($connection_id, $export, $tables = '*')
     {
        

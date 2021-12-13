@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\RestoreDB\VersionControl\VersionControl;
+use App\RestoreDB\SnapshotControl\VersionControl;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -34,12 +34,12 @@ class VersionControlController extends Controller
     }
     function update($file, $table, $id)
     {
-        try {
+        // try {
             $version = new VersionControl($id);
-            $version->update($file, $table);
+            $version->update($file, $table,$id);
             return redirect()->route('super-db.jobs.view-column', [$table, $id]);
-        } catch (Exception $e) {
-            abort(404);
-        }
+        // } catch (Exception $e) {
+        //     // abort(404);
+        // }
     }
 }

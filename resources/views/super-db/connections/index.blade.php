@@ -1,17 +1,19 @@
 <x-layout title="{{ __('Connection') }}">
 
   @php
-  $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
+  $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
        
 @endphp
 
   <div class="d-grid gap-2 d-md-flex justify-content-md-end">
   <div class="row g-3">
 <div class="col-sm-7">
+   @if (in_array('super-db.connection.add',$roles_permissions))
   <input type="text" class="form-control name" placeholder="{{ __('Add database') }}">
+  @endif
 </div>
 <div class="col-sm">
-  @if (in_array('super-db.connection.add',$roles_Abilitiles))
+  @if (in_array('super-db.connection.add',$roles_permissions))
   <button type="button" class="btn btn-primary connection">{{ __('Create') }}</button>
   @endif
 </div>
@@ -29,13 +31,13 @@
   @if (sizeof($connections) > 0) 
   @foreach ($connections as $connection)
       <tr>
-        <td>{{ $connection->name }}</td>
+        <td><span class="font-weight-normal">{{ $connection->name }}</span></td>
        
         <td>
-          @if (in_array('super-db.connection.delete',$roles_Abilitiles))
+          @if (in_array('super-db.connection.delete',$roles_permissions))
           <a type="button" href="{{route('super-db.connection.delete', $connection->id ) }}" class="btn btn-danger">{{ __('Delete') }}</a>
           @endif
-          @if (in_array('super-db.jobs.index',$roles_Abilitiles))
+          @if (in_array('super-db.jobs.index',$roles_permissions))
 
           <a type="button" href="{{ route('super-db.jobs.index', $connection->id ) }}" class="btn btn-primary">@lang('Show') </a></td>
           @endif

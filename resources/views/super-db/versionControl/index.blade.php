@@ -10,13 +10,11 @@
 @if($tables !=null and count($tables)>0)
     <ul class="list-group">
         @foreach($tables as $table)
-            <li class="list-group-item list-group-item-action list-group-item-dark">
-                <div class="form-check">
+            <li class="list-group-item">
                     <input class="form-check-input" name="tables[]" type="checkbox" value="{{$table}}" id="{{$table}}">
                     <label class="form-check-label" for="{{$table}}">
                         {{$table}}
                     </label>
-                </div>
             </li>
         @endforeach
     </ul>
@@ -26,3 +24,5 @@
 @endif
 </form>
 </x-layout>
+
+

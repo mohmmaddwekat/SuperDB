@@ -31,7 +31,7 @@
     <div class="page-flex">
         <!-- ! Sidebar -->
         <?php
-        $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
+        $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
              
     ?>
     <aside class="sidebar">
@@ -69,7 +69,7 @@
                   </li>
   
                   
-                  <?php if(in_array('users.register',$roles_permissions) || in_array('super-db.roles.index',$roles_permissions)): ?>
+                  <?php if(in_array('users.register',$roles_Abilitiles) || in_array('super-db.roles.index',$roles_Abilitiles)): ?>
                   <span class="system-menu__title"><?php echo e(__('system control')); ?></span>
                   <li>
                       <a class="show-cat-btn <?php if(Request::is('register')): ?>  || (Request::is('roles')) active <?php endif; ?> " href="##" >
@@ -81,12 +81,12 @@
                           </span>
                       </a>
                       <ul class="cat-sub-menu">
-                          <?php if(in_array('users.register',$roles_permissions)): ?>
+                          <?php if(in_array('users.register',$roles_Abilitiles)): ?>
                           <li>
                               <a href="<?php echo e(route('users.register')); ?>" ><?php echo e(__('Create Users')); ?></a>
                           </li>
                           <?php endif; ?>
-                          <?php if(in_array('super-db.roles.index',$roles_permissions)): ?>
+                          <?php if(in_array('super-db.roles.index',$roles_Abilitiles)): ?>
                           <li>
                               <a href="<?php echo e(route('super-db.roles.index')); ?>"><?php echo e(__('Create Roles')); ?></a>
                           </li>

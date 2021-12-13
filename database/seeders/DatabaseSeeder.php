@@ -17,20 +17,20 @@ class DatabaseSeeder extends Seeder
     {
          User::factory(1)->create();
          $this->call([
-            AbilitySeeder::class,
+            PermissionsSeeder::class,
             RoleSeeder::class,
             
         ]);
 
         $ranges = range(1,35);
-        Role::find(1)->abilities()->attach($ranges); 
+        Role::find(1)->permissions()->attach($ranges); 
         
-        Role::find(2)->abilities()->attach($ranges); 
+        Role::find(2)->permissions()->attach($ranges); 
 
         $ranges = [1, 3, 4 ,5 ,8 ,9 ,10, 11, 12 ,13, 14 ,15 ,16, 17, 18 ,19,20,21,22,23];
-        Role::find(3)->abilities()->attach($ranges);
+        Role::find(3)->permissions()->attach($ranges);
 
         $ranges = [1,4,5,8,9];
-        Role::find(4)->abilities()->attach($ranges);
+        Role::find(4)->permissions()->attach($ranges);
     }
 }

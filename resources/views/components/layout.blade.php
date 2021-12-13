@@ -31,7 +31,7 @@
     <div class="page-flex">
         <!-- ! Sidebar -->
         @php
-        $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
+        $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
              
     @endphp
     <aside class="sidebar">
@@ -45,6 +45,7 @@
                   </div>
   
               </a>
+            
               <button class="sidebar-toggle transparent-btn" title="Menu" type="button">
                   <span class="sr-only">Toggle menu</span>
                   <span class="icon menu-toggle" aria-hidden="true"></span>
@@ -69,7 +70,7 @@
                   </li>
   
                   
-                  @if (in_array('users.register',$roles_Abilitiles) || in_array('super-db.roles.index',$roles_Abilitiles))
+                  @if (in_array('users.register',$roles_permissions) || in_array('super-db.roles.index',$roles_permissions))
                   <span class="system-menu__title">{{ __('system control') }}</span>
                   <li>
                       <a class="show-cat-btn @if (Request::is('register'))  || (Request::is('roles')) active @endif " href="##" >
@@ -80,12 +81,12 @@
                           </span>
                       </a>
                       <ul class="cat-sub-menu">
-                          @if (in_array('users.register',$roles_Abilitiles))
+                          @if (in_array('users.register',$roles_permissions))
                           <li>
                               <a href="{{ route('users.register') }}" >{{ __('Create Users') }}</a>
                           </li>
                           @endif
-                          @if (in_array('super-db.roles.index',$roles_Abilitiles))
+                          @if (in_array('super-db.roles.index',$roles_permissions))
                           <li>
                               <a href="{{ route('super-db.roles.index') }}">{{ __('Create Roles') }}</a>
                           </li>

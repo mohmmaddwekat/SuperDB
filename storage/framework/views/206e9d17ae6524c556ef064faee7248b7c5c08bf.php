@@ -7,7 +7,7 @@
 
 <div class="flex items-center justify-end mt-4 " style="font-family: Arial, Helvetica, sans-serif;">
     <button class="ml-4">
-        <?php echo e(__($savelabel)); ?>
+        <?php echo e($savelabel); ?>
 
 
     </button>

@@ -5,26 +5,26 @@ use App\RestoreDB\ExportDB\ExportInterface;
 
 class ExportAsCSV implements ExportInterface{
 
-    public function export($tables, $db, $handle){
+    public function export($tables, $db, $file){
 
         
         foreach($tables as $table){
 
-            $Createquery = new MangeDataBase;
+            $createQuery = new MangeDataBase;
             /**
             * get all columns in table
             * then save columns in csv file , each column in new column in csv
             */
-            $nameColunms = $Createquery->getallcolumns($db, $table);
-            fputcsv($handle, $nameColunms);
+            $columnsNames = $createQuery->getAllColumns($db, $table);
+            fputcsv($file, $columnsNames);
 
             /**
-            * get rows then save him in csv
+            * get rows then save them in csv
             */
-            list($numColumns,$rows)= $Createquery->getalltable($db, $table);
+            list($numColumns,$rows)= $createQuery->getAllTables($db, $table);
             
             
-            $Createquery->storeSCV($numColumns,$rows,$handle);
+            $createQuery->storeCSV($numColumns,$rows,$file);
         }
     }
 

@@ -2,21 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Job\Factory;
+use App\Job\QueryHandler;
 use App\Rules\CheckNotConnectRole;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate;
 
 class SqlController extends Controller
 {
     public function index($id)
     {
         try {
-            $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
-            if (!in_array('super-db.sqls.index', $roles_Abilitiles)) {
+            $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
+            if (!in_array('super-db.sqls.index', $roles_permissions)) {
                 abort(403);
             }
             $DBconnection = DB::table('connection')->where('id', '=', $id)->first(['name', 'id']);
@@ -39,16 +38,17 @@ class SqlController extends Controller
             ],
         ]);
         try {
-            $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
-            if (!in_array('super-db.sqls.store', $roles_Abilitiles)) {
+            $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
+            if (!in_array('super-db.sqls.store', $roles_permissions)) {
                 abort(403);
             }
 
-            $link = mysqli_connect("localhost", "root", "", $DBconnection->name);
+            $mysqlConnection = mysqli_connect("localhost", "root", "", $DBconnection->name);
             $query = $request->post('query');
-            $factory = new Factory;
-            $message = $factory->factory($query, $link);
-            mysqli_close($link);
+            $queryHandler = new QueryHandler;
+            $message = $queryHandler->handleQueries($query, $mysqlConnection);
+
+            mysqli_close($mysqlConnection);
 
             return redirect()->route('super-db.sqls.index', $DBconnection->id)->with($message[0], $message[1]);
         } catch (Exception $e) {

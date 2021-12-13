@@ -11,16 +11,14 @@ use Illuminate\Support\Facades\Auth;
 
 class UsersPermissionsController extends Controller
 {
-   /*
-    *
-    */
+
 
     /**
-     * Redirect the user to the (add permissions) page 
+     * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function createRolePermissions(Role $role)
+    public function createUserRole(Role $role)
     {
         try {
 
@@ -44,7 +42,7 @@ class UsersPermissionsController extends Controller
     }
 
     /**
-     * Assign permisisons to each role and store them
+     * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -73,7 +71,7 @@ class UsersPermissionsController extends Controller
 
 
     /**
-     * Edit already assigned roles permissions 
+     * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
@@ -100,7 +98,7 @@ class UsersPermissionsController extends Controller
     }
 
     /**
-     * Update an already assigned user role 
+     * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response

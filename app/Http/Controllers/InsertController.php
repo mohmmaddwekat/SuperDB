@@ -3,21 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Exceptions\ErrorHandlerMsg;
-use App\Job\Factory;
+use App\Job\QueryHandler;
 use App\widgets\viewColumn;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate;
 
 class InsertController extends Controller
 {
     public function index($id)
     {
         try {
-            $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
-            if (!in_array('super-db.inserts.index', $roles_Abilitiles)) {
+            $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
+            if (!in_array('super-db.inserts.index', $roles_permissions)) {
                 abort(403);
             }
             $connection = DB::table('connection')->where('id', '=', $id)->first(['name', 'id']);
@@ -48,8 +47,8 @@ class InsertController extends Controller
             ],
         ]);
         try {
-            $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
-            if (!in_array('super-db.inserts.store', $roles_Abilitiles)) {
+            $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
+            if (!in_array('super-db.inserts.store', $roles_permissions)) {
                 abort(403);
             }
             $DBconnection = DB::table('connection')->where('id', '=', $connection_id)->first(['name', 'id']);
@@ -73,11 +72,11 @@ class InsertController extends Controller
                 ++$i;
             }
             $query = implode(" ", $arrquery);
-            $link = mysqli_connect("localhost", "root", "", $DBconnection->name);
+            $mysqlConnection = mysqli_connect("localhost", "root", "", $DBconnection->name);
             $query = "CREATE TABLE $nametable($query);";
-            $factory = new Factory;
-            $message = $factory->factory($query, $link);
-            mysqli_close($link);
+            $queryHandler = new QueryHandler;
+            $message = $queryHandler->handleQueries($query, $mysqlConnection);
+            mysqli_close($mysqlConnection);
             return redirect()->route('super-db.inserts.index', $DBconnection->id)->with($message[0], $message[1]);
         } catch (Exception $e) {
             return ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
@@ -88,8 +87,8 @@ class InsertController extends Controller
     public function renameTable($connection_id, $name)
     {
         try {
-            $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
-            if (!in_array('super-db.inserts.rename-table', $roles_Abilitiles)) {
+            $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
+            if (!in_array('super-db.inserts.rename-table', $roles_permissions)) {
                 abort(403);
             }
             $DBconnection = DB::table('connection')->where('id', '=', $connection_id)->first(['name', 'id']);
@@ -111,19 +110,19 @@ class InsertController extends Controller
             ],
         ]);
         try {
-            $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
-            if (!in_array('super-db.inserts.updateTable', $roles_Abilitiles)) {
+            $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
+            if (!in_array('super-db.inserts.updateTable', $roles_permissions)) {
                 abort(403);
             }
 
 
             $DBconnection = DB::table('connection')->where('id', '=', $connection_id)->first(['name', 'id']);
-            $link = mysqli_connect("localhost", "root", "", $DBconnection->name);
+            $mysqlConnection = mysqli_connect("localhost", "root", "", $DBconnection->name);
             $newname = $request->post('nametable');
             $query = "ALTER TABLE $oldname RENAME TO $newname;";
-            $factory = new Factory;
-            $message = $factory->factory($query, $link);
-            mysqli_close($link);
+            $queryHandler = new QueryHandler;
+            $message = $queryHandler->handleQueries($query, $mysqlConnection);
+            mysqli_close($mysqlConnection);
 
             if ($message[0] == "error") {
                 $table = $oldname;
@@ -140,8 +139,8 @@ class InsertController extends Controller
     public function renameColumn($connection_id, $table, $namecolumn)
     {
         try {
-            $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
-            if (!in_array('super-db.inserts.rename-column', $roles_Abilitiles)) {
+            $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
+            if (!in_array('super-db.inserts.rename-column', $roles_permissions)) {
                 abort(403);
             }
 
@@ -165,19 +164,19 @@ class InsertController extends Controller
             ],
         ]);
         try {
-            $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
-            if (!in_array('super-db.inserts.update-column', $roles_Abilitiles)) {
+            $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
+            if (!in_array('super-db.inserts.update-column', $roles_permissions)) {
                 abort(403);
             }
 
 
             $DBconnection = DB::table('connection')->where('id', '=', $connection_id)->first(['name', 'id']);
-            $link = mysqli_connect("localhost", "root", "", $DBconnection->name);
+            $mysqlConnection = mysqli_connect("localhost", "root", "", $DBconnection->name);
             $newname = $request->post('namecolumn');
             $query = "ALTER TABLE $table RENAME COLUMN $oldnamecolumn TO $newname;";
-            $factory = new Factory;
-            $message = $factory->factory($query, $link);
-            mysqli_close($link);
+            $queryHandler = new QueryHandler;
+            $message = $queryHandler->handleQueries($query, $mysqlConnection);
+            mysqli_close($mysqlConnection);
 
             $viewcolumn = new viewColumn;
             $dataviewcolumn = $viewcolumn->viewColumn($connection_id, $table);

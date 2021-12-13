@@ -12,8 +12,8 @@ class ImportAsCSV implements ImportInterface {
     */
     function buildTableBySQLQuery($tablename,$queryHandler,$values,$id){
         try{
-            $DBconnection = DB::table('connection')->where('id','=',$id)->first(['name','id']);
-            $mysqlConnection = mysqli_connect("localhost", "root", "", $DBconnection->name);
+            $connectionName = DB::table('connection')->where('id','=',$id)->first(['name']);
+            $mysqlConnection = mysqli_connect("localhost", "root", "", $connectionName->name);
                 $query = 'CREATE TABLE '.$tablename.' ( ';
                 foreach($values as $key=>$value){
                     if ($key == count($values)-1) {
@@ -74,13 +74,13 @@ class ImportAsCSV implements ImportInterface {
                 $query  .= "'$value',";   
             }
             $query .=')';
-            $DBconnection = DB::table('connection')->where('id','=',$id)->first(['name','id']);
-            $mysqli = mysqli_connect("localhost", "root", "", $DBconnection->name);
-            $queryHandler->handleQueries($query,$mysqli);
+            $connectionName = DB::table('connection')->where('id','=',$id)->first(['name']);
+            $mysqlConnection = mysqli_connect("localhost", "root", "", $connectionName->name);
+            $queryHandler->handleQueries($query,$mysqlConnection);
          }catch(Exception $e){
-
+             ErrorHandlerMsg::setLog('error',$e->getMessage());
          }finally{
-             mysqli_close($mysqli);
+             mysqli_close($mysqlConnection);
          }
         
         

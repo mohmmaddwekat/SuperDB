@@ -51,8 +51,8 @@ class User extends Authenticatable
     }
 
 
-    public function hasAbility($ability)
+    public function hasPermission($permission)
     {
-        return $this->role->abilities()->where('code',$ability)->exists();
+        return $this->role->permissions()->where('code',$permission)->exists();
     }
 }

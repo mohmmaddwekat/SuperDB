@@ -4,18 +4,21 @@ class ImportHandler{
       /*
         * Handle import operation according to the type of file selected 
         */
-    public function handleImport($name,$tableName,$id,$query){
+    public function handleImport($name,$tableName,$id){
         if ($name == "csv") {
+            $query = fopen("../storage/app/file/".$tableName, "r");
             $sqlFiles = new ImportAsCSV();
             $sqlFiles->createTable($tableName,$query,$id);
             return ['success','Success file have been added'];
         }
-         if ($name == "text") {
+         if ($name == "txt") {
+            $query = fopen("../storage/app/file/".$tableName, "r");
             $sqlFiles = new ImportAsTXT();
             $sqlFiles->createTable($tableName,$query,$id);
             return ['success','Success file have been added'];
         }
         if ($name == "sql") {
+            $query = file_get_contents("../storage/app/file/".$tableName);
             $sqlFiles = new ImportAsSQL();
             $sqlFiles->createTable($tableName,$query,$id);
             return ['success','Success file have been added'];

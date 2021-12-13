@@ -15,8 +15,6 @@ class ImportAsTXT implements ImportInterface {
         $updateTable =new ImportAsCSV;
         $count = 0;
         while (( $data[] =fgetcsv($file)) !== false) {
-                print_r($data[$count]);
-                echo "<br><br>";
             if ($count == 0) {
                 $updateTable->buildTableBySQLQuery($name,$queryHandler,$data[0],$id);
             }

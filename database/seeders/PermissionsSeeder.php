@@ -40,7 +40,7 @@ class PermissionsSeeder extends Seeder
         'super-db.roles.store' =>'can store roles',
         'super-db.roles.edit' =>'can edit roles',
         'super-db.roles.update' =>'can update roles',
-        'super-db.roles.destroy' =>'can delete roels',
+        'super-db.roles.destory' =>'can delete roels',
         'super-db.permissions.create' =>'can add abilites',
         'super-db.permissions.store' =>'can store abilites',
         'super-db.permissions.edit' =>'can edit abilites',

@@ -2,10 +2,9 @@
 
 namespace App\Job;
 
-use App\Connection\ErrorHandlerMsg;
 
 
-class Insert implements Job
+class Insert implements JobInterface
 {
 
         public function insert($query, $link)
