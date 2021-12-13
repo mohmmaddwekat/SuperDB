@@ -8,9 +8,16 @@ use Illuminate\Support\Facades\DB;
 use mysqli;
 
 class ExportHandler{
-      /*
-        * Handle export operation according to the type of file sele
-        */
+
+            
+    /**
+     *Handle export operation according to the type of file sele
+     *
+     * @param  mixed $export
+     * @param  mixed $connection_id
+     * @param  mixed $tables
+     * @return object|null
+     */
     public function handleExport($export, $connection_id,$tables ){
             $connectionName = DB::table('connection')->where('id', '=', $connection_id)->first(['name', 'id']);
             $db = new mysqli('localhost', 'root', '', $connectionName->name);

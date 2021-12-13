@@ -16,18 +16,24 @@ class VersionControl {
     private $DBconnection;
     private $mysqlConnection;
  
-    /*
-    *Constructor to create database connection using connection details (port, connection name)
-    */
+ 
+    /**
+     * Constructor to create database connection using connection details (port, connection name)
+     *
+     * @param  mixed $id
+     * @return void
+     */
     function __construct($id)
     {
         $this->DBconnection = DB::table('connection')->where('id','=',$id)->first(['name','id']);
         $this->mysqlConnection = new mysqli('localhost', 'root', '', $this->DBconnection->name);
     }
-
-    /*
-        *Show connection if created successfully
-        */
+   
+    /**
+     * Show connection if created successfully
+     *
+     * @return null|array
+     */
     function show(){
         $tables = null;
         if ($this->mysqlConnection->connect_error) {
@@ -40,9 +46,13 @@ class VersionControl {
         }
         return $tables;
     }
-    /*
-    *Take snapshot by storing the database in a SQL file
-    */
+   
+    /**
+     * Take snapshot by storing the database in a SQL file
+     *
+     * @param  mixed $tables
+     * @return void
+     */
     function store($tables){
         $comparisonOperators =new MangeDataBase;
         list($NameDB, $tables) = $comparisonOperators->comparisonOperators($tables,$this->DBconnection,$this->mysqlConnection);
@@ -54,10 +64,15 @@ class VersionControl {
         fclose($file);        
     }
 
-
-    /*
-    *Update the newly snapshot taken
-    */
+  
+    /**
+     * Update the newly snapshot taken
+     *
+     * @param  mixed $file
+     * @param  mixed $table
+     * @param  mixed $id
+     * @return void
+     */
     function update($file,$table,$id){
         $snapshot = new ImportAsSQL();
         $query = file_get_contents("../storage/app/".$this->DBconnection->name."/".$table."/".$file);

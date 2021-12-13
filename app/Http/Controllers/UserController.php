@@ -30,13 +30,13 @@ class UserController extends Controller
 
             $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
             if (!in_array('users.register', $roles_permissions)) {
-                abort(403);
+                abort(404);
             }
             ErrorHandlerMsg::setLog('info',"A new user has been created");
             return view(
                 'users.register',
                 [
-                    'roles' => Role::all(),
+                    'roles' => Role::where('id','>',1)->get(),
                 ]
             );
         } catch (Exception $e) {
@@ -69,7 +69,7 @@ class UserController extends Controller
         try {
             $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
             if (!in_array('users.store', $roles_permissions)) {
-                abort(403);
+                abort(404);
             }
 
             User::create([

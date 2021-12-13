@@ -8,10 +8,9 @@
 
 
 
-    <div class="card card-body border-light shadow-sm table-wrapper table-responsive pt-0">
+    <div class="card card-body shadow-sm table-wrapper table-responsive pt-0 main-content">
         <div class="row my-2">
             <div class="btn-toolbar">
-
                 <div class="col col-md-6 col-lg-3 col-xl-4 ">
                     <div class="btn-group m-2">
                         @if (in_array('super-db.roles.create',$roles_permissions))
@@ -29,7 +28,7 @@
 
 
         </div>
-        <table class="table table-hover">
+        <table class="table table-hover ">
 
             <thead>
                 <tr>
@@ -42,12 +41,12 @@
             </thead>
             <tbody>
                 <!-- Item -->
-                @foreach ($roles as $role)
+                @forelse ($roles as $role)
                     <tr>
                         <td>
-                            <a class="font-weight-bold">
-                                {{ $role['id'] }}
-                            </a>
+                            <span class="font-weight-bold">
+                                {{ $role['id']-1 }}
+                            </span>
                         </td>
                         <td>
                             <span class="font-weight-normal"> {{ $role['name'] }}</span>
@@ -83,6 +82,7 @@
                                                 class="fas fa-edit mr-2"><i data-feather="edit"></i>{{ __('Edit permissions') }}</span></a>
                                             
                                     @endif
+                                    @endif
                                     @if (in_array('super-db.roles.destroy',$roles_permissions))
                                     <form action="{{ route('super-db.roles.destroy', $role['id']) }}" method="post">
                                         @csrf
@@ -99,13 +99,13 @@
 
                         </td>
                     </tr>
-                @endif
+                @empty
                     <tr>
                         <td colspan="10">
                             No Roles Found.
                         </td>
                     </tr>
-                @endforeach
+                @endforelse
 
 
             </tbody>

@@ -13,7 +13,7 @@ class Drop implements JobInterface{
         $cant = array('super-db.connection.delete','super-db.jobs.delete-table','super-db.jobs.delete-column' );
         $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
         if(!array_intersect( $cant,$roles_permissions)){
-            abort(403);
+            abort(404);
         }
         if(mysqli_query($link, $query)){
             return true;

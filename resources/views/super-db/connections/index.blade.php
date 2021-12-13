@@ -46,7 +46,7 @@
         @else 
       <tr class="notfound">
         <td colspan="2">
-        <h5 style="text-align: center;">{{ __('There are no databases, add a new one') }}</h5>
+        <h5 style="text-align: center;"><span class="font-weight-normal">{{ __('There are no databases, add a new one') }}</span></h5>
         </td>
       </tr>
       @endif

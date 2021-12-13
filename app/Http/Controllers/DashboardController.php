@@ -12,7 +12,16 @@ use App\Exceptions\ErrorHandlerMsg;
 class DashboardController extends Controller
 {
 
-    
+        
+    /**
+     * Display dashboard
+     * Display the number of created users
+     * Display the number of created databased 
+     * Displays a chart with the number of created databases
+
+     *
+     * @return void
+     */
     public function index(){
 
         try{
@@ -20,7 +29,7 @@ class DashboardController extends Controller
             ErrorHandlerMsg::setLog('debug',"Dashboard controller entered by authorized user");
             $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
             if(!in_array('super-db.dashboard',$roles_permissions)){
-                abort(403);
+                abort(404);
             }
     
             $number_database = DB::table('connection')->count();

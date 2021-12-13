@@ -21,7 +21,7 @@ class JobController extends Controller
 
             $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
             if (!in_array('super-db.jobs.index', $roles_permissions)) {
-                abort(403);
+                abort(404);
             }
             $DBconnection = DB::table('connection')->where('id', '=', $id)->first(['name', 'id']);
             $link = mysqli_connect("localhost", "root", "", $DBconnection->name);
@@ -46,7 +46,7 @@ class JobController extends Controller
         try {
             $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
             if (!in_array('super-db.jobs.view-column', $roles_permissions)) {
-                abort(403);
+                abort(404);
             }
             $viewcolumn = new viewColumn;
             $dataviewcolumn = $viewcolumn->viewColumn($connection_id, $table);
@@ -84,7 +84,7 @@ class JobController extends Controller
         try {
             $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
             if (!in_array('super-db.jobs.delete-table', $roles_permissions)) {
-                abort(403);
+                abort(404);
             }
 
             $DBconnection = DB::table('connection')->where('id', '=', $connection_id)->first(['name', 'id']);
@@ -105,7 +105,7 @@ class JobController extends Controller
         try {
             $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
             if (!in_array('super-db.jobs.delete-column', $roles_permissions)) {
-                abort(403);
+                abort(404);
             }
             $DBconnection = DB::table('connection')->where('id', '=', $connection_id)->first(['name', 'id']);
             $link = mysqli_connect("localhost", "root", "", $DBconnection->name);

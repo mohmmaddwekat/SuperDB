@@ -10,14 +10,20 @@ use Illuminate\Support\Facades\DB;
 
 class ConnectionController extends Controller
 {
-
+  
+  /**
+   * Show all created databases
+   * Only the user who has the permissions can do this
+   *
+   * @return mixed
+   */
   public function  index()
   {
     try {
       ErrorHandlerMsg::setLog('info'," Connection controller entered");
       $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
       if (!in_array('super-db.connection.index', $roles_permissions)) {
-        abort(403);
+        abort(404);
       }
       $databases = DB::table('connection')->get(['name', 'id']);
       return view('super-db.connections.index', ['connections' => $databases]);
@@ -25,13 +31,22 @@ class ConnectionController extends Controller
       ErrorHandlerMsg::setLog('erorr',$e->getMessage());
       return ErrorHandlerMsg::getErrorMsgWithLog("You must be logged in");
     }
-  }
+  }  
+
+
+  /**
+   * Create a new database
+   * Only the user who has the permissions can do this
+   *
+   * @param  mixed $name
+   * @return array
+   */
   public function add($name)
   {
       try {
       $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
       if (!in_array('super-db.connection.add', $roles_permissions)) {
-        abort(403);
+        abort(404);
       }
       $MysqlDB = CreateMySQLDataBase::getInstance();
       if($MysqlDB->createDatabase($name)){
@@ -42,13 +57,20 @@ class ConnectionController extends Controller
     ErrorHandlerMsg::setLog('erorr',$e->getMessage());
     return [];
   }
-}
+}  
+  /**
+   * Delete an existing database 
+   * Only the user who has the permissions can do this
+   *
+   * @param  mixed $id
+   * @return mixed
+   */
   public function deleteDBConnection($id)
   {
     try {
       $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
       if (!in_array('super-db.connection.delete', $roles_permissions)) {
-        abort(403);
+        abort(404);
       }
       $MysqlDB = CreateMySQLDataBase::getInstance();
       $connection = DB::table('connection')->where('id', '=', $id)->first(['name', 'id']);

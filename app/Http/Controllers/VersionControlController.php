@@ -11,7 +11,13 @@ use Illuminate\Support\Facades\Log;
 
 
 class VersionControlController extends Controller
-{
+{    
+    /**
+     * Redirect the user to version control page
+     *
+     * @param  mixed $id
+     * @return void
+     */
     function index($id)
     {
         ErrorHandlerMsg::setLog('info'," Version Control controller entered ",null);
@@ -22,7 +28,14 @@ class VersionControlController extends Controller
         } catch (Exception $e) {
             abort(404);
         }
-    }
+    }    
+    /**
+     * Take snapshot by storing the database in a SQL file
+     *
+     * @param  mixed $request
+     * @param  mixed $id
+     * @return void
+     */
     function store(Request $request, $id)
     {
         try {
@@ -36,7 +49,15 @@ class VersionControlController extends Controller
         } catch (Exception $e) {
             abort(404);
         }
-    }
+    }    
+    /**
+     * Update the newly snapshot taken
+     *
+     * @param  mixed $file
+     * @param  mixed $table
+     * @param  mixed $id
+     * @return void
+     */
     function update($file, $table, $id)
     {
         // try {

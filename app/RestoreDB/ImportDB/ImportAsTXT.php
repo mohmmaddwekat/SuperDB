@@ -1,14 +1,21 @@
 <?php
 namespace App\RestoreDB\ImportDB;
+
+use App\Exceptions\ErrorHandlerMsg;
 use App\Job\QueryHandler;
-use Illuminate\Support\Facades\DB;
-use mysqli;
+use Exception;
 
 class ImportAsTXT implements ImportInterface {
-   /*
-   *Import database from text file
-   *Insert data to database
-   */
+  
+    /**
+     * Import database from text file
+     * Insert data to database
+     *
+     * @param  mixed $tableName
+     * @param  mixed $file
+     * @param  mixed $id
+     * @return void
+     */
     function createTable($tableName,$file,$id){
         try{
         $name = str_replace(".txt","", $tableName);
@@ -24,10 +31,9 @@ class ImportAsTXT implements ImportInterface {
             }
             $count++;
         }
-    }catch(FileException $e){
+    }catch(Exception $e){
         ErrorHandlerMsg::setLog('error',$e->getMessage());
         ErrorHandlerMsg::setLog('debug',"Error while importing file.");
-        throw new FileExcpetion($msg,$query,$mysqlConnection);
 
     }finally{
         fclose($file);

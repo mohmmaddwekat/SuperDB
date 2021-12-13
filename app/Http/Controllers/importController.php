@@ -10,12 +10,18 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class ImportController extends Controller
-{
+{    
+    /**
+     * Redirect the user to the import page
+     *
+     * @param  mixed $id
+     * @return void
+     */
     function index($id){
         try{
         $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
         if(!in_array('super-db.import.index',$roles_permissions)){
-            abort(403);
+            abort(404);
         }
         
         return view('super-db.jobs.import',['id'=>$id]);
@@ -24,7 +30,16 @@ class ImportController extends Controller
         //abort(404);
     }
     }
-
+    
+    /**
+     * Import file (sql/csv/sql) from filesystem
+     * Parse it to SQL file 
+     * Store it in the database
+     *
+     * @param  mixed $request
+     * @param  mixed $id
+     * @return void
+     */
     function add(Request $request,$id){
         $request->validate([
             'formFile'=>['required','mimes:txt,csv,sql','file'],
@@ -33,7 +48,7 @@ class ImportController extends Controller
         try{
         $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
         if(!in_array('super-db.import.add',$roles_permissions)){
-            abort(403);
+            abort(404);
         }
         if(Storage::exists('file/'.$_FILES['formFile']['name'])){
             ErrorHandlerMsg::setLog('debug',"Error while importing a file, trying to import an existing file");
@@ -47,7 +62,6 @@ class ImportController extends Controller
         }catch (Exception $e){
             return ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
             ErrorHandlerMsg::setLog('debug',"Error while importing a file");
-            //abort(404);
         }
     }
     

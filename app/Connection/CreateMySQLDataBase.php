@@ -2,6 +2,7 @@
 namespace App\Connection;
 
 use App\Exceptions\ErrorHandlerMsg;
+use Carbon\Carbon;
 use PDO;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -32,7 +33,8 @@ class CreateMySQLDataBase implements ConnectionInterface
                 $sqlQuery = "CREATE DATABASE $DBName";
                 $mysqlConnection->exec($sqlQuery);
                 $name = [
-                    'name'=> $DBName
+                    'name'=> $DBName,
+                    'created_at' => Carbon::createFromFormat('Y-m-d H:i:s',Carbon::now())->format('Y-m-d'),
                 ];
                 ErrorHandlerMsg::setLog('info',"The connection has been successfully established");
                 $database = DB::table('connection')->insert($name);

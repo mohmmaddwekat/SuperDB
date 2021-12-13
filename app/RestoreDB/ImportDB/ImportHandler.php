@@ -1,9 +1,17 @@
 <?php
 namespace App\RestoreDB\ImportDB;
-class ImportHandler{
-      /*
-        * Handle import operation according to the type of file selected 
-        */
+
+use App\Exceptions\ErrorHandlerMsg;
+
+class ImportHandler{   
+    /**
+     * Handle import operation according to the type of file selected
+     *
+     * @param  mixed $name
+     * @param  mixed $tableName
+     * @param  mixed $id
+     * @return string[]
+     */
     public function handleImport($name,$tableName,$id){
         if ($name == "csv") {
             $query = fopen("../storage/app/file/".$tableName, "r");

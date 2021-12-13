@@ -105,7 +105,7 @@
                 @empty
                     <tr>
                         <td colspan="10">
-                            {{ __('No Tables Found.') }}
+                            <span class="font-weight-normal">{{ __('No Tables Found.') }}</span>
                         </td>
                     </tr>
                 @endforelse

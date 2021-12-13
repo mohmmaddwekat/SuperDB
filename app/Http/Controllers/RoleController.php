@@ -8,6 +8,7 @@ use App\Models\Role;
 use App\Rules\CheckNameRule;
 use Exception;
 use Illuminate\Support\Facades\Auth;
+use PhpParser\Node\Stmt\TryCatch;
 
 class RoleController extends Controller
 {
@@ -24,18 +25,18 @@ class RoleController extends Controller
             $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
 
             if (!in_array('super-db.roles.index', $roles_permissions)) {
-                abort(403);
+            abort(404);
             }
             return view(
                 'super-db.roles.index',
                 [
-                    'roles' => Role::with('permissions')->paginate(),
+                    'roles' => Role::where('id','>',1)->get(),
                 ]
             );
         } catch (Exception $e) {
-            return ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+            //return ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
             ErrorHandlerMsg::setLog('debug',"Unauthorized operation");
-            // abort(404);
+            abort(404);
         }
     }
 
@@ -49,7 +50,7 @@ class RoleController extends Controller
         try {
             $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
             if (!in_array('super-db.roles.create', $roles_permissions)) {
-                abort(403);
+                abort(404);
             }
             ErrorHandlerMsg::setLog('info',"ٌRole is created");
             return view(
@@ -59,8 +60,7 @@ class RoleController extends Controller
                 ]
             );
         } catch (Exception $e) {
-            return ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
-            //abort(404);
+            abort(404);
         }
     }
 
@@ -78,7 +78,7 @@ class RoleController extends Controller
         try {
             $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
             if (!in_array('super-db.roles.store', $roles_permissions)) {
-                abort(403);
+                abort(404);
             }
 
 
@@ -115,7 +115,7 @@ class RoleController extends Controller
     {
         $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
         if (!in_array('super-db.roles.edit', $roles_permissions)) {
-            abort(403);
+            abort(404);
         }
         return view('super-db.roles.edit', [
             'role' => $role,
@@ -130,19 +130,24 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
-        $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
-        if (!in_array('super-db.roles.update', $roles_permissions)) {
-            abort(403);
+        try {        
+            $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
+            if (!in_array('super-db.roles.update', $roles_permissions)) {
+                abort(404);
+            }
+            $request->validate([
+                'name' => ['required', 'string', 'max:255', 'unique:roles,name,' . $role->id, new CheckNameRule],
+            ]);
+            $role->update([
+                'name' => $request->name,
+
+            ]);
+
+            return redirect()->route('super-db.roles.index')->with('success', 'Roles Updated!');
+        } catch (Exception $th) {
+            abort(404);
         }
-        $request->validate([
-            'name' => ['required', 'string', 'max:255', 'unique:roles,name,' . $role->id, new CheckNameRule],
-        ]);
-        $role->update([
-            'name' => $request->name,
 
-        ]);
-
-        return redirect()->route('super-db.roles.index')->with('success', 'Roles Updated!');
     }
 
     /**
@@ -153,13 +158,18 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
-        if (!in_array('super-db.roles.destory', $roles_permissions)) {
-            abort(403);
+        try {
+            $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
+            if (!in_array('super-db.roles.destory', $roles_permissions)) {
+                abort(404);
+            }
+            ErrorHandlerMsg::setLog('info',"Role has been deleted");
+            Role::destroy($role->id);
+            ErrorHandlerMsg::setLog('info',"Role has been edited");
+            return  redirect()->route('super-db.roles.index')->with('success', 'Role Deleted!');
+        } catch (Exception $th) {
+            abort(404);
         }
-        ErrorHandlerMsg::setLog('info',"Role has been deleted");
-        Role::destroy($role->id);
-        ErrorHandlerMsg::setLog('info',"Role has been edited");
-        return  redirect()->route('super-db.roles.index')->with('success', 'Role Deleted!');
+        
     }
 }

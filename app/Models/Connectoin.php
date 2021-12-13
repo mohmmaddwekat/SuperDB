@@ -14,6 +14,7 @@ class Connectoin extends Model
      * @var string
      */
     protected $table = 'connectoin';
+    public $timestamps = true;
     /**
      * The primary key associated with the table.
      *
@@ -27,5 +28,6 @@ class Connectoin extends Model
      */
     protected $fillable = [
         'name',
+        'created_at'
     ];
 }

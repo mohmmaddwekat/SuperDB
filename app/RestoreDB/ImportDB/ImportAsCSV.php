@@ -7,9 +7,16 @@ use Exception;
 use Illuminate\Support\Facades\DB;
 
 class ImportAsCSV implements ImportInterface {
-    /*
-    *Create table by executing SQL query
-    */
+
+    /**
+     * Create table by executing SQL query
+     *
+     * @param  mixed $tablename
+     * @param  mixed $queryHandler
+     * @param  mixed $values
+     * @param  mixed $id
+     * @return void
+     */
     function buildTableBySQLQuery($tablename,$queryHandler,$values,$id){
         try{
             $connectionName = DB::table('connection')->where('id','=',$id)->first(['name']);
@@ -25,17 +32,22 @@ class ImportAsCSV implements ImportInterface {
                 $query .=')';
                 $queryHandler->handleQueries($query,$mysqlConnection);
                 ErrorHandlerMsg::setLog('info',"The table has been successfully established");            
-        }catch(FileException $e){
+        }catch(Exception $e){
             ErrorHandlerMsg::setLog('error',$e->getMessage());
         }finally{
             mysqli_close($mysqlConnection);
         }
 
     }     
-
-      /*
-   *Import database from csv file
-   */
+    
+    /**
+     * Import database from csv file
+     *
+     * @param  mixed $tablename
+     * @param  mixed $file
+     * @param  mixed $id
+     * @return void
+     */
     function createTable($tablename,$file,$id){
         try{
         $name = str_replace(".csv","", $tablename);
@@ -51,19 +63,26 @@ class ImportAsCSV implements ImportInterface {
             }
             $count++;
         }
-    }catch(FileException $e){
+    }catch(Exception $e){
         ErrorHandlerMsg::setLog('error',$e->getMessage());
         ErrorHandlerMsg::setLog('debug',"Error while importing file.");
-        throw new FileExcpetion($msg,$query,$mysqlConnection);
 
     }finally{
         fclose($file);
     }
 
  }
-/*
-*Insert data to database by executing SQL query
-*/
+    
+     /**
+      * Insert data to database by executing SQL query
+      *
+      * @param  mixed $tablename
+      * @param  mixed $queryHandler
+      * @param  mixed $colName
+      * @param  mixed $values
+      * @param  mixed $id
+      * @return void
+      */
      function insertRowsBySQLQuery($tablename,$queryHandler,$colName,$values,$id){
          try{
             $query = 'INSERT INTO '.$tablename.' ( ';
@@ -87,10 +106,10 @@ class ImportAsCSV implements ImportInterface {
             $mysqlConnection = mysqli_connect("localhost", "root", "", $connectionName->name);
             $queryHandler->handleQueries($query,$mysqlConnection);
 
-            ErrorHandlerMsg::setLog('info',"$mysqlConnection has been created",null);
+            ErrorHandlerMsg::setLog('info',"The Connection has been created",null);
          }catch(Exception $e){
              ErrorHandlerMsg::setLog('error',$e->getMessage());
-             ErrorHandlerMsg::setLog('info',"Error creating $mysqlConnection connection",null);
+             ErrorHandlerMsg::setLog('info',"Error creating connection",null);
          }finally{
              mysqli_close($mysqlConnection);
          }

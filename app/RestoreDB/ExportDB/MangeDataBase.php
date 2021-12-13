@@ -1,12 +1,18 @@
 <?php
 namespace App\RestoreDB\ExportDB;
 
+use App\Exceptions\ErrorHandlerMsg;
 
 class MangeDataBase {
- /*
- *fetch all rows 
- *store them in csv
- */
+   
+    /**
+     *fetch all rows store them in csv
+     *
+     * @param  mixed $numColumns
+     * @param  mixed $rows
+     * @param  mixed $file
+     * @return void
+     */
     public function storeCSV($numColumns,$rows,$file){
 
         while($row = $rows->fetch_row()) { 
@@ -19,18 +25,27 @@ class MangeDataBase {
             fputcsv($file, $data);
         }
     }
+    
     /**
-    * get query for create table 
-    */
+     * get query for create table 
+     *
+     * @param  mixed $db
+     * @param  mixed $table
+     * @return void
+     */
     public function createTableBySQLQuery($db, $table){
         $query = $db->query("SHOW CREATE TABLE $table");
         $queryCreate = $query->fetch_row();
         return $queryCreate;
     }
-
+  
     /**
-    * get rows then save them in csv
-    */
+     * get rows then save them in csv
+     *
+     * @param  mixed $db
+     * @param  mixed $table
+     * @return void
+     */
     public function getAllTables($db, $table){
         $query = $db->query("SELECT * FROM $table");
         $numColumns = $query->field_count;
@@ -39,10 +54,14 @@ class MangeDataBase {
 
     }
 
-
+  
     /**
-    * get all columns in table
-    */
+     * get all columns in table
+     *
+     * @param  mixed $db
+     * @param  mixed $table
+     * @return array
+     */
     public function getAllColumns($db, $table){
         $sql_columns = $db->query("SHOW COLUMNS FROM ".$table);
         $columns = array();
@@ -54,10 +73,16 @@ class MangeDataBase {
 
     }
 
-    /*
-    *explode table/all tables 
-    *rename file according to tables selected 
-    */
+   
+    /**
+     * explode table/all tables 
+     * rename file according to tables selected 
+     *
+     * @param  mixed $tables
+     * @param  mixed $connectionName
+     * @param  mixed $db
+     * @return array
+     */
     public  function comparisonOperators($tables,$connectionName,$db)
     {
         if($tables != '*') { 
@@ -75,11 +100,14 @@ class MangeDataBase {
         
          return [$NameDB, $tables];
     }
-
+    
     /**
-    * 
-    * set name of columns in sql file
-    */
+     * set name of columns in sql file
+     *
+     * @param  mixed $namecolumns
+     * @param  mixed $query
+     * @return string
+     */
     public function storeNameOfColumns($namecolumns,$query){
 
         
@@ -95,12 +123,14 @@ class MangeDataBase {
         ErrorHandlerMsg::setLog('debug',"$query columns are set in SQL file");
         
     }
-    
+     
     /**
-    * 
-    *store data to sql file 
-    * 
-    */ 
+     * store data to sql file 
+     *
+     * @param  mixed $rows
+     * @param  mixed $query
+     * @return string
+     */
     public function storeDataOfSQl($rows,$query){
         foreach ($rows as $key => $row){
             $query .='(';

@@ -24,7 +24,7 @@ class UsersPermissionsController extends Controller
 
             $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
             if (!in_array('super-db.permissions.create', $roles_permissions)) {
-                abort(403);
+                abort(404);
             }
 
             return view(
@@ -55,7 +55,7 @@ class UsersPermissionsController extends Controller
         try {
             $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
             if (!in_array('super-db.permissions.store', $roles_permissions)) {
-                abort(403);
+                abort(404);
             }
   
             $permissions = $request->post('permissions', []);
@@ -80,7 +80,7 @@ class UsersPermissionsController extends Controller
         try {
             $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
             if (!in_array('super-db.permissions.edit', $roles_permissions)) {
-                abort(403);
+                abort(404);
             }
             $roles_permissions = $role->permissions()->pluck('id')->toArray();
             return view(
@@ -112,11 +112,11 @@ class UsersPermissionsController extends Controller
         try {
             $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
             if (!in_array('super-db.permissions.update', $roles_permissions)) {
-                abort(403);
+                abort(404);
             }
 
    
-            $permissions = $request->post('permission', []);
+            $permissions = $request->post('permissions', []);
 
 
             //detach is invert  sync //attach add without check if exits in db 

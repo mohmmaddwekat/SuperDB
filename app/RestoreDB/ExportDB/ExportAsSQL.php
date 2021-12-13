@@ -4,7 +4,15 @@ namespace App\RestoreDB\ExportDB;
 use App\RestoreDB\ExportDB\ExportInterface;
 
 class ExportAsSQL implements ExportInterface{
-
+    
+    /**
+     * export database in file sql
+     *
+     * @param  mixed $tables
+     * @param  mixed $db
+     * @param  mixed $file
+     * @return void
+     */
     public function export($tables, $db, $file){
 
         $queries = '';
