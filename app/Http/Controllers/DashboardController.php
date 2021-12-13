@@ -12,19 +12,14 @@ use Illuminate\Support\Facades\Log;
 class DashboardController extends Controller
 {
 
-    /*
-    *Display dashboard
-    *Display the number of created users
-    *Display the number of created databased 
-    * Displays a chart with the number of created databases
-    */
+    
     public function index(){
 
+        try{
            
            // throw new \Exception('Error found');
-            $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
-            dd($roles_permissions);
-            if(!in_array('super-db.dashboard',$roles_permissions)){
+            $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
+            if(!in_array('super-db.dashboard',$roles_Abilitiles)){
                 abort(403);
             }
     
@@ -52,6 +47,9 @@ class DashboardController extends Controller
             Log::channel('custom')->info("hello from logs");
     
             return view ('dashboard', $data);
-  
+        }catch (Exception $e){
+            abort(404);
+            //return ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
+        }
     }
 }

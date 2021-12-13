@@ -18,7 +18,7 @@ class RegisterPolicy
     {
         //
     }
-    public function before(User $user, $permission)
+    public function before(User $user, $ability)
     {
         if($user->type == 'super-admin')
         {
@@ -28,6 +28,6 @@ class RegisterPolicy
     public function register(User $user)
     {
         dd();
-        return $user->hasPermission('users.register');
+        return $user->hasAbility('users.register');
     }
 }

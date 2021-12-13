@@ -31,8 +31,8 @@ class UserController extends Controller
         try {
 
 
-            $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
-            if (!in_array('users.register', $roles_permissions)) {
+            $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
+            if (!in_array('users.register', $roles_Abilitiles)) {
                 abort(403);
             }
 
@@ -70,8 +70,8 @@ class UserController extends Controller
 
         ]);
         try {
-            $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
-            if (!in_array('users.store', $roles_permissions)) {
+            $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
+            if (!in_array('users.store', $roles_Abilitiles)) {
                 abort(403);
             }
 

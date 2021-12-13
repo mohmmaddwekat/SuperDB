@@ -4,28 +4,24 @@ namespace App\Job;
 use App\Connection\ErrorHandlerMsg;
 
 
-class Create implements JobInterface{
+class Create implements Job{
 
-    /*
-    *If query is equal to (create), create data in database 
-    */
-    public function create($query,$mysqlConnection){
-        if(mysqli_query($mysqlConnection, $query)){
+
+    public function create($query,$link){
+        if(mysqli_query($link, $query)){
 
             return true;
         } 
-        if(!mysqli_query($mysqlConnection, $query)){
+        if(!mysqli_query($link, $query)){
           return false;
         }
     }
-      /*
-    *if the process of (create) succeded, return success. If not, return and error 
-    */
-    public function send($isSucceeded,$mysqlConnection){
-        if($isSucceeded == true){
+
+    public function send($bool,$link) {
+        if($bool == true){
             return ['success','Table Created!'];
         } 
-        if($isSucceeded == false){
+        if($bool == false){
           return ['error','Oops, Error performing query'];
         }    
     }

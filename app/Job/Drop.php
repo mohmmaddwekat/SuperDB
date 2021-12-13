@@ -4,35 +4,32 @@ namespace App\Job;
 use Illuminate\Support\Facades\Auth;
 
 
-class Drop implements JobInterface{
+class Drop implements Job{
 
-
-        /*
-    *If query is equal to (drop), drop data in database 
-    */
-    public function drop($query,$mysqlConnection){
+    public function drop($query,$link){
 
         $cant = array('super-db.connection.delete','super-db.jobs.delete-table','super-db.jobs.delete-column' );
-        $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
-        if(!array_intersect( $cant,$roles_permissions)){
+        $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
+        if(!array_intersect( $cant,$roles_Abilitiles)){
             abort(403);
         }
-        if(mysqli_query($mysqlConnection, $query)){
+        if(mysqli_query($link, $query)){
             return true;
         } 
-        if(!mysqli_query($mysqlConnection, $query)){
+        if(!mysqli_query($link, $query)){
           return false;
         }
     }
-    /*
-    *if the process of (drop) succeded, return success. If not, return and error 
-    */
-    public function send($isSucceeded,$mysqlConnection) {
-        if($isSucceeded == true){
+    public function send($bool,$link) {
+        if($bool == true){
             return ['success','Table Droped!'];
         } 
-        if($isSucceeded == false){
+        if($bool == false){
           return ['error','Oops, Error performing query'];
         }   
     }
 }
+
+
+
+?>

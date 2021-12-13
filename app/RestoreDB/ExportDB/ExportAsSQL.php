@@ -5,13 +5,13 @@ use App\RestoreDB\ExportDB\ExportInterface;
 
 class ExportAsSQL implements ExportInterface{
 
-    public function export($tables, $db, $file){
+    public function export($tables, $db, $handle){
 
         $queries = '';
         foreach($tables as $table){
 
             $mangeDB = new MangeDataBase;
-            list($numColumns, $data) = $mangeDB->getAllTables($db, $table);
+            list($numColumns, $data) = $mangeDB->getalltable($db, $table);
     
             /**
             *
@@ -22,7 +22,7 @@ class ExportAsSQL implements ExportInterface{
             /**
             * get query for create table 
             */
-            $createTableBySQl = $mangeDB->createTableBySQLQuery($db, $table);
+            $createTableBySQl = $mangeDB->queryCreatetable($db, $table);
             $queries .= $createTableBySQl[1].";\n\n";
 
            /**
@@ -61,7 +61,7 @@ class ExportAsSQL implements ExportInterface{
             $queries .= "COMMIT;";
         }
 
-        fwrite($file,$queries);
+        fwrite($handle,$queries);
     }
 
 }

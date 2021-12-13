@@ -1,14 +1,10 @@
 <?php
 namespace App\RestoreDB\ExportDB;
 
-use Illuminate\Support\Facades\DB;
 
 class MangeDataBase {
- /*
- *fetch all rows 
- *store them in csv
- */
-    public function storeCSV($numColumns,$rows,$file){
+
+    public function storeSCV($numColumns,$rows,$handle){
 
         while($row = $rows->fetch_row()) { 
             $data= array();
@@ -17,45 +13,41 @@ class MangeDataBase {
                 $row[$j] = $row[$j];
                 array_push($data, $row[$j]);
             }
-            fputcsv($file, $data);
+            fputcsv($handle, $data);
         }
     }
     /**
     * get query for create table 
     */
-    public function createTableBySQLQuery($db, $table){
-        $query = $db->query("SHOW CREATE TABLE $table");
-        $queryCreate = $query->fetch_row();
+    public function queryCreatetable($db, $table){
+        $sqli_query = $db->query("SHOW CREATE TABLE $table");
+        $queryCreate = $sqli_query->fetch_row();
         return $queryCreate;
     }
 
     /**
-    * get rows then save them in csv
+    * get rows then save him in csv
     */
-    public function getAllTables($db, $table){
-        $query = $db->query("SELECT * FROM $table");
-        $numColumns = $query->field_count;
-        return [$numColumns, $query ];
+    public function getalltable($db, $table){
+        $result = $db->query("SELECT * FROM $table");
+        $numColumns = $result->field_count;
+        return [$numColumns, $result ];
     }
 
 
     /**
     * get all columns in table
     */
-    public function getAllColumns($db, $table){
-        $sql_columns = $db->query("SHOW COLUMNS FROM ".$table);
-        $columns = array();
-        while($row = mysqli_fetch_array($sql_columns)){
-          array_push($columns,$row[0]);
+    public function getallcolumns($db, $table){
+        $sql_colunms = $db->query("SHOW COLUMNS FROM ".$table);
+        $colunms = array();
+        while($row = mysqli_fetch_array($sql_colunms)){
+          array_push($colunms,$row[0]);
         }
-        return $columns;
+        return $colunms;
     }
 
-    /*
-    *explode table/all tables 
-    *rename file according to tables selected 
-    */
-    public  function comparisonOperators($tables,$connectionName,$db)
+    public  function ComparisonOperators($tables,$DBconnection,$db)
     {
         if($tables != '*') { 
             $NameDB = $tables.'_table';
@@ -63,11 +55,11 @@ class MangeDataBase {
         }
         if($tables == '*') { 
             $tables = array();
-            $query = $db->query("SHOW TABLES");
-            while($row = $query->fetch_row()) { 
+            $result = $db->query("SHOW TABLES");
+            while($row = $result->fetch_row()) { 
                 $tables[] = $row[0];
             }
-            $NameDB =$connectionName->name.'_db';
+            $NameDB =$DBconnection->name.'_db';
         } 
         
          return [$NameDB, $tables];
@@ -77,18 +69,18 @@ class MangeDataBase {
     * 
     * set name of columns in sql file
     */
-    public function storeNameOfColumns($namecolumns,$query){
+    public function storeNameOfColumns($nameColunms,$return){
 
         
-        foreach ($namecolumns as $key => $column){
-            if($key == (count($namecolumns)-1)){
-                $query .="`$column`";
+        foreach ($nameColunms as $key => $colunm){
+            if($key == (count($nameColunms)-1)){
+                $return .="`$colunm`";
                 break;
             }
-            $query .="`$column`".', ';
+            $return .="`$colunm`".', ';
             
         }
-        return $query;
+        return $return;
         
     }
     
@@ -97,49 +89,23 @@ class MangeDataBase {
     *store data to sql file 
     * 
     */ 
-    public function storeDataOfSQl($rows,$query){
+    public function storeDataOfSQl($rows,$return){
         foreach ($rows as $key => $row){
-            $query .='(';
+            $return .='(';
             foreach ($row as $index => $value){
                 if($index == (count($row)-1)){
-                    $query .="'$value'";
+                    $return .="'$value'";
                     break;
                 }
-                $query .="'$value'".', ';
+                $return .="'$value'".', ';
             }
             
             if($key == (count($rows)-1)){
-                $query .=");\n";
+                $return .=");\n";
                 break;
             }
-            $query .="),\n";
+            $return .="),\n";
         }
-        return $query;
-    }
-
-    /*
-    *Show (display) all columns , rows, and connection details in a specific table 
-    */
-    public function showDatabaseDetails($connection_id,$table){
-        $connectionDetails = DB::table('connection')->where('id','=',$connection_id)->first(['name','id']);
-        $mysqlConnection = mysqli_connect("localhost", "root", "", $connectionDetails->name); 
-        $sqlrow = mysqli_query($mysqlConnection,"SELECT * FROM ".$table);
-        $rows = array();
-        while ($row = mysqli_fetch_assoc($sqlrow)) {
-            array_push($rows,$row);
-        }
-
-        $sqlColumns = mysqli_query($mysqlConnection,"SHOW COLUMNS FROM ".$table);
-        $colunms = array();
-        while($row = mysqli_fetch_array($sqlColumns)){
-          array_push($colunms,$row);
-        }
-        mysqli_close($mysqlConnection);
-        return [
-        'connection'=> $connectionDetails,
-        'colunms' => $colunms,
-        'rows' => $rows,
-        'table' =>$table
-        ];
+        return $return;
     }
 }

@@ -5,30 +5,24 @@ namespace App\Job;
 use App\Connection\ErrorHandlerMsg;
 
 
-class Insert implements JobInterface
+class Insert implements Job
 {
 
-        /*
-        *If query is equal to (insert), insert data in database 
-        */
-        public function insert($query,$mysqlConnection)
+        public function insert($query, $link)
         {
-                if (mysqli_query($mysqlConnection, $query)) {
+                if (mysqli_query($link, $query)) {
                         return true;
                 }
-                if (!mysqli_query($mysqlConnection, $query)) {
+                if (!mysqli_query($link, $query)) {
                         return false;
                 }
         }
-        /*
-        *if the process of (insert) succeded, return success. If not, return and error 
-        */
-        public function send($isSucceeded,$mysqlConnection)
+        public function send($bool,$link)
         {
-                if($isSucceeded == true){
+                if($bool == true){
                         return ['success','Data inserted!'];
                 } 
-                if($isSucceeded == false){
+                if($bool == false){
                       return ['error','Oops, Error performing query'];
                 }              
         }

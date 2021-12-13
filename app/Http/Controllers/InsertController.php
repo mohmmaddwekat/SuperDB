@@ -4,19 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\ErrorHandlerMsg;
 use App\Job\Factory;
+use App\widgets\viewColumn;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Gate;
 
 class InsertController extends Controller
 {
     public function index($id)
     {
         try {
-            $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
-            if (!in_array('super-db.inserts.index', $roles_permissions)) {
+            $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
+            if (!in_array('super-db.inserts.index', $roles_Abilitiles)) {
                 abort(403);
             }
             $connection = DB::table('connection')->where('id', '=', $id)->first(['name', 'id']);
@@ -47,8 +48,8 @@ class InsertController extends Controller
             ],
         ]);
         try {
-            $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
-            if (!in_array('super-db.inserts.store', $roles_permissions)) {
+            $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
+            if (!in_array('super-db.inserts.store', $roles_Abilitiles)) {
                 abort(403);
             }
             $DBconnection = DB::table('connection')->where('id', '=', $connection_id)->first(['name', 'id']);
@@ -87,8 +88,8 @@ class InsertController extends Controller
     public function renameTable($connection_id, $name)
     {
         try {
-            $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
-            if (!in_array('super-db.inserts.rename-table', $roles_permissions)) {
+            $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
+            if (!in_array('super-db.inserts.rename-table', $roles_Abilitiles)) {
                 abort(403);
             }
             $DBconnection = DB::table('connection')->where('id', '=', $connection_id)->first(['name', 'id']);
@@ -110,8 +111,8 @@ class InsertController extends Controller
             ],
         ]);
         try {
-            $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
-            if (!in_array('super-db.inserts.updateTable', $roles_permissions)) {
+            $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
+            if (!in_array('super-db.inserts.updateTable', $roles_Abilitiles)) {
                 abort(403);
             }
 
@@ -139,8 +140,8 @@ class InsertController extends Controller
     public function renameColumn($connection_id, $table, $namecolumn)
     {
         try {
-            $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
-            if (!in_array('super-db.inserts.rename-column', $roles_permissions)) {
+            $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
+            if (!in_array('super-db.inserts.rename-column', $roles_Abilitiles)) {
                 abort(403);
             }
 
@@ -164,8 +165,8 @@ class InsertController extends Controller
             ],
         ]);
         try {
-            $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
-            if (!in_array('super-db.inserts.update-column', $roles_permissions)) {
+            $roles_Abilitiles = Auth::user()->role->abilities()->pluck('code')->toArray();
+            if (!in_array('super-db.inserts.update-column', $roles_Abilitiles)) {
                 abort(403);
             }
 
@@ -192,4 +193,3 @@ class InsertController extends Controller
         }
     }
 }
- 
