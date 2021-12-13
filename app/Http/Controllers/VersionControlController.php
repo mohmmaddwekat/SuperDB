@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\RestoreDB\VersionControl\VersionControl;
+use App\RestoreDB\snapshotControl\VersionControl;
 use Exception;
 use Illuminate\Http\Request;
 
 class VersionControlController extends Controller
 {
+    /*
+    *Redirect the user to version control page
+    */
     function index($id)
     {
         try {
@@ -18,6 +21,9 @@ class VersionControlController extends Controller
             abort(404);
         }
     }
+       /*
+    * Take snapshot by storing the database in a SQL file
+    */
     function store(Request $request, $id)
     {
         try {
@@ -32,6 +38,9 @@ class VersionControlController extends Controller
             abort(404);
         }
     }
+       /*
+    *Update the newly snapshot taken
+    */
     function update($file, $table, $id)
     {
         try {

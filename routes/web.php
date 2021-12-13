@@ -172,7 +172,7 @@ Route::group([
         'as' => 'permissions.',
     ], function () {
 
-        Route::get('/create/{role}', [UsersPermissionsController::class, 'createUserRole'])->name('create');
+        Route::get('/create/{role}', [UsersPermissionsController::class, 'createRolePermissions'])->name('create');
         Route::post('/{role}', [UsersPermissionsController::class, 'store'])->name('store');
         Route::get('/{role}', [UsersPermissionsController::class, 'editRolePermissions'])->name('edit');
         Route::put('/{role}', [UsersPermissionsController::class, 'updateUserRole'])->name('update');

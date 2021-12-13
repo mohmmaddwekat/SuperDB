@@ -4,12 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\ErrorHandlerMsg;
 use App\Job\Factory;
-use App\widgets\viewColumn;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate;
+
 
 class InsertController extends Controller
 {
@@ -193,3 +192,4 @@ class InsertController extends Controller
         }
     }
 }
+ 

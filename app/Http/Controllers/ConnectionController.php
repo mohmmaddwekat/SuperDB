@@ -11,12 +11,16 @@ use Illuminate\Support\Facades\DB;
 class ConnectionController extends Controller
 {
 
+  /*
+  *Show all created databases
+  *Only the user who has the permissions can do this 
+  */
   public function  index()
   {
     try {
       $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
       if (!in_array('super-db.connection.index', $roles_permissions)) {
-        abort(403);
+        abort(404);
       }
       $databases = DB::table('connection')->get(['name', 'id']);
       return view('super-db.connections.index', ['connections' => $databases]);
@@ -25,6 +29,11 @@ class ConnectionController extends Controller
       return ErrorHandlerMsg::getErrorMsgWithLog("You must be logged in");
     }
   }
+  
+  /*
+  *Create a new database 
+  *Only the user who has the permissions can do this 
+  */
   public function add($name)
   {
       try {
@@ -42,6 +51,12 @@ class ConnectionController extends Controller
     return [];
   }
 }
+
+
+ /*
+ *Delete an existing database 
+ *Only the user who has the permissions can do this 
+ */
   public function deleteDBConnection($id)
   {
     try {
