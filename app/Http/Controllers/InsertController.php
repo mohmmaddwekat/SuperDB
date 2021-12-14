@@ -90,15 +90,10 @@ class InsertController extends Controller
         }
     }
 
-<<<<<<< HEAD
  /*
  *Rename Table view 
  */
     public function renameTableView($connection_id, $name)
-=======
-    
-    public function renameTable($connection_id, $name)
->>>>>>> cc69905e80324e45a94976fe7562f9fa89fa0d78
     {
 
         try {
