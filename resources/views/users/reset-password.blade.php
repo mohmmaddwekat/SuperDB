@@ -13,11 +13,6 @@
                                 <h1 class="  text-center">{{ __('Reset Password') }}</h1>
                                 <input type="hidden" name ="token" value="{{ $request->route('token') }}">
 
-                                <div class="form-group">
-                                    <label for="email" class="form-group ">{{ __('Email') }}</label>
-                                    <input type="email" name="email" name="email" class="form-control  @error('email') is-invalid @enderror"  value="">
-                                  </div>
-
                                   <div class="form-group">
                                     <label for="Password" class="form-label ">{{ __('Password') }}</label>
                                     <input type="password"  name="password" class="form-control  @error('password') is-invalid @enderror " >

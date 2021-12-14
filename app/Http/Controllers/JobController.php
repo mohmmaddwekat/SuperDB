@@ -70,7 +70,7 @@ class JobController extends Controller
     }
 
 /*
-*This function displays all snapshot taken
+*This function displays all snapshot taken for a specific database 
 */
     public function versionControl($table, $id)
     {
@@ -83,12 +83,13 @@ class JobController extends Controller
             }
             return view('super-db.versionControl.update', ['files' => $file, 'table' => $table, 'id' => $id]);
         } catch (Exception $e) {
+            ErrorHandlerMsg::setLog('error',"Unauthorized user entering the job controller");
               abort(404);
         }
     }
 
 /*
-*Delete table in the database 
+*Delete a specific table in the database 
 */
     public function deletTable($connection_id, $name)
     {
@@ -107,6 +108,7 @@ class JobController extends Controller
             ErrorHandlerMsg::setLog('debug',"Table deleted");
             return redirect()->route('super-db.jobs.index', $DBconnection->id)->with($message[0], $message[1]);
         } catch (Exception $e) {
+            ErrorHandlerMsg::setLog('error',"Unauthorized user entering the job controller");
              abort(404);
         }
     }

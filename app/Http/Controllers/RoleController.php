@@ -14,7 +14,7 @@ class RoleController extends Controller
 {
 
     /**
-     * Display a listing of the resource.
+     * Redirect the user to the roles page
      *
      * @return \Illuminate\Http\Response
      */
@@ -34,14 +34,13 @@ class RoleController extends Controller
                 ]
             );
         } catch (Exception $e) {
-            //return ErrorHandlerMsg::getErrorMsgWithLog($e->getMessage());
             ErrorHandlerMsg::setLog('debug',"Unauthorized operation");
             abort(404);
         }
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Create a new user role and assign permissions to it 
      *
      * @return \Illuminate\Http\Response
      */
@@ -60,12 +59,14 @@ class RoleController extends Controller
                 ]
             );
         } catch (Exception $e) {
+            ErrorHandlerMsg::setLog('error',"ٌUnauthorized operation in role controller");
             abort(404);
         }
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store (save) the newly added role
+     * Validate on that role (name constraints)
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -78,6 +79,7 @@ class RoleController extends Controller
         try {
             $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
             if (!in_array('super-db.roles.store', $roles_permissions)) {
+                ErrorHandlerMsg::setLog('error',"ٌUnauthorized operation in role controller");
                 abort(404);
             }
 
@@ -90,25 +92,16 @@ class RoleController extends Controller
 
             return redirect()->route('super-db.roles.index')->with('success', 'Roles created!');
         } catch (Exception $e) {
+            ErrorHandlerMsg::setLog('error',"ٌUnauthorized operation in role controller");
             abort(404);
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Role  $role
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Role $role)
-    {
-        //
-    }
 
     /**
-     * Show the form for editing the specified resource.
+     * Redirect the user to the edit role page
      *
-     * @param  \App\Models\super-db\City  $city
+     * @param  \App\Models\super-db\Role $role
      * @return \Illuminate\Http\Response
      */
     public function edit(Role $role)
@@ -123,7 +116,7 @@ class RoleController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Edit a role with it's permissions 
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -142,18 +135,19 @@ class RoleController extends Controller
                 'name' => $request->name,
 
             ]);
-
+            ErrorHandlerMsg::setLog('info',"ٌRole has been updated");
             return redirect()->route('super-db.roles.index')->with('success', 'Roles Updated!');
         } catch (Exception $th) {
+            ErrorHandlerMsg::setLog('error',"ٌUnauthorized operation in role controller");
             abort(404);
         }
 
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete a specific role
      *
-     * @param  \App\Models\super-db\City  $city
+     * @param  \App\Models\super-db\Role $role
      * @return \Illuminate\Http\Response
      */
     public function destroy(Role $role)
@@ -163,11 +157,11 @@ class RoleController extends Controller
             if (!in_array('super-db.roles.destory', $roles_permissions)) {
                 abort(404);
             }
-            ErrorHandlerMsg::setLog('info',"Role has been deleted");
             Role::destroy($role->id);
-            ErrorHandlerMsg::setLog('info',"Role has been edited");
+            ErrorHandlerMsg::setLog('info',"Role has been deleted");
             return  redirect()->route('super-db.roles.index')->with('success', 'Role Deleted!');
         } catch (Exception $th) {
+            ErrorHandlerMsg::setLog('error',"ٌUnauthorized operation in role controller");
             abort(404);
         }
         

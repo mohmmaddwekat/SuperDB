@@ -17,7 +17,9 @@ use App\Exceptions\ErrorHandlerMsg;
 
 class UserController extends Controller
 {
-
+/*
+*Redirect the user to the add new user page 
+*/
     public function index()
     {
         $message =" Main controller entered index";
@@ -40,12 +42,16 @@ class UserController extends Controller
                 ]
             );
         } catch (Exception $e) {
-            
+            ErrorHandlerMsg::setLog('error',"ٌUnauthorized operation in user controller");
             abort(404);
         }
     }
 
-
+/*
+*Store new user's data 
+*Validate on user's data 
+*Add constraints on fields
+*/
     public function store(Request $request)
     {
         $request->validate([
@@ -69,6 +75,7 @@ class UserController extends Controller
         try {
             $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
             if (!in_array('users.store', $roles_permissions)) {
+                ErrorHandlerMsg::setLog('error',"ٌUnauthorized operation in user controller");
                 abort(404);
             }
 
@@ -84,11 +91,13 @@ class UserController extends Controller
 
             return redirect()->route('users.register')->with('success', 'Create new user!');
         } catch (Exception $e) {
-            
+            ErrorHandlerMsg::setLog('error',"ٌUnauthorized operation in user controller");
             abort(404);
         }
     }
-
+/*
+*redirect the user to the login page
+*/
     public function login()
     {
         if (Auth::check()) {
@@ -100,11 +109,11 @@ class UserController extends Controller
     }
     /**
      * Handle an incoming authentication request.
-     *
+     *Validate user login 
+     *Check entered credentials
      * @param  \App\Http\Requests\Auth\LoginRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-
 
     public function storeLogin(Request $request)
     {
@@ -128,7 +137,7 @@ class UserController extends Controller
 
     /**
      * Destroy an authenticated session.
-     *
+     *Log the user out of the system
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */

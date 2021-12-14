@@ -26,7 +26,7 @@
         </div>
     </div>
 
-    <div class="chart-container row">
+    <div class="chart-container row mt-5">
         <div class="pie-chart-container col-5">
           <canvas id="pie-chart"></canvas>
         </div>

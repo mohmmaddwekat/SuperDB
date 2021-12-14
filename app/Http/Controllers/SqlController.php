@@ -12,6 +12,9 @@ use App\Exceptions\ErrorHandlerMsg;
 
 class SqlController extends Controller
 {
+    /*
+    *Redirect the user to database details page 
+    */
     public function index($id)
     {
 
@@ -19,6 +22,7 @@ class SqlController extends Controller
         try {
             $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
             if (!in_array('super-db.sqls.index', $roles_permissions)) {
+                ErrorHandlerMsg::setLog('error',"ٌUnauthorized operation in SQL controller");
                 abort(404);
             }
             $DBconnection = DB::table('connection')->where('id', '=', $id)->first(['name', 'id']);
@@ -26,11 +30,16 @@ class SqlController extends Controller
                 'connection' => $DBconnection,
             ]);
         } catch (Exception $e) {
+            ErrorHandlerMsg::setLog('error',"ٌUnauthorized operation in SQL controller");
             abort(404);
         }
     }
 
-
+/*
+*Insert data to the database 
+*Validate inserted data 
+*Validate query
+*/
     public function store(Request $request, $id)
     {
         $DBconnection = DB::table('connection')->where('id', '=', $id)->first(['name', 'id']);
