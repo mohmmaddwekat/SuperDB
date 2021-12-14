@@ -76,7 +76,7 @@
                         </div>
                         </th>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                    <th><?php echo e(__('Options')); ?></th>
+                    
                 </tr>
             </thead>
             <tbody>
