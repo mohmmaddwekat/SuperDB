@@ -14,7 +14,9 @@ use App\RestoreDB\ExportDB\MangeDataBase;
 
 class JobController extends Controller
 {
-
+ /*
+ *Redirect the user to the database details (show)
+ */
     public function index($id)
     {
         try {
@@ -25,23 +27,26 @@ class JobController extends Controller
                 abort(404);
             }
             $DBconnection = DB::table('connection')->where('id', '=', $id)->first(['name', 'id']);
-            $link = mysqli_connect("localhost", "root", "", $DBconnection->name);
-            $result = mysqli_query($link, "show tables");
+            $mysqlConnection = mysqli_connect("localhost", "root", "", $DBconnection->name);
+            $result = mysqli_query($mysqlConnection, "show tables");
             $tables = array();
             while ($table = mysqli_fetch_array($result)) {
                 array_push($tables, $table[0]);
             }
 
-            mysqli_close($link);
+            mysqli_close($mysqlConnection);
             return view('super-db.jobs.index', [
                 'connection' => $DBconnection,
                 'tables' => $tables
             ]);
         } catch (Exception $e) {
+            ErrorHandlerMsg::setLog('error',"Unauthorized user entering the job controller");
             abort(404);
         }
     }
-
+/*
+*Redirect the user to the database view (tables)
+*/
     public function viewColumn($table, $connection_id)
     {
         try {
@@ -59,11 +64,14 @@ class JobController extends Controller
                 'table' => $dataviewcolumn["table"]
             ]);
         } catch (Exception $e) {
+            ErrorHandlerMsg::setLog('error',"Unauthorized user entering the job controller");
             abort(404);
         }
     }
 
-
+/*
+*This function displays all snapshot taken
+*/
     public function versionControl($table, $id)
     {
 
@@ -79,7 +87,9 @@ class JobController extends Controller
         }
     }
 
-
+/*
+*Delete table in the database 
+*/
     public function deletTable($connection_id, $name)
     {
         try {
@@ -94,13 +104,16 @@ class JobController extends Controller
             $factory = new QueryHandler;
             $message = $factory->handleQueries($query, $link);
             mysqli_close($link);
+            ErrorHandlerMsg::setLog('debug',"Table deleted");
             return redirect()->route('super-db.jobs.index', $DBconnection->id)->with($message[0], $message[1]);
         } catch (Exception $e) {
              abort(404);
         }
     }
 
-
+/*
+*Delete a pecific columnin the table 
+*/
     public function deletColumn($connection_id, $table, $column)
     {
         try {
@@ -126,6 +139,7 @@ class JobController extends Controller
                 'table' => $dataviewcolumn["table"]
             ]);
         } catch (Exception $e) {
+            ErrorHandlerMsg::setLog('error',"Unauthorized user entering the job controller");
             abort(404);
         }
     }

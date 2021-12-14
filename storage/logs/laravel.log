@@ -3557,3 +3557,34 @@ VALUES ('Cardinal', 'Tom B. Erichsen', 'Skagen 21', 'Stavanger', '4006', 'Norway
 [2021-12-14 17:41:59] local.DEBUG: User logged out of SuperDB  
 [2021-12-14 17:42:00] local.INFO:  Main controller entered index  
 [2021-12-14 17:43:24] local.INFO:  Main controller entered index  
+[2021-12-14 20:30:33] local.INFO:  Main controller entered index  
+[2021-12-14 20:30:45] local.DEBUG: A user logged in SuperDB  
+[2021-12-14 20:30:45] local.DEBUG: Dashboard controller entered by authorized user  
+[2021-12-14 20:30:52] local.INFO:  Connection controller entered  
+[2021-12-14 20:30:57] local.INFO: The connection has been successfully established  
+[2021-12-14 20:30:57] local.INFO: A connection of name lkflsdjflk has been added to the database  
+[2021-12-14 20:30:58] local.DEBUG: Job controller entered  
+[2021-12-14 20:31:05] local.INFO:  Version Control controller entered   
+[2021-12-14 20:31:08] local.DEBUG: Job controller entered  
+[2021-12-14 20:34:56] local.DEBUG: Job controller entered  
+[2021-12-14 20:36:35] local.DEBUG: Job controller entered  
+[2021-12-14 20:36:37] local.INFO:  Language Controller entered  
+[2021-12-14 20:36:37] local.INFO:  Language switched   
+[2021-12-14 20:36:38] local.DEBUG: Job controller entered  
+[2021-12-14 20:36:54] local.INFO:  Language Controller entered  
+[2021-12-14 20:36:54] local.INFO:  Language switched   
+[2021-12-14 20:36:54] local.DEBUG: Job controller entered  
+[2021-12-14 20:39:17] local.DEBUG: Job controller entered  
+[2021-12-14 20:39:28] local.DEBUG: Error while importing a file, trying to import an existing file  
+[2021-12-14 20:39:32] local.DEBUG: Job controller entered  
+[2021-12-14 20:39:36] local.INFO: connection exported  
+[2021-12-14 20:39:37] local.DEBUG: Job controller entered  
+[2021-12-14 20:39:45] local.INFO:  Version Control controller entered   
+[2021-12-14 20:39:48] local.DEBUG: Job controller entered  
+[2021-12-14 20:39:51] local.INFO:  Connection controller entered  
+[2021-12-14 20:39:53] local.INFO: The connection has been successfully deleted  
+[2021-12-14 20:39:53] local.INFO: lkflsdjflk connection has been deleted from the database  
+[2021-12-14 20:39:53] local.INFO:  Database of name lkflsdjflk has been deleted  
+[2021-12-14 20:39:54] local.INFO:  Connection controller entered  
+[2021-12-14 20:39:58] local.INFO: A new user has been created  
+[2021-12-14 20:40:16] local.INFO: A new user has been created  

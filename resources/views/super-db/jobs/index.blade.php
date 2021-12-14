@@ -24,7 +24,7 @@
         <a href="{{ route('super-db.import.index', $connection->id) }}" class="mr-2"><button class="btn btn-primary" type="button">{{ __('Import') }}</button></a>
         @endif
         @if (in_array('super-db.versionControl.index',$roles_permissions))
-        <a href="{{ route('super-db.versionControl.index', $connection->id) }}" class="mr-2"><button class="btn btn-primary" type="button">{{ __('Version Control') }}</button></a>
+        <a href="{{ route('super-db.versionControl.index', $connection->id) }}" class="mr-2"><button class="btn btn-primary" type="button">{{ __('Take Snapshot') }}</button></a>
         @endif 
 
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">

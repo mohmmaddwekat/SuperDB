@@ -113,8 +113,8 @@ Route::group([
         Route::get('/rename-column/{id}/{table}/{column}', [InsertController::class, 'renameColumn'])->name('rename-column');
         Route::post('/rename-column/{id}/{table}/{column}', [InsertController::class, 'updateColumn'])->name('update-column');
 
-        Route::get('/rename-table/{id}/{table}', [InsertController::class, 'renameTable'])->name('rename-table');
-        Route::post('/rename-table/{id}/{table}', [InsertController::class, 'updateTable'])->name('updateTable');
+        Route::get('/rename-table/{id}/{table}', [InsertController::class, 'renmeTableView'])->name('rename-table');
+        Route::post('/rename-table/{id}/{table}', [InsertController::class, 'renameTable'])->name('updateTable');
     });
     Route::group([
         'prefix' => '/sqls',

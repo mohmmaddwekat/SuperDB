@@ -29,7 +29,7 @@
         <a href="<?php echo e(route('super-db.import.index', $connection->id)); ?>" class="mr-2"><button class="btn btn-primary" type="button"><?php echo e(__('Import')); ?></button></a>
         <?php endif; ?>
         <?php if(in_array('super-db.versionControl.index',$roles_permissions)): ?>
-        <a href="<?php echo e(route('super-db.versionControl.index', $connection->id)); ?>" class="mr-2"><button class="btn btn-primary" type="button"><?php echo e(__('Version Control')); ?></button></a>
+        <a href="<?php echo e(route('super-db.versionControl.index', $connection->id)); ?>" class="mr-2"><button class="btn btn-primary" type="button"><?php echo e(__('Take Snapshot')); ?></button></a>
         <?php endif; ?> 
 
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">

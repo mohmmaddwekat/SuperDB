@@ -90,9 +90,12 @@ class InsertController extends Controller
         }
     }
 
-
-    public function renameTable($connection_id, $name)
+ /*
+ *Rename Table view 
+ */
+    public function renameTableView($connection_id, $name)
     {
+
         try {
             $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
             if (!in_array('super-db.inserts.rename-table', $roles_permissions)) {
@@ -108,8 +111,10 @@ class InsertController extends Controller
             // abort(404);
         }
     }
-
-    public function updateTable(Request $request, $connection_id, $oldname)
+/*
+ *Rename table according to the database and connection id
+*/
+    public function renameTable(Request $request, $connection_id, $oldname)
     {
         $request->validate([
             'nametable' => [
@@ -142,7 +147,9 @@ class InsertController extends Controller
         }
     }
 
-
+/*
+*Rename a specific column in the database according to database and connection
+*/
     public function renameColumn($connection_id, $table, $namecolumn)
     {
         try {

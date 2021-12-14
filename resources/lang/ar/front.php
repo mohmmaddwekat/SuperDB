@@ -8,6 +8,7 @@ return [
     'Back'=>'الرجوع',
     'Insert'=>'إدراج',
     'Import'=>'استيراد',
+    'Take Snapshot' => 'خذ نسخة احتياطية',
     'Export'=>'تصدير',
     'Select method you want to export data'=>'حدد الطريقة التي تريد تصدير البيانات',
     'Close'=>'اغلاق',
