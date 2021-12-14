@@ -55,7 +55,8 @@ class SqlController extends Controller
 
             return redirect()->route('super-db.sqls.index', $DBconnection->id)->with($message[0], $message[1]);
         } catch (Exception $e) {
-            abort(404);
+            ErrorHandlerMsg::setLog('error',"incorrect query :: ".$query);
+            return ErrorHandlerMsg::getErrorMsgWithLog("The query is not incorrect !! check your query :) !"); 
         }
     }
 }

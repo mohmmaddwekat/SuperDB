@@ -68,7 +68,6 @@ class ExportAsSQL implements ExportInterface{
 
             $queries .= "COMMIT;";
         }
-
         fwrite($file,$queries);
     }
 

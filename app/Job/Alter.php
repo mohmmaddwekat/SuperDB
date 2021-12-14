@@ -24,7 +24,7 @@ class Alter implements JobInterface{
         } 
         if($isSucceeded == false){
           ErrorHandlerMsg::setLog('info'," Error while performing (alter table) query ",null);
-          return ['error','Oops! Error performing query'];
+          return ['error',mysqli_error($mysqlConnection)];
         }    
 
     }

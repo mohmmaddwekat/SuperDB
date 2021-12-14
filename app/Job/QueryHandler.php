@@ -16,23 +16,23 @@ class QueryHandler{
         $splitquery = $this->SplitQuery($query);
         if (in_array('CREATE', $splitquery)) {
             $create = new  Create();
-            $bool = $create->create($query,$mysqlConnection);
-            return $create->send($bool,$mysqlConnection);
+            $isSucceeded = $create->create($query,$mysqlConnection);
+            return $create->send($isSucceeded,$mysqlConnection);
         }
         if (in_array('DROP', $splitquery) and !in_array('ALTER', $splitquery)) {
             $drop = new  Drop();
-            $bool = $drop->drop($query,$mysqlConnection);
-            return $drop->send($bool,$mysqlConnection);
+            $isSucceeded = $drop->drop($query,$mysqlConnection);
+            return $drop->send($isSucceeded,$mysqlConnection);
         }
         if (in_array('ALTER', $splitquery)) {
             $alter = new  Alter();
-            $bool= $alter->alter($query,$mysqlConnection);
-            return $alter->send($bool,$mysqlConnection);
+            $isSucceeded= $alter->alter($query,$mysqlConnection);
+            return $alter->send($isSucceeded,$mysqlConnection);
         }
         if (in_array('INSERT', $splitquery)) {
             $insert = new  Insert();
-            $bool = $insert->insert($query,$mysqlConnection);
-            return $insert->send($bool,$mysqlConnection);
+            $isSucceeded = $insert->insert($query,$mysqlConnection);
+            return $insert->send($isSucceeded,$mysqlConnection);
         }
         return ['error','Oops. Something went wrong'];
     }

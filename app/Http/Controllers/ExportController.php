@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Exceptions\ErrorHandlerMsg;
 use App\RestoreDB\ExportDB\ExportHandler;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class ExportController extends Controller
 {    
@@ -23,7 +25,9 @@ class ExportController extends Controller
             if (!in_array('super-db.jobs.index', $roles_permissions)) {
                 abort(404);
             }
-            
+            if(!File::exists('db')) {
+                Storage::makeDirectory('db', 0755, true, true);
+            }
             $exportHandler  =new ExportHandler ;
             $connectionName = $exportHandler->handleExport($export, $connection_id,$tables );
             ErrorHandlerMsg::setLog('info',"connection exported");
