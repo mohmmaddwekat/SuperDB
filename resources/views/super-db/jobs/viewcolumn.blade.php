@@ -70,7 +70,7 @@
                         </div>
                         </th>
                     @endforeach
-                    <th>{{ __('Options') }}</th>
+                    
                 </tr>
             </thead>
             <tbody>

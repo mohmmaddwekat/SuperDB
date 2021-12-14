@@ -90,7 +90,7 @@ class InsertController extends Controller
         }
     }
 
-
+    
     public function renameTable($connection_id, $name)
     {
         try {
