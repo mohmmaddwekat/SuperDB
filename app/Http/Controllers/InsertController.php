@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exceptions\ErrorHandlerMsg;
 use App\Job\QueryHandler;
+use App\RestoreDB\ExportDB\MangeDataBase;
 use App\widgets\viewColumn;
 use Exception;
 use Illuminate\Http\Request;
@@ -184,8 +185,8 @@ class InsertController extends Controller
             $message = $queryHandler->handleQueries($query, $mysqlConnection);
             mysqli_close($mysqlConnection);
 
-            $viewcolumn = new viewColumn;
-            $dataviewcolumn = $viewcolumn->viewColumn($connection_id, $table);
+            $mangeDB = new MangeDataBase;
+            $dataviewcolumn = $mangeDB->showDatabaseDetails($connection_id, $table);
             return view('super-db.jobs.viewcolumn', [
                 'connection' => $dataviewcolumn["connection"],
                 'colunms' => $dataviewcolumn["colunms"],

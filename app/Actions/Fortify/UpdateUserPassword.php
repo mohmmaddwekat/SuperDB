@@ -19,6 +19,7 @@ class UpdateUserPassword implements UpdatesUserPasswords
      */
     public function update($user, array $input)
     {
+        dd();
         Validator::make($input, [
             'current_password' => ['required', 'string'],
             'password' => $this->passwordRules(),
@@ -27,7 +28,7 @@ class UpdateUserPassword implements UpdatesUserPasswords
                 $validator->errors()->add('current_password', __('The provided password does not match your current password.'));
             }
         })->validateWithBag('updatePassword');
-
+        
         $user->forceFill([
             'password' => Hash::make($input['password']),
         ])->save();

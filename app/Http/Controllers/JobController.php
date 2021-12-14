@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use PDO;
 use App\Exceptions\ErrorHandlerMsg;
+use App\RestoreDB\ExportDB\MangeDataBase;
 
 class JobController extends Controller
 {
@@ -48,8 +49,8 @@ class JobController extends Controller
             if (!in_array('super-db.jobs.view-column', $roles_permissions)) {
                 abort(404);
             }
-            $viewcolumn = new viewColumn;
-            $dataviewcolumn = $viewcolumn->viewColumn($connection_id, $table);
+            $mangeDB = new MangeDataBase;
+            $dataviewcolumn = $mangeDB->showDatabaseDetails($connection_id, $table);
 
             return view('super-db.jobs.viewcolumn', [
                 'connection' => $dataviewcolumn["connection"],
@@ -114,8 +115,10 @@ class JobController extends Controller
             $message = $factory->handleQueries($query, $link);
             mysqli_close($link);
 
-            $viewcolumn = new viewColumn;
-            $dataviewcolumn = $viewcolumn->viewColumn($connection_id, $table);
+
+            $mangeDB = new MangeDataBase;
+            $dataviewcolumn = $mangeDB->showDatabaseDetails($connection_id, $table);
+
             return view('super-db.jobs.viewcolumn', [
                 'connection' => $dataviewcolumn["connection"],
                 'colunms' => $dataviewcolumn["colunms"],

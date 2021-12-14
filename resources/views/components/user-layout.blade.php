@@ -8,8 +8,8 @@
 
         <meta name="author" content="" />
         <title>Super-DB</title>
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="{{ asset('/user-layout-assets/assets/favicon.ico') }}" />
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/layout-assets/img/svg/logo.svg" type="image/x-icon">
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
         <!-- Google fonts-->

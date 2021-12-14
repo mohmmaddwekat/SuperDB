@@ -2,6 +2,7 @@
 namespace App\RestoreDB\ExportDB;
 
 use App\Exceptions\ErrorHandlerMsg;
+use Illuminate\Support\Facades\DB;
 
 class MangeDataBase {
    
@@ -151,5 +152,32 @@ class MangeDataBase {
         return $query;
         ErrorHandlerMsg::setLog('debug',"$query is stored in SQL file");
 
+    }
+
+    
+    /*
+    *Show (display) all columns , rows, and connection details in a specific table 
+    */
+    public function showDatabaseDetails($connection_id,$table){
+        $connectionDetails = DB::table('connection')->where('id','=',$connection_id)->first(['name','id']);
+        $mysqlConnection = mysqli_connect("localhost", "root", "", $connectionDetails->name); 
+        $sqlrow = mysqli_query($mysqlConnection,"SELECT * FROM ".$table);
+        $rows = array();
+        while ($row = mysqli_fetch_assoc($sqlrow)) {
+            array_push($rows,$row);
+        }
+
+        $sqlColumns = mysqli_query($mysqlConnection,"SHOW COLUMNS FROM ".$table);
+        $colunms = array();
+        while($row = mysqli_fetch_array($sqlColumns)){
+          array_push($colunms,$row);
+        }
+        mysqli_close($mysqlConnection);
+        return [
+        'connection'=> $connectionDetails,
+        'colunms' => $colunms,
+        'rows' => $rows,
+        'table' =>$table
+        ];
     }
 }
