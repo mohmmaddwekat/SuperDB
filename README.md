@@ -146,6 +146,7 @@ Now you are ready to go and enjoy SuperDB on your browser :)!
 #### Logging system was implemented in every step in order to allow the developer to track the run of the code, in case of success and errors.
 
 
+![logggg](https://user-images.githubusercontent.com/47077091/146271594-c3340061-fc99-4030-ab82-10dd1367e2a8.PNG)
 
 
 
