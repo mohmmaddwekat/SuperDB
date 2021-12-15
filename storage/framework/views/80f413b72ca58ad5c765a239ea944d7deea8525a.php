@@ -13,15 +13,18 @@
                 data-feather="skip-back"></i><?php echo e(__('Back')); ?></a>
 
     </div>
+
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
          <?php if(in_array('super-db.jobs.versionControl',$roles_permissions)): ?>
-            <a href="<?php echo e(route('super-db.jobs.versionControl', [$table,$connection->id])); ?>" class="mr-2"><button class="btn btn-primary" type="button"><?php echo e(__('Version Control')); ?></button></a>
+            <a href="<?php echo e(route('super-db.jobs.versionControl', [$table,$connection->id])); ?>" class="mr-2"><button class="btn btn-primary"><?php echo e(__('Version Control')); ?></button></a>
         <?php endif; ?>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
             <?php echo e(__('Export')); ?>
 
         </button>
-        
+        <div class="d-grid gap-2 d-md-block">
+            <a href="<?php echo e(route('super-db.inserts.add-row',[$table,$connection->id])); ?>"class="mr-2"><button  class="btn btn-primary"><?php echo e(__('Add Row')); ?></button></a>
+        </div>
     </div>
 
     <!-- Modal -->

@@ -8,14 +8,17 @@
                 data-feather="skip-back"></i>{{ __('Back') }}</a>
 
     </div>
+
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
          @if (in_array('super-db.jobs.versionControl',$roles_permissions))
-            <a href="{{ route('super-db.jobs.versionControl', [$table,$connection->id]) }}" class="mr-2"><button class="btn btn-primary" type="button">{{ __('Version Control') }}</button></a>
+            <a href="{{ route('super-db.jobs.versionControl', [$table,$connection->id]) }}" class="mr-2"><button class="btn btn-primary">{{ __('Version Control') }}</button></a>
         @endif
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
             {{ __('Export') }}
         </button>
-        
+        <div class="d-grid gap-2 d-md-block">
+            <a href="{{ route('super-db.inserts.add-row',[$table,$connection->id]) }}"class="mr-2"><button  class="btn btn-primary">{{ __('Add Row') }}</button></a>
+        </div>
     </div>
 
     <!-- Modal -->

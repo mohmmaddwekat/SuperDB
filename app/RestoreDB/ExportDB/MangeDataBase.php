@@ -180,4 +180,27 @@ class MangeDataBase {
         'table' =>$table
         ];
     }
+
+    public function createRowQuery($table,$data, $dataviewcolumn){
+        $mangeDB = new MangeDataBase;
+        $query = "INSERT INTO ".$table."(";
+        foreach ($dataviewcolumn["colunms"] as $index => $nameOfcolumn) {
+            if($index == (count($dataviewcolumn["colunms"])-1)){
+                $query .= $nameOfcolumn[0];
+                break;
+            }
+            $query .= $nameOfcolumn[0].', ';
+        }
+        $query .= ") VALUES (";
+        
+        foreach ($data as $index => $value) {
+            if($index == (count($data)-1)){
+                $query .= "'$value'";
+                break;
+            }
+            $query .= "'$value'".', ';
+        }
+        $query .= ");";
+        return $query;
+    }
 }

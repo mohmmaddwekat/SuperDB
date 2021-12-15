@@ -115,6 +115,10 @@ Route::group([
 
         Route::get('/rename-table/{id}/{table}', [InsertController::class, 'renmeTableView'])->name('rename-table');
         Route::post('/rename-table/{id}/{table}', [InsertController::class, 'renameTable'])->name('updateTable');
+
+        Route::get('/add-row/{table}/{connection_id}', [InsertController::class, 'addRow'])->name('add-row');
+        Route::post('/store-row/{table}/{connection_id}', [InsertController::class, 'storeRow'])->name('store-row');
+
     });
     Route::group([
         'prefix' => '/sqls',

@@ -154,7 +154,7 @@ class RoleController extends Controller
     {
         try {
             $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
-            if (!in_array('super-db.roles.destory', $roles_permissions)) {
+            if (!in_array('super-db.roles.destroy', $roles_permissions)) {
                 abort(404);
             }
             Role::destroy($role->id);
