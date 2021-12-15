@@ -140,11 +140,13 @@ Now you are ready to go and enjoy SuperDB on your browser :)!
 
 #### 8. Localization (Language Switch)
 #### Website language shall be switched either to Arabic or English. Using Middleware, a request to switch the language is sent. A new session is created to store the new request, and then send another PUT request to this session. In this way the language is switched. The default language taken from the browser is stored in the session. 
+![lang](https://user-images.githubusercontent.com/47077091/146271932-23f187b5-9aeb-4e5d-a254-c4c1e4e0c8b7.PNG)
+
 
 #### 9. Exception Handling and Logging 
 #### We have created a controller called ExceptionMsgHandler in order to handle our different types of exceptions. We have also defined new special exceptions such as FileException. 
 #### Logging system was implemented in every step in order to allow the developer to track the run of the code, in case of success and errors.
-
+##### Here is a sample log file:
 
 ![logggg](https://user-images.githubusercontent.com/47077091/146271594-c3340061-fc99-4030-ab82-10dd1367e2a8.PNG)
 
