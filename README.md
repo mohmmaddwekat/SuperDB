@@ -120,10 +120,10 @@ Now you are ready to go and enjoy SuperDB on your browser :)!
 
 
 #### 5. Add new table in the database
-#### - Using insert:
+#### -Using insert:
 #### This component is connected with a component called queryHandler. The queryHandler takes a query, splits it in order to get the type of query ( drop, insert, alter..).
 
-#### - Using SQL query
+#### -Using SQL query
 #### This component is also connected with the queryHandler component. In the queryHandler component, mysqli query function is used to create, drop, alter, and insert a query.
 
 #### 6. Add a new user
