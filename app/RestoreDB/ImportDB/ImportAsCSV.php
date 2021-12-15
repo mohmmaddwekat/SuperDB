@@ -107,7 +107,8 @@ class ImportAsCSV implements ImportInterface {
             $queryHandler->handleQueries($query,$mysqlConnection);
 
             ErrorHandlerMsg::setLog('info',"The Connection has been created",null);
-         }catch(Exception $e){
+         }catch(FileException $e){
+             e->getError();
              ErrorHandlerMsg::setLog('error',$e->getMessage());
              ErrorHandlerMsg::setLog('info',"Error creating connection",null);
          }finally{

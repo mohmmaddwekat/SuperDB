@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Exceptions\ErrorHandlerMsg;
 use App\Job\QueryHandler;
 use App\RestoreDB\ExportDB\MangeDataBase;
+use App\widgets\viewColumn;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -92,7 +93,7 @@ class InsertController extends Controller
  /*
  *Rename Table view 
  */
-    public function renameTable($connection_id, $name)
+    public function renameTableView($connection_id, $name)
     {
 
         try {
@@ -113,7 +114,7 @@ class InsertController extends Controller
 /*
  *Rename table according to the database and connection id
 */
-    public function updateTable(Request $request, $connection_id, $oldname)
+    public function renameTable(Request $request, $connection_id, $oldname)
     {
         $request->validate([
             'nametable' => [
@@ -204,47 +205,4 @@ class InsertController extends Controller
             // abort(404);
         }
     }
-
-
-    public function addRow($table,$connection_id){
-        $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
-        if (!in_array('super-db.inserts.update-column', $roles_permissions)) {
-            abort(404);
-        }
-        $mangeDB = new MangeDataBase;
-        $dataviewcolumn = $mangeDB->showDatabaseDetails($connection_id, $table);
-        $countNumColumns = count($dataviewcolumn["colunms"]);
-        return view('super-db.inserts.addRow', [
-            'connection' => $dataviewcolumn["connection"],
-            'colunms' => $dataviewcolumn["colunms"],
-            'table' => $dataviewcolumn["table"],
-            'countNumColumns' => $countNumColumns
-        ]);
-    }
-  
-    public function storeRow(Request $request,$table,$connection_id){
-
-        try {
-            $data = $request->post('data');
-
-            $mangeDB = new MangeDataBase;
-            $dataviewcolumn = $mangeDB->showDatabaseDetails($connection_id, $table);
-    
-            $query =  $mangeDB->createRowQuery($table, $data, $dataviewcolumn);
-            $mysqlConnection = mysqli_connect("localhost", "root", "", $dataviewcolumn["connection"]->name);
-            $queryHandler = new QueryHandler;
-            $message = $queryHandler->handleQueries($query, $mysqlConnection);
-            mysqli_close($mysqlConnection);
-
-            
-            return redirect()->route('super-db.jobs.index', $dataviewcolumn["connection"]->id)->with($message[0], $message[1]);
-
-        } catch (Exception $e) {
-            ErrorHandlerMsg::setLog('error',"incorrect query :: ".$query);
-            return ErrorHandlerMsg::getErrorMsgWithLog("The query is not incorrect !! check your query :) !"); 
-        }
-
-    }
-
-
 }

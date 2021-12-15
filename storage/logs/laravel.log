@@ -4153,3 +4153,14 @@
 [2021-12-15 00:33:11] local.DEBUG: User logged out of SuperDB  
 [2021-12-15 00:33:12] local.INFO:  Main controller entered index  
 [2021-12-15 00:33:13] local.INFO:  Main controller entered index  
+[2021-12-15 21:41:55] local.INFO:  Main controller entered index  
+[2021-12-15 21:42:08] local.DEBUG: A user logged in SuperDB  
+[2021-12-15 21:42:08] local.DEBUG: Dashboard controller entered by authorized user  
+[2021-12-15 21:42:12] local.INFO:  Connection controller entered  
+[2021-12-15 21:42:17] local.INFO: The connection has been successfully established  
+[2021-12-15 21:42:17] local.INFO: A connection of name kakakaka has been added to the database  
+[2021-12-15 21:42:19] local.DEBUG: Job controller entered  
+[2021-12-15 21:42:41] local.DEBUG: Error while importing a file, trying to import an existing file  
+[2021-12-15 21:43:22] local.DEBUG: Error while performing (create table) query   
+[2021-12-15 21:43:22] local.INFO: The table has been successfully established  
+[2021-12-15 21:43:22] local.INFO: File impoerted  
