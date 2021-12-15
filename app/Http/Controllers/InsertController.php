@@ -92,7 +92,7 @@ class InsertController extends Controller
  /*
  *Rename Table view 
  */
-    public function renameTableView($connection_id, $name)
+    public function renameTable($connection_id, $name)
     {
 
         try {
@@ -113,7 +113,7 @@ class InsertController extends Controller
 /*
  *Rename table according to the database and connection id
 */
-    public function renameTable(Request $request, $connection_id, $oldname)
+    public function updateTable(Request $request, $connection_id, $oldname)
     {
         $request->validate([
             'nametable' => [
@@ -207,7 +207,10 @@ class InsertController extends Controller
 
 
     public function addRow($table,$connection_id){
-
+        $roles_permissions = Auth::user()->role->permissions()->pluck('code')->toArray();
+        if (!in_array('super-db.inserts.update-column', $roles_permissions)) {
+            abort(404);
+        }
         $mangeDB = new MangeDataBase;
         $dataviewcolumn = $mangeDB->showDatabaseDetails($connection_id, $table);
         $countNumColumns = count($dataviewcolumn["colunms"]);

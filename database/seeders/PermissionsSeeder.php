@@ -29,6 +29,8 @@ class PermissionsSeeder extends Seeder
         'super-db.inserts.updateTable' => 'can update Table',
         'super-db.sqls.index' => 'can show page sql',
         'super-db.sqls.store' => 'can store query',
+        'super-db.inserts.add-row' => 'show add row page',
+        'super-db.inserts.store-row' => 'add store new row for data of table',
         'super-db.jobs.versionControl' => 'can make snapshot',
         'super-db.versionControl.index' => 'can show all snapshot you make',
         'super-db.versionControl.store' => 'can make snapshot',

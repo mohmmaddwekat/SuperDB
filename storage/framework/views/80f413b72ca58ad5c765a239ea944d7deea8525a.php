@@ -23,7 +23,9 @@
 
         </button>
         <div class="d-grid gap-2 d-md-block">
+            <?php if(in_array('super-db.inserts.add-row',$roles_permissions)): ?>
             <a href="<?php echo e(route('super-db.inserts.add-row',[$table,$connection->id])); ?>"class="mr-2"><button  class="btn btn-primary"><?php echo e(__('Add Row')); ?></button></a>
+            <?php endif; ?>
         </div>
     </div>
 
