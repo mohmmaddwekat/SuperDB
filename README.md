@@ -5,7 +5,18 @@
 
 
 # Key Features
-### *Add a new database connection
+### * Add a new database connection
+### * Add new tables to the database 
+### * Update existing tables in a specific database
+### * Import a database, either from a CSV file, SQL file, or a text file
+### * Export tables in a database, either to an SQL file, or a CSV file
+### * Version Control (snapshots) of tables in the database
+### * Add a new user with a specific role
+### * Add a new role
+### * Add/edit roles permissions
+### * Localization (Sqitch website language)
+### * Apply dark mode
+### * Logging
 
 
 
