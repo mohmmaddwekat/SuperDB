@@ -82,13 +82,13 @@ Now you are ready to go and enjoy SuperDB on your browser :)!
 
 ### Below is the logic of our work:
 
-#### Adding a new database connection 
+#### 1. Adding a new database connection 
 #### By creating a new controller called ConnectionController, we were able to connect it with two components: CreateMySQLDataBase, PDO.
 #### Using a mysql server connection, the connection details (DSN, password, username) were passed through the PDO component to create the connection. In the CreateMySQLDataBase component, we were able to handle the create/release database.
 
 
 
-#### Export database/tables in the database
+#### 2. Export database/tables in the database
 #### We have created a component called ExportHandler. In this component, the factory method design pattern was used in order to connect it with two other components called: ExportAsCSV, ExportAsSQL. 
 #### The factory method shall be able to handle the exporting process between the two selected methods(CSV, SQL). 
 #### Overall, the ExportHandler component is also connected with another component called ManageDatabase.
@@ -101,7 +101,7 @@ Now you are ready to go and enjoy SuperDB on your browser :)!
 
 
 
-#### Import database 
+#### 3. Import database 
 #### We have created a controller called Import Controller, connected to a component named Import Handler. This component is connected with three other components in order to handle the three types of files to be imported: ImportAsCSV, ImportAsSQL, ImportAsTXT.
 #### ImportAsCSV
 #### In this component, first, get the table name using buildTableBySQLQuery function, then build the query. Then, get the data from the CSV file to create the query and insert data to the table using insertRowBySQLQuery function. Finally, creating the table using the two previous functions.
@@ -112,36 +112,36 @@ Now you are ready to go and enjoy SuperDB on your browser :)!
 #### In this component, we get the data from the sql file and then by using prepare function- it prepares the query to be inserted-we were able to insert the data to the database using the execute function.
 
 
-#### Version Control
+#### 4. Version Control
 #### We have created a controller called Version Control, this controller is connected with a component named VersionController. 
 #### In this component, we used three functions:
 #### The first one, show, which will show the files that will be taken as snapshots. The second, store, this will create the snapshot for the desired file. The final function is update, this will update the data by replacing the existing data in the database with the newly added snapshot. 
 #### The Version Control component is also connected with the ExportAsSQL component. 
 
 
-#### Add new table in the database
+#### 5. Add new table in the database
 #### Using insert:
 #### This component is connected with a component called queryHandler. The queryHandler takes a query, splits it in order to get the type of query ( drop, insert, alter..).
 
 #### Using SQL query
 #### This component is also connected with the queryHandler component. In the queryHandler component, mysqli query function is used to create, drop, alter, and insert a query.
 
-#### Add a new user
+#### 6. Add a new user
 #### We have created a controller called User Controller. In this controller, a register function is used to create a new user with the required data. Also, the role of the user will be selected.
 #### Another function is used, named, store: this will save the data registered in the database. 
 #### Also, a login function is used in order to allow the user to log in his account. Authentication is used here. 
 #### Finally, the destroy function is used in order to log the user out of his account.
 
-#### Add a new role with permissions
+#### 7. Add a new role with permissions
 #### Using the models, we were able to apply a many-to-many relationship between the roles and permissions. Using the seeder feature, we were able to define all users permissions that would be in the system.
 #### In the same seeder, we were also able to define the main four roles in our system: Super-Admin, Admin, Staff, and Reader. We assigned the permissions for each role. 
-In the Role Controller, we have handled the edit-permission functionality. 
+#### In the Role Controller, we have handled the edit-permission functionality. 
 
 
-#### Localization (Language Switch)
+#### 8. Localization (Language Switch)
 #### Website language shall be switched either to Arabic or English. Using Middleware, a request to switch the language is sent. A new session is created to store the new request, and then send another PUT request to this session. In this way the language is switched. The default language taken from the browser is stored in the session. 
 
-#### Exception Handling and Logging 
+#### 9. Exception Handling and Logging 
 #### We have created a controller called ExceptionMsgHandler in order to handle our different types of exceptions. We have also defined new special exceptions such as FileException. 
 #### Logging system was implemented in every step in order to allow the developer to track the run of the code, in case of success and errors.
 
