@@ -39,7 +39,7 @@ composer create-project laravel/laravel project
 * Now, create a new folder in the laravel project you have just created, namely, vendor. And take the content of this folder from the project repo. Then, create a file named .env and also paste the content of this file from the project repo.
 * Then you need to create a new database. Put the connection details (host, username, password) in the .env file you have already created.
 * Now, you need to install the Fortify, and laravel-to-uml packages using these commands:
-* ```
+ ```
 composer require laravel/fortify
 composer require andyabih/laravel-to-uml --dev
 ```
