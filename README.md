@@ -93,9 +93,9 @@ Now you are ready to go and enjoy SuperDB on your browser :)!
 #### The factory method shall be able to handle the exporting process between the two selected methods(CSV, SQL). 
 #### Overall, the ExportHandler component is also connected with another component called ManageDatabase.
 #### In the ManageDatabase component, two methods of exporting data are handled as follows:
-#### * Exporting to CSV file
+####   * Exporting to CSV file
 #### Data from the database will be stored in a CSV file using the “fputcsv” method. 
-#### * Exporting to SQL file
+####   * Exporting to SQL file
 #### SQL queries will be created according to data taken from the desired database. This will be done using four functions: getAllTables, createTableBySQLQuery, getAllColumns, and storeNameOfColumn. 
 
 
