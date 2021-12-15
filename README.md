@@ -93,9 +93,9 @@ Now you are ready to go and enjoy SuperDB on your browser :)!
 #### The factory method shall be able to handle the exporting process between the two selected methods(CSV, SQL). 
 #### Overall, the ExportHandler component is also connected with another component called ManageDatabase.
 #### In the ManageDatabase component, two methods of exporting data are handled as follows:
-####   * Exporting to CSV file
+####  - Exporting to CSV file
 #### Data from the database will be stored in a CSV file using the “fputcsv” method. 
-####   * Exporting to SQL file
+####  - Exporting to SQL file
 #### SQL queries will be created according to data taken from the desired database. This will be done using four functions: getAllTables, createTableBySQLQuery, getAllColumns, and storeNameOfColumn. 
 
 
@@ -103,12 +103,12 @@ Now you are ready to go and enjoy SuperDB on your browser :)!
 
 #### 3. Import database 
 #### We have created a controller called Import Controller, connected to a component named Import Handler. This component is connected with three other components in order to handle the three types of files to be imported: ImportAsCSV, ImportAsSQL, ImportAsTXT.
-####  * ImportAsCSV
+####  - ImportAsCSV
 #### In this component, first, get the table name using buildTableBySQLQuery function, then build the query. Then, get the data from the CSV file to create the query and insert data to the table using insertRowBySQLQuery function. Finally, creating the table using the two previous functions.
 
-####  * ImportAsTXT
+####  - ImportAsTXT
 #### This component is connected with the ImportAsCSV component in order to benefit from its functions (buildTableBySQLQuery, insertRowBySQLQuery). Using the buildTableBySQLQuery, we will get data from the text file and then insert it to the database using insertRowBySQLQuery.
-####  * ImportAsSQL
+####  - ImportAsSQL
 #### In this component, we get the data from the sql file and then by using prepare function- it prepares the query to be inserted-we were able to insert the data to the database using the execute function.
 
 
