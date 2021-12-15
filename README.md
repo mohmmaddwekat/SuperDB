@@ -43,7 +43,9 @@ composer create-project laravel/laravel project
 composer require laravel/fortify
 composer require andyabih/laravel-to-uml --dev
 ```
-* After installing the required packages, go to SuperDB\vendor\laravel\fortify\route\routes.php and replace the name (login) with (users.login)
+* After installing the required packages, go to SuperDB\vendor\laravel\fortify\route\routes.php and replace the name (login) inside the route with (users.login)
+if ($enableViews){
+  Route::get('/login', [AuthenticatedSessionController::class, 'create']) 
 * Then, go to SuperDB\vendor\laravel\fortify\src\Http\Controllers\NewPasswordController.php and remove the validate property applied on (email), and use this code for the password: 
 ] <= 'password'
       'required',
