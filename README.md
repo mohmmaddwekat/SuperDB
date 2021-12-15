@@ -58,7 +58,16 @@ if ($enableViews){
        ->uncompromised()
      ],
      
-* Finally, in order to let the reset password feature to run, create an account on Mailtrap, select the Laravel environment, go to .env file and paste the instructions from Mailtrap in there. Do not forget to pass any dummy email in the MAIL_FROM_ADDRESS. eg, team@test.com
+* Now, in order to let the reset password feature to run, create an account on Mailtrap, select the Laravel environment, go to .env file and paste the instructions from Mailtrap in there. Do not forget to pass any dummy email in the MAIL_FROM_ADDRESS. eg, team@test.com
+* Finally, to run the project in your IDE:
+ ```
+php artisan migrate
+php artisan db:seed
+php artisan serve
+```
+Now you are ready to go and run SuperDB on your browser :)
+
+# 
 
 
 
