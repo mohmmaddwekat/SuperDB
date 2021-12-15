@@ -24,9 +24,41 @@ This is an example of how you may give instructions on setting up your project l
 
 # Prerequisites
 PHP and Composer should be installed:
+This is how to install it if you're using Windows:
 ```
 php composer-setup.php --install-dir=bin --filename=composer
 ```
+
+# How To Use
+To clone and run this application, follow the follwing instructions:
+* Clone the project from this GitHub repository
+* Download the project through this command of Laravel Composer
+```
+composer create-project laravel/laravel project
+```
+* Now, create a new folder in the laravel project you have just created, namely, vendor. And take the content of this folder from the project repo. Then, create a file named .env and also paste the content of this file from the project repo.
+* Then you need to create a new database. Put the connection details (host, username, password) in the .env file you have already created.
+* Now, you need to install the Fortify, and laravel-to-uml packages using these commands:
+* ```
+composer require laravel/fortify
+composer require andyabih/laravel-to-uml --dev
+```
+* After installing the required packages, go to SuperDB\vendor\laravel\fortify\route\routes.php and replace the name (login) with (users.login)
+* Then, go to SuperDB\vendor\laravel\fortify\src\Http\Controllers\NewPasswordController.php and remove the validate property applied on (email), and use this code for the password: 
+] <= 'password'
+      'required',
+      Password::min(8) 
+       ->mixedCase()
+       ->letters()
+       ->numbers()
+       ->symbols()
+       ->uncompromised()
+     ],
+     
+* Finally, in order to let the reset password feature to run, create an account on Mailtrap, select the Laravel environment, go to .env file and paste the instructions from Mailtrap in there. Do not forget to pass any dummy email in the MAIL_FROM_ADDRESS. eg, team@test.com
+
+
+
 
 
 
